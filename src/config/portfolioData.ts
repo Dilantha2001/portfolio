@@ -15,38 +15,28 @@ export const PORTFOLIO_INFO: Portfolio = {
     summary:
       "Senior Engineer with 7+ years of experience delivering enterprise-grade applications. Over the last 3 years I have focused on building production systems using Python (FastAPI) and React — designing APIs, building responsive frontends, and automating deployments with IaC. Experienced across AWS & Azure and comfortable owning full delivery from design to production.",
     contact: {
-      email: "satyasubudhi089@gmail.com",
-      phone: "+91 9937 446 070",
-      location: "Bangalore, India",
-      website: "https://satya00089.github.io/portfolio",
+      email: "pramudithadilantha89@gmail.com",
+      phone: "+94 756813888",
+      location: "kegalle",
+
       socials: [
         {
           label: "LinkedIn",
-          url: "https://www.linkedin.com/in/satya-subudhi/",
+          url: "www.linkedin.com/in/dilantha-ranaweera-825148295",
           icon: "SiLinkedin",
         },
+
         {
           label: "GitHub",
-          url: "https://github.com/satya00089",
+          url: "https://github.com/Dilantha2001",
           icon: "SiGithub",
-        },
-        {
-          label: "Hugging Face",
-          url: "https://huggingface.co/spaces/satya00089/",
-          icon: "SiHuggingface",
-        },
-        {
-          label: "Kaggle",
-          url: "https://www.kaggle.com/satya00089",
-          icon: "SiKaggle",
-          size: 32,
         },
       ],
     },
   },
   highlights: [
-    "Senior Engineer at Unisys (Jun 2025 – Present)",
-    "3+ years focused on Python (FastAPI) and React",
+    "Software Engineer Internship at postal headquarters (6 mounths)",
+    "2+ years focused on Nodejs and React",
     "Experienced with AWS, Azure, Terraform, and CI/CD pipelines",
   ],
   skills: [
@@ -112,7 +102,6 @@ export const PORTFOLIO_INFO: Portfolio = {
     {
       title: "Backend",
       skills: [
-       
         {
           name: "Php",
           level: 80,
@@ -147,12 +136,10 @@ export const PORTFOLIO_INFO: Portfolio = {
         },
       ],
     },
-    
+
     {
       title: "Infrastructure & DevOps",
       skills: [
-       
-      
         {
           name: "AWS",
           level: 78,
@@ -161,7 +148,7 @@ export const PORTFOLIO_INFO: Portfolio = {
           years: 0,
           note: "Used in production since 2025",
         },
-      
+
         {
           name: "Docker",
           level: 75,
@@ -169,7 +156,7 @@ export const PORTFOLIO_INFO: Portfolio = {
           category: "devops",
           years: 0,
           note: "Used in production since 2025",
-        }
+        },
       ],
     },
     {
@@ -199,7 +186,6 @@ export const PORTFOLIO_INFO: Portfolio = {
           years: 2,
           note: "Used in production since 2023",
         },
-        
       ],
     },
     {
@@ -229,7 +215,7 @@ export const PORTFOLIO_INFO: Portfolio = {
           years: 1,
           note: "Used in production since 2024",
         },
-    
+
         {
           name: "VS Code",
           level: 90,
@@ -244,212 +230,153 @@ export const PORTFOLIO_INFO: Portfolio = {
   experience: [
     {
       id: "unisys-senior-2025",
-      title: "Senior Engineer",
-      company: "Unisys",
-      location: "Bengaluru, India",
-      date: { start: "2025-06", present: true },
+      title: "Software Engineer",
+      company: "Postal Headquarters",
+      location: "Colombo",
+      date: { start: "2025-07", present: false },
       summary:
-        "Leading full-stack efforts around Python-based backends and React frontends for enterprise customers. Driving architecture, mentoring teammates and implementing IaC and cloud deployment practices.",
+        " full-stack efforts around Nodejs-based backends and React frontends for enterprise customers. Driving architecture,  and implementing IaC and cloud deployment practices.",
       bullets: [
         "Lead development of microservices using FastAPI and Python for enterprise-scale workloads.",
         "Design and implement responsive React frontends and component libraries with TypeScript and Tailwind.",
         "Drive IaC adoption using Terraform and Bicep; implement CI/CD pipelines and deployment automation.",
         "Mentor engineers, conduct design reviews, and improve code quality and observability.",
       ],
-      tech: [
-        "Python",
-        "FastAPI",
-        "React",
-        "TypeScript",
-        "Terraform",
-        "AWS",
-        "Azure",
-      ],
-    },
-    {
-      id: "unisys-se-2022",
-      title: "Software Engineer",
-      company: "Unisys",
-      location: "Bengaluru, India",
-      date: { start: "2022-01", end: "2025-05" },
-      summary:
-        "Worked on web and desktop applications, cloud deployment tooling, and multi-cloud automation for Unisys products.",
-      bullets: [
-        "Built desktop and web UI features using React, Electron.js, TypeScript and Node.js.",
-        "Implemented cloud deployment workflows for Azure (ARM) and AWS (CloudFormation).",
-        "Improved code quality and CI pipelines, addressing SonarQube findings and standardizing testing.",
-        "Delivered features around redeployment, resource deletions and automation across cloud providers.",
-      ],
-      tech: ["React", "Electron", "TypeScript", "Node.js", "Azure", "AWS"],
-    },
-    {
-      id: "unisys-rae-aircore",
-      title: "Software Engineer (RAE, AirCore projects)",
-      company: "Unisys",
-      location: "Bengaluru, India",
-      date: { start: "2018-03", end: "2021-12" },
-      summary:
-        "Worked on UI and backend components for airline/travel solutions and internal tooling.",
-      bullets: [
-        "Developed front-end UIs using Angular and React and integrated with Unisys Design System.",
-        "Built REST APIs using Java (Vert.x) and integrated with NoSQL stores (MongoDB, Couchbase).",
-        "Implemented role-based access with Keycloak and developed data visualization tools.",
-        "Contributed to NDC stabilization, import/export features and product maintenance.",
-      ],
-      tech: [
-        "Angular",
-        "React",
-        "Java (Vert.x)",
-        "MongoDB",
-        "Couchbase",
-        "Keycloak",
-      ],
+      tech: ["Nodejs", "Php", "React", "TypeScript"],
     },
   ],
   projects: [
     {
-      id: "learn-algo",
-      title: "Learn Algo",
+      id: "dog-behavior-ai",
+      title: "AI-Powered Dog Behavior Monitoring",
       description:
-        "Interactive visualizations that transform abstract concepts into intuitive understanding. Watch sorting, searching, and ML algorithms execute step-by-step.",
-      tags: ["Algorithms", "DSA", "ML", "AI", "Visualization", "Next.js"],
-      image:
-        "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExYXpqYWFhbnBraWt3ZXhvajZsdjg5andyMGZzY2VibGg3bXE0MWxwayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/2PuPWxuLV1FGyh03Ja/giphy.gif",
-      href: "https://www.learn-algo.com",
-      links: [
-        {
-          label: "GitHub",
-          url: "https://github.com/satya00089/learn-algo",
-          icon: "SiGithub",
-        },
-      ],
-      isUnderDevelopment: true,
-    },
-    {
-      id: "landing-zone-orchestrator",
-      title: "Landing Zone Orchestrator",
-      description:
-        "A production-ready platform that transforms cloud infrastructure provisioning from manual IaC coding to an intuitive, form-driven workflow. Built with React, FastAPI, and MongoDB to generate validated Terraform templates for AWS, Azure, and GCP. Features include schema-driven form builder for VPC, Subnets, IAM, and networking resources, real-time Terraform code generation and validation, JWT-based authentication, MongoDB storage for projects and templates, and multi-cloud support.",
+        "A multimodal AI system using YOLOv8, ResNet-50, and LSTM to classify canine emotions and behaviors. Features dual-pathway visual processing and audio signal analysis for real-time monitoring.",
       tags: [
-        "Terraform",
-        "IaC",
+        "Python",
+        "YOLOv8",
+        "TensorFlow",
+        "Computer Vision",
+        "Multimodal AI",
+        "Research",
+      ],
+      image: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjEx.../giphy.gif",
+      href: "#",
+      links: [
+        {
+          label: "GitHub",
+          url: "https://github.com/Dilantha-Ranaweera/dog-behavior-monitor",
+          icon: "SiGithub",
+        },
+      ],
+    },
+    {
+      id: "trust-post-logistics",
+      title: "Trust Post Logistics System",
+      description:
+        "A comprehensive parcel delivery platform developed for the Sri Lankan Postal Department. Features real-time GPS tracking, secure transactions, and a specialized admin/manager dashboard.",
+      tags: [
         "React",
-        "FastAPI",
-        "MongoDB",
-        "AWS",
-        "Azure",
+        "Node.js",
+        "PostgreSQL",
+        "GPS APIs",
         "Full Stack",
+        "Logistics",
       ],
-      image:
-        "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZGtuYjY1emtsZmNjMXp1czdrdXR5bXE5ZDJheHVvZjY1azZxYnJieiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/qzImRjQVb2OUI84mTt/giphy.gif",
-      href: "https://orchestrator.next-zen.dev",
+      image: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjEx.../giphy.gif",
+      href: "#",
       links: [
         {
           label: "GitHub",
-          url: "https://github.com/satya00089/landing-zone-orchestrator-ui",
+          url: "https://github.com/Dilantha-Ranaweera/trust-post-logistics",
           icon: "SiGithub",
         },
       ],
-      isUnderDevelopment: true,
     },
     {
-      id: "diagrammatic",
-      title: "Diagrammatic",
+      id: "music-streaming-app",
+      title: "Dynamic Music Application",
       description:
-        "Diagrammatic (System Design Playground): A component library and living documentation for a design system.",
-      tags: ["System Design", "Ai & ML", "React"],
-      image:
-        "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExeTFnOGF3d3BodjFvY3NhanY5cnl5bmd4Z243aXB5M3hrOHg3d2tmeiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/WvzQektcJxs0oDFkHq/giphy.gif",
-      href: "https://diagrammatic.next-zen.dev",
+        "Full-stack music engine with custom audio playback, MongoDB aggregation pipelines for trending charts, and JWT-based authentication for a secure user ecosystem.",
+      tags: ["React", "Node.js", "MongoDB", "Express", "Cloudinary", "Redux"],
+      image: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjEx.../giphy.gif",
+      href: "#",
       links: [
         {
           label: "GitHub",
-          url: "https://github.com/satya00089/diagrammatic",
+          url: "https://github.com/Dilantha-Ranaweera/music-app",
           icon: "SiGithub",
         },
       ],
     },
     {
-      id: "mui-color-wheel",
-      title: "MUI Color Wheel",
+      id: "ecommerce-engine",
+      title: "High-Performance E-Commerce Engine",
       description:
-        "A Material-UI based color wheel component with real-time color picking.",
-      tags: ["React", "Material-UI", "NPM Package", "Storybook"],
-      image:
-        "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExYTJxYjhmdTVjam41aWlzczZreGZ2eXc5eThjdDRpMXgxYzVuYTAzMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/tWnCyw4rmoFY8CmhLV/giphy.gif",
-      href: "https://mui-color-wheel.vercel.app/",
-      links: [
-        {
-          label: "Storybook",
-          url: "https://mui-color-wheel.vercel.app/",
-          icon: "SiStorybook",
-        },
-        {
-          label: "NPM",
-          url: "https://www.npmjs.com/package/mui-color-wheel",
-          icon: "SiNpm",
-        },
-        {
-          label: "GitHub",
-          url: "https://github.com/satya00089/mui-color-wheel",
-          icon: "SiGithub",
-        },
+        "E-commerce solution built with TypeScript and Redux Toolkit. Features server-side SQL filtering for product discovery and a simulated Stripe API checkout flow.",
+      tags: [
+        "React",
+        "TypeScript",
+        "Redux Toolkit",
+        "PostgreSQL",
+        "Stripe API",
       ],
-      isUnderDevelopment: true,
-    },
-    {
-      id: "alochona",
-      title: "Alochona",
-      description:
-        "Alochona is an experimental chatbot hosted on Hugging Face Spaces. It uses OpenAI under the hood for responses. This project was built as a way to explore chatbot UIs, Hugging Face deployment, and integrating OpenAI APIs.",
-      image:
-        "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmc5dDY1c2ZnOGs0ODF0eDkwbzBvMHZ2ZXJvYml2amRmdzN2dnZueSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/7AFQj6uviWpwudbOWg/giphy.gif",
-      href: "https://huggingface.co/spaces/satya00089/alochona",
-      links: [
-        {
-          label: "Huggingface",
-          url: "https://huggingface.co/spaces/satya00089/alochona/tree/main",
-          icon: "SiHuggingface",
-        },
-        {
-          label: "GitHub",
-          url: "https://github.com/satya00089/alochona",
-          icon: "SiGithub",
-        },
-      ],
-      tags: ["Chatbot", "OpenAI", "Hugging Face", "Beginner Project"],
-    },
-    {
-      id: "night-sky",
-      title: "Night Skyline",
-      description:
-        "A breathtaking recreation of the city skyline under a starlit night sky, capturing the serene beauty and glowing atmosphere of the evening.",
-      tags: ["React", "CSS"],
-      image:
-        "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExc2RjaHAxY3N3enY0d3RldWVpczg2ZTNzMHhsY2dpam0yYnp6bWh2byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/P2jddT5c9g9OeHI17p/giphy.gif",
-      href: "https://satya00089.github.io/night-sky",
-      links: [
-        {
-          label: "Watch",
-          url: "https://www.loom.com/share/1516014366e34135a67f5dd4e551fec5",
-          icon: "FaPlay",
-        },
-        {
-          label: "GitHub",
-          url: "https://github.com/satya00089/night-sky",
-          icon: "SiGithub",
-        },
-      ],
-      isUnderDevelopment: true,
-    },
-    {
-      id: "data-dashboard-poc",
-      title: "Data Dashboard (POC)",
-      description: "Real-time charts and alerts for operational metrics.",
-      tags: ["React", "D3", "Realtime"],
       image: undefined,
       href: "#",
-      isUnderDevelopment: true,
+      links: [
+        {
+          label: "GitHub",
+          url: "https://github.com/Dilantha-Ranaweera/ecommerce-ts",
+          icon: "SiGithub",
+        },
+      ],
+    },
+    {
+      id: "online-book-store",
+      title: "MERN Online Book Store",
+      description:
+        "A full-stack bookshop enabling users to browse and purchase books. Includes an admin dashboard for inventory management and order status tracking.",
+      tags: ["React", "Tailwind CSS", "MongoDB", "Express", "Chart.js"],
+      image: undefined,
+      href: "#",
+      links: [
+        {
+          label: "GitHub",
+          url: "https://github.com/Dilantha-Ranaweera/book-store",
+          icon: "SiGithub",
+        },
+      ],
+    },
+    {
+      id: "portfolio-website",
+      title: "Professional Portfolio",
+      description:
+        "A modern, responsive portfolio built with TypeScript and React to showcase software engineering projects and technical expertise with optimized UI/UX.",
+      tags: ["React", "TypeScript", "Tailwind CSS", "Vite"],
+      image: undefined,
+      href: "https://dilantha-ranaweera.dev",
+      links: [
+        {
+          label: "GitHub",
+          url: "https://github.com/Dilantha-Ranaweera/portfolio",
+          icon: "SiGithub",
+        },
+      ],
+    },
+    {
+      id: "university-ordering-system",
+      title: "Legacy Food Ordering System",
+      description:
+        "A responsive university group project focused on backend processing and database management using PHP and MySQL for efficient menu and order handling.",
+      tags: ["PHP", "MySQL", "HTML", "CSS", "Group Project"],
+      image: undefined,
+      href: "#",
+      links: [
+        {
+          label: "GitHub",
+          url: "https://github.com/Dilantha-Ranaweera/php-ordering-system",
+          icon: "SiGithub",
+        },
+      ],
     },
   ],
   education: [
