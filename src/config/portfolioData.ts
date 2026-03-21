@@ -13,7 +13,7 @@ export const PORTFOLIO_INFO: Portfolio = {
     headline: "React · Nodejs · Php  · Cloud",
     avatar: "./profile.jpg",
     summary:
-      "Senior Engineer with 7+ years of experience delivering enterprise-grade applications. Over the last 3 years I have focused on building production systems using Python (FastAPI) and React — designing APIs, building responsive frontends, and automating deployments with IaC. Experienced across AWS & Azure and comfortable owning full delivery from design to production.",
+      "Motivated Software Engineering undergraduate with a strong foundation in Full Stack Web Development. Proficient in building scalable, user-centric applications using the MERN stack (MongoDB, Express.js, React.js, Node.js). Experienced in developing RESTful APIs, managing SQL/NoSQL databases, and implementing responsive UIs with Tailwind CSS. Adept at TypeScript for type-safe development and committed to writing clean, maintainable code. Seeking an internship or entry-level position to contribute to dynamic development teams",
     contact: {
       email: "pramudithadilantha89@gmail.com",
       phone: "+94 756813888",
@@ -303,7 +303,7 @@ export const PORTFOLIO_INFO: Portfolio = {
       links: [
         {
           label: "GitHub",
-          url: "https://github.com/Dilantha-Ranaweera/music-app",
+          url: "https://github.com/Dilantha2001/MusicApplication",
           icon: "SiGithub",
         },
       ],
@@ -325,7 +325,7 @@ export const PORTFOLIO_INFO: Portfolio = {
       links: [
         {
           label: "GitHub",
-          url: "https://github.com/Dilantha-Ranaweera/ecommerce-ts",
+          url: "https://github.com/Dilantha2001/ecommerce-ts",
           icon: "SiGithub",
         },
       ],
@@ -341,7 +341,7 @@ export const PORTFOLIO_INFO: Portfolio = {
       links: [
         {
           label: "GitHub",
-          url: "https://github.com/Dilantha-Ranaweera/book-store",
+          url: "https://github.com/Dilantha2001/book-store",
           icon: "SiGithub",
         },
       ],
@@ -357,7 +357,7 @@ export const PORTFOLIO_INFO: Portfolio = {
       links: [
         {
           label: "GitHub",
-          url: "https://github.com/Dilantha-Ranaweera/portfolio",
+          url: "https://github.com/Dilantha2001/portfolio",
           icon: "SiGithub",
         },
       ],
@@ -373,7 +373,7 @@ export const PORTFOLIO_INFO: Portfolio = {
       links: [
         {
           label: "GitHub",
-          url: "https://github.com/Dilantha-Ranaweera/php-ordering-system",
+          url: "https://github.com/Dilantha2001/php-ordering-system",
           icon: "SiGithub",
         },
       ],
@@ -381,40 +381,67 @@ export const PORTFOLIO_INFO: Portfolio = {
   ],
   education: [
     {
-      degree: "B.Tech in Computer Science Engineering",
-      school: "Biju Patnaik University of Technology",
-      date: "2013-2017",
+      degree: "BSc (Hons) Software Engineering",
+      school:
+        "Colombo International Nautical and Engineering College (CINEC Campus)",
+      date: "2022 - Present",
     },
     {
-      degree: "Higher Secondary",
-      school: "Bellaguntha Science College",
-      date: "2011-2013",
+      degree: "G.C.E. Advanced Level (Physical Science)",
+      school: "St. Mary's College, Kegalle",
+      date: "2018 - 2021",
     },
     {
-      degree: "High School",
-      school: "G.T High School Bellaguntha",
-      date: "2011",
+      degree: "G.C.E. Ordinary Level",
+      school: "St. Mary's College, Kegalle",
+      date: "2017",
     },
   ],
   certifications: [
     {
-      name: "Microsoft Certified: Azure Fundamentals (AZ-900)",
-      issuer: "Microsoft",
-      date: "2022",
-      url: "https://www.credly.com/badges/56ba404b-b2ec-49d7-b869-d41c8c88d7b5",
+      name: "Cisco Certified Support Technician (CCST) Cybersecurity",
+      issuer: "Cisco",
+      date: "2024",
     },
     {
-      name: "Terraform Associate",
-      issuer: "HashiCorp",
-      date: "2023",
+      name: "Postman API Fundamentals Student Expert",
+      issuer: "Postman",
+      date: "2024",
+    },
+    {
+      name: "CCNA: Introduction to Networks",
+      issuer: "Cisco Networking Academy",
+      date: "2022",
+    },
+    {
+      name: "Presenter & Researcher | CINEC International Research Symposium (CIRS-2024)",
+      issuer: "CINEC Campus",
+      date: "2024",
+      description:
+        "Published and presented research on Cashless Payment Systems for Expressway Transport.",
+    },
+    {
+      name: "Poster Presenter | Wedding Planning Website Project",
+      issuer: "CINEC Faculty of Computing",
+      date: "2024",
+      description:
+        "Showcased UI/UX design and backend architecture for a digital event management platform.",
     },
   ],
   extras: {
-    languages: [{ name: "English", level: "Native" }],
-    interests: ["astronomy", "music"],
+    languages: [
+      { name: "English", level: "Professional Working Proficiency" },
+      { name: "Sinhala", level: "Native" },
+    ],
+    interests: [
+      "AI Image Generation",
+      "Human-Computer Interaction",
+      "Vehicle Tracking Systems",
+      "Music Production",
+      "Astronomy",
+    ],
   },
 };
-
 // ---------- SMALL HELPERS ----------
 export const tagColors: TagColors = {
   React: "bg-blue-100 text-blue-800",
