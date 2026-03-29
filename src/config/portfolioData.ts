@@ -247,6 +247,43 @@ export const PORTFOLIO_INFO: Portfolio = {
   ],
   projects: [
     {
+      id: "wedding-photography-platform",
+      title: "Digital Wedding Planning & Photography Platform",
+      description:
+        "A comprehensive event management solution showcased at the CINEC Computing Poster Session. Features a high-performance frontend for gallery management and a robust backend for booking workflows.",
+      tags: ["React", "Node.js", "MongoDB", "Tailwind CSS", "UI/UX Design"],
+      image: "./slide1.png",
+      href: "#",
+      links: [
+        {
+          label: "GitHub",
+          url: "https://github.com/Dilantha2001/Photography-Web",
+          icon: "SiGithub",
+        },
+      ],
+    },
+    {
+      id: "expressway-payment-system",
+      title: "Smart Banking web",
+      description:
+        "Award-winning research project presented at CIRS-2024. Designed a smart card-based transactional architecture to automate expressway toll collection and improve transport efficiency.",
+      tags: ["System Architecture", "Software Engineering", "Research", "IoT"],
+      image: "./payment.png",
+      href: "https://resplendent-yeot-b6f88a.netlify.app/#features",
+      links: [
+        {
+          label: "Research Paper",
+          url: "#",
+          icon: "SiReadthedocs",
+        },
+        {
+          label: "GitHub",
+          url: "https://github.com/Dilantha2001/Payment-Website",
+          icon: "SiGithub",
+        },
+      ],
+    },
+    {
       id: "dog-behavior-ai",
       title: "AI-Powered Dog Behavior Monitoring",
       description:
@@ -259,12 +296,12 @@ export const PORTFOLIO_INFO: Portfolio = {
         "Multimodal AI",
         "Research",
       ],
-      image: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjEx.../giphy.gif",
+      image: "./dog.png",
       href: "#",
       links: [
         {
           label: "GitHub",
-          url: "https://github.com/Dilantha-Ranaweera/dog-behavior-monitor",
+          url: "https://github.com/Dilantha2001/dogsense-analytics",
           icon: "SiGithub",
         },
       ],
@@ -282,7 +319,7 @@ export const PORTFOLIO_INFO: Portfolio = {
         "Full Stack",
         "Logistics",
       ],
-      image: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjEx.../giphy.gif",
+      image: "./post.png",
       href: "#",
       links: [
         {
@@ -336,7 +373,7 @@ export const PORTFOLIO_INFO: Portfolio = {
       description:
         "A full-stack bookshop enabling users to browse and purchase books. Includes an admin dashboard for inventory management and order status tracking.",
       tags: ["React", "Tailwind CSS", "MongoDB", "Express", "Chart.js"],
-      image: undefined,
+      image: "./image.png",
       href: "#",
       links: [
         {
@@ -352,7 +389,7 @@ export const PORTFOLIO_INFO: Portfolio = {
       description:
         "A modern, responsive portfolio built with TypeScript and React to showcase software engineering projects and technical expertise with optimized UI/UX.",
       tags: ["React", "TypeScript", "Tailwind CSS", "Vite"],
-      image: undefined,
+      image: "./port.png",
       href: "https://dilantha-ranaweera.dev",
       links: [
         {
@@ -368,7 +405,7 @@ export const PORTFOLIO_INFO: Portfolio = {
       description:
         "A responsive university group project focused on backend processing and database management using PHP and MySQL for efficient menu and order handling.",
       tags: ["PHP", "MySQL", "HTML", "CSS", "Group Project"],
-      image: undefined,
+      image: "./resturant.png",
       href: "#",
       links: [
         {
