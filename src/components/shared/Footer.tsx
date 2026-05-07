@@ -1,5 +1,5 @@
 import React from "react";
-import { SiKaggle, SiGithub, SiLinkedin } from "react-icons/si";
+import { SiGithub, SiLinkedin } from "react-icons/si";
 
 export const Footer: React.FC = () => {
   return (
