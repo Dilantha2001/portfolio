@@ -262,27 +262,7 @@ export const PORTFOLIO_INFO: Portfolio = {
         },
       ],
     },
-    {
-      id: "expressway-payment-system",
-      title: "Smart Banking web",
-      description:
-        "Award-winning research project presented at CIRS-2024. Designed a smart card-based transactional architecture to automate expressway toll collection and improve transport efficiency.",
-      tags: ["System Architecture", "Software Engineering", "Research", "IoT"],
-      image: "./payment.png",
-      href: "https://resplendent-yeot-b6f88a.netlify.app/#features",
-      links: [
-        {
-          label: "Research Paper",
-          url: "#",
-          icon: "SiReadthedocs",
-        },
-        {
-          label: "GitHub",
-          url: "https://github.com/Dilantha2001/Payment-Website",
-          icon: "SiGithub",
-        },
-      ],
-    },
+
     {
       id: "dog-behavior-ai",
       title: "AI-Powered Dog Behavior Monitoring",
@@ -345,28 +325,7 @@ export const PORTFOLIO_INFO: Portfolio = {
         },
       ],
     },
-    {
-      id: "ecommerce-engine",
-      title: "High-Performance E-Commerce Engine",
-      description:
-        "E-commerce solution built with TypeScript and Redux Toolkit. Features server-side SQL filtering for product discovery and a simulated Stripe API checkout flow.",
-      tags: [
-        "React",
-        "TypeScript",
-        "Redux Toolkit",
-        "PostgreSQL",
-        "Stripe API",
-      ],
-      image: undefined,
-      href: "#",
-      links: [
-        {
-          label: "GitHub",
-          url: "https://github.com/Dilantha2001/ecommerce-ts",
-          icon: "SiGithub",
-        },
-      ],
-    },
+
     {
       id: "online-book-store",
       title: "MERN Online Book Store",
@@ -411,6 +370,27 @@ export const PORTFOLIO_INFO: Portfolio = {
         {
           label: "GitHub",
           url: "https://github.com/Dilantha2001/php-ordering-system",
+          icon: "SiGithub",
+        },
+      ],
+    },
+    {
+      id: "expressway-payment-system",
+      title: "Smart Banking web",
+      description:
+        "Award-winning research project presented at CIRS-2024. Designed a smart card-based transactional architecture to automate expressway toll collection and improve transport efficiency.",
+      tags: ["System Architecture", "Software Engineering", "Research", "IoT"],
+      image: "./payment.png",
+      href: "https://resplendent-yeot-b6f88a.netlify.app/#features",
+      links: [
+        {
+          label: "Research Paper",
+          url: "#",
+          icon: "SiReadthedocs",
+        },
+        {
+          label: "GitHub",
+          url: "https://github.com/Dilantha2001/Payment-Website",
           icon: "SiGithub",
         },
       ],
