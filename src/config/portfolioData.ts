@@ -335,7 +335,7 @@ export const PORTFOLIO_INFO: Portfolio = {
       description:
         "Full-stack music engine with custom audio playback, MongoDB aggregation pipelines for trending charts, and JWT-based authentication for a secure user ecosystem.",
       tags: ["React", "Node.js", "MongoDB", "Express", "Cloudinary", "Redux"],
-      image: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjEx.../giphy.gif",
+      image: "/neon.png",
       href: "#",
       links: [
         {
@@ -373,7 +373,7 @@ export const PORTFOLIO_INFO: Portfolio = {
       description:
         "A full-stack bookshop enabling users to browse and purchase books. Includes an admin dashboard for inventory management and order status tracking.",
       tags: ["React", "Tailwind CSS", "MongoDB", "Express", "Chart.js"],
-      image: "./image.png",
+      image: "./book.png",
       href: "#",
       links: [
         {
