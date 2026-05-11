@@ -395,6 +395,27 @@ export const PORTFOLIO_INFO: Portfolio = {
         },
       ],
     },
+    {
+      id: "fullstack-ecommerce-platform",
+      title: "Complete E-Commerce Platform",
+      description:
+        "A comprehensive full-stack e-commerce solution. Built with a responsive React and TypeScript storefront, powered by a scalable Node.js backend, and supported by a robust SQL database for secure inventory, payment, and order management.",
+      tags: ["React", "TypeScript", "Node.js", "SQL", "Full-Stack"],
+      image: "./port.png",
+      href: "https://your-live-ecommerce-site.com",
+      links: [
+        {
+          label: "Live Demo",
+          url: "https://your-live-ecommerce-site.com",
+          icon: "SiGooglechrome",
+        },
+        {
+          label: "GitHub",
+          url: "https://github.com/yourusername/fullstack-ecommerce",
+          icon: "SiGithub",
+        },
+      ],
+    },
   ],
   education: [
     {
