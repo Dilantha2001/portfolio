@@ -229,23 +229,86 @@ export const PORTFOLIO_INFO: Portfolio = {
   ],
   experience: [
     {
-      id: "unisys-senior-2025",
-      title: "Software Engineer",
-      company: "Postal Headquarters",
-      location: "Colombo",
-      date: { start: "2025-07", present: false },
+      id: "intern-dept-posts-2025",
+      title: "Intern Software Developer",
+      company: "Department of Posts (IT Division)",
+      location: "Colombo, Sri Lanka",
+      date: { start: "2025-07", end: "2026-01", present: false },
       summary:
-        " full-stack efforts around Nodejs-based backends and React frontends for enterprise customers. Driving architecture,  and implementing IaC and cloud deployment practices.",
+        "Contributed to full-stack development by building scalable React frontends and Node.js RESTful APIs, optimizing MySQL schemas, and refactoring legacy PHP systems for enhanced stability and security.",
       bullets: [
-        "Lead development of microservices using FastAPI and Python for enterprise-scale workloads.",
-        "Design and implement responsive React frontends and component libraries with TypeScript and Tailwind.",
-        "Drive IaC adoption using Terraform and Bicep; implement CI/CD pipelines and deployment automation.",
-        "Mentor engineers, conduct design reviews, and improve code quality and observability.",
+        "Developed a high-performance React.js with Tailwind CSS, optimizing state management and component reusability for enhanced user engagement.",
+        "Built scalable RESTful APIs using Node.js and Express.js, ensuring seamless data synchronization and efficient server-side logic execution.",
+        "Database Optimization: Designed normalized MySQL schemas for logistics tracking, optimizing complex queries to handle high-volume data with maximum integrity.",
+        "Implemented JWT authentication, Anti-CSRF measures, and strict input validation to mitigate vulnerabilities and secure sensitive user data.",
+        "Refactored legacy PHP modules and integrated them with modern JavaScript architectures to improve system stability and performance.",
       ],
-      tech: ["Nodejs", "Php", "React", "TypeScript"],
+      tech: [
+        "React.js",
+        "Tailwind CSS",
+        "Node.js",
+        "Express.js",
+        "MySQL",
+        "PHP",
+        "JWT",
+      ],
     },
   ],
   projects: [
+    {
+      id: "music-streaming-app",
+      title: "Dynamic Music Application",
+      description:
+        "Full-stack music engine with custom audio playback, MongoDB aggregation pipelines for trending charts, and JWT-based authentication for a secure user ecosystem.",
+      tags: ["React", "Node.js", "MongoDB", "Express", "Cloudinary", "Redux"],
+      image: "/neon.png",
+      href: "#",
+      links: [
+        {
+          label: "GitHub",
+          url: "https://github.com/Dilantha2001/MusicApplication",
+          icon: "SiGithub",
+        },
+      ],
+    },
+
+    {
+      id: "online-book-store",
+      title: "MERN Online Book Store",
+      description:
+        "A full-stack bookshop enabling users to browse and purchase books. Includes an admin dashboard for inventory management and order status tracking.",
+      tags: ["React", "Tailwind CSS", "MongoDB", "Express", "Chart.js"],
+      image: "./book.png",
+      href: "#",
+      links: [
+        {
+          label: "GitHub",
+          url: "https://github.com/Dilantha2001/book-store",
+          icon: "SiGithub",
+        },
+      ],
+    },
+    {
+      id: "fullstack-ecommerce-platform",
+      title: " E-Commerce Platform",
+      description:
+        "A comprehensive full-stack e-commerce solution. Built with a responsive React and TypeScript storefront, powered by a scalable Node.js backend, and supported by a robust SQL database for secure inventory, payment, and order management.",
+      tags: ["React", "TypeScript", "Node.js", "SQL", "Full-Stack"],
+      image: "./port.png",
+      href: "https://your-live-ecommerce-site.com",
+      links: [
+        {
+          label: "Live Demo",
+          url: "https://your-live-ecommerce-site.com",
+          icon: "SiGooglechrome",
+        },
+        {
+          label: "GitHub",
+          url: "https://github.com/yourusername/fullstack-ecommerce",
+          icon: "SiGithub",
+        },
+      ],
+    },
     {
       id: "wedding-photography-platform",
       title: "Digital Wedding Planning & Photography Platform",
@@ -309,46 +372,14 @@ export const PORTFOLIO_INFO: Portfolio = {
         },
       ],
     },
-    {
-      id: "music-streaming-app",
-      title: "Dynamic Music Application",
-      description:
-        "Full-stack music engine with custom audio playback, MongoDB aggregation pipelines for trending charts, and JWT-based authentication for a secure user ecosystem.",
-      tags: ["React", "Node.js", "MongoDB", "Express", "Cloudinary", "Redux"],
-      image: "/neon.png",
-      href: "#",
-      links: [
-        {
-          label: "GitHub",
-          url: "https://github.com/Dilantha2001/MusicApplication",
-          icon: "SiGithub",
-        },
-      ],
-    },
 
-    {
-      id: "online-book-store",
-      title: "MERN Online Book Store",
-      description:
-        "A full-stack bookshop enabling users to browse and purchase books. Includes an admin dashboard for inventory management and order status tracking.",
-      tags: ["React", "Tailwind CSS", "MongoDB", "Express", "Chart.js"],
-      image: "./book.png",
-      href: "#",
-      links: [
-        {
-          label: "GitHub",
-          url: "https://github.com/Dilantha2001/book-store",
-          icon: "SiGithub",
-        },
-      ],
-    },
     {
       id: "portfolio-website",
       title: "Professional Portfolio",
       description:
         "A modern, responsive portfolio built with TypeScript and React to showcase software engineering projects and technical expertise with optimized UI/UX.",
       tags: ["React", "TypeScript", "Tailwind CSS", "Vite"],
-      image: "./port.png",
+      image: "./portf.png",
       href: "https://dilantha-ranaweera.dev",
       links: [
         {
@@ -395,27 +426,6 @@ export const PORTFOLIO_INFO: Portfolio = {
         },
       ],
     },
-    {
-      id: "fullstack-ecommerce-platform",
-      title: "Complete E-Commerce Platform",
-      description:
-        "A comprehensive full-stack e-commerce solution. Built with a responsive React and TypeScript storefront, powered by a scalable Node.js backend, and supported by a robust SQL database for secure inventory, payment, and order management.",
-      tags: ["React", "TypeScript", "Node.js", "SQL", "Full-Stack"],
-      image: "./port.png",
-      href: "https://your-live-ecommerce-site.com",
-      links: [
-        {
-          label: "Live Demo",
-          url: "https://your-live-ecommerce-site.com",
-          icon: "SiGooglechrome",
-        },
-        {
-          label: "GitHub",
-          url: "https://github.com/yourusername/fullstack-ecommerce",
-          icon: "SiGithub",
-        },
-      ],
-    },
   ],
   education: [
     {
@@ -437,33 +447,34 @@ export const PORTFOLIO_INFO: Portfolio = {
   ],
   certifications: [
     {
-      name: "Cisco Certified Support Technician (CCST) Cybersecurity",
-      issuer: "Cisco",
-      date: "2024",
+      name: "The Ultimate React Course 2025: React, Next.js, Redux & More",
+      issuer: "Udemy",
+      date: "2025",
     },
     {
-      name: "Postman API Fundamentals Student Expert",
-      issuer: "Postman",
-      date: "2024",
+      name: "Java Masterclass 2025: 130+ Hours of Expert Lessons",
+      issuer: "Udemy",
+      date: "2025",
     },
     {
-      name: "CCNA: Introduction to Networks",
-      issuer: "Cisco Networking Academy",
+      name: "NVQ Level 4 Certification in Computer Network Technology",
+      issuer: "Vocational Training Authority",
       date: "2022",
     },
     {
-      name: "Presenter & Researcher | CINEC International Research Symposium (CIRS-2024)",
-      issuer: "CINEC Campus",
-      date: "2024",
-      description:
-        "Published and presented research on Cashless Payment Systems for Expressway Transport.",
+      name: "CCNA: Enterprise Networking, Security, and Automation",
+      issuer: "Cisco",
+      date: "2022",
     },
     {
-      name: "Poster Presenter | Wedding Planning Website Project",
-      issuer: "CINEC Faculty of Computing",
-      date: "2024",
-      description:
-        "Showcased UI/UX design and backend architecture for a digital event management platform.",
+      name: "CCNA: Switching, Routing, and Wireless Essentials",
+      issuer: "Cisco",
+      date: "2022",
+    },
+    {
+      name: "CCNA: Introduction to Networks",
+      issuer: "Cisco",
+      date: "2022",
     },
   ],
   extras: {
