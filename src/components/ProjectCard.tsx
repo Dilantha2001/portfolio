@@ -7,7 +7,6 @@ import * as SiIcons from "react-icons/si";
 import * as FaIcons from "react-icons/fa";
 import { BsArrowUpRightCircleFill } from "react-icons/bs";
 import ElectricBorder from "./ElectricBorder";
-import BrowserMockup from "./BrowserMockup";
 
 export const ProjectCard: React.FC<{
   project: Project;
@@ -50,20 +49,7 @@ export const ProjectCard: React.FC<{
               </span>
             </button>
 
-            {/* ── Preview area: Browser Mockup OR static image ── */}
-            {project.previewUrl ? (
-              <div
-                className="w-full mb-4 cursor-pointer"
-                onClick={() => onOpen?.(project)}
-                title="Click to open project details"
-              >
-                <BrowserMockup
-                  url={project.previewUrl}
-                  title={project.title}
-                  className="w-full"
-                />
-              </div>
-            ) : project.image ? (
+            {project.image && (
               <div className="w-full flex justify-center mb-4">
                 <img
                   src={project.image}
@@ -71,7 +57,7 @@ export const ProjectCard: React.FC<{
                   className="rounded-lg border border-[var(--border)] w-full object-cover h-45"
                 />
               </div>
-            ) : null}
+            )}
 
             {/* Title + Description */}
             <button

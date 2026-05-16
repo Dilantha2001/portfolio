@@ -133,36 +133,72 @@ const PortfolioPage: React.FC = () => {
             {/* ── Live Demo Showcase Section ── */}
             <section id="live-demo" className="py-10">
               <div className="mb-6">
-                <h2 className="text-2xl font-semibold text-[var(--brand)]">Live Portfolio Demo</h2>
+                <h2 className="text-2xl font-semibold text-[var(--brand)]">Live Project Demos</h2>
                 <p className="text-sm text-white mt-1">
-                  Scroll through the live site right here — click{" "}
-                  <a
-                    href="https://comfy-medovik-ee1f2a.netlify.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[var(--brand)] underline hover:opacity-80 transition-opacity"
-                  >
-                    open in new tab ↗
-                  </a>{" "}
-                  for the full experience.
+                  Interact with my live projects directly from here.
                 </p>
               </div>
 
-              {/* Glow container */}
-              <div
-                style={{
-                  position: "relative",
-                  borderRadius: "18px",
-                  padding: "2px",
-                  background: "linear-gradient(135deg, #5F67E6 0%, #8B5CF6 50%, #5F67E6 100%)",
-                  boxShadow: "0 0 60px rgba(95,103,230,0.35), 0 0 120px rgba(139,92,246,0.2)",
-                }}
-              >
-                <BrowserMockup
-                  url="https://comfy-medovik-ee1f2a.netlify.app/"
-                  title="Dilantha Ranaweera — Portfolio"
-                  viewportHeight={520}
-                />
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Mockup 1: Portfolio */}
+                <div className="flex flex-col gap-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium text-white">Professional Portfolio</span>
+                    <a
+                      href="https://comfy-medovik-ee1f2a.netlify.app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-[var(--brand)] underline hover:opacity-80"
+                    >
+                      Open Fullscreen ↗
+                    </a>
+                  </div>
+                  <div
+                    style={{
+                      position: "relative",
+                      borderRadius: "18px",
+                      padding: "2px",
+                      background: "linear-gradient(135deg, #5F67E6 0%, #8B5CF6 50%, #5F67E6 100%)",
+                      boxShadow: "0 0 40px rgba(95,103,230,0.2)",
+                    }}
+                  >
+                    <BrowserMockup
+                      url="https://comfy-medovik-ee1f2a.netlify.app/"
+                      title="Portfolio Preview"
+                      viewportHeight={400}
+                    />
+                  </div>
+                </div>
+
+                {/* Mockup 2: Smart Banking */}
+                <div className="flex flex-col gap-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium text-white">Smart Banking Web</span>
+                    <a
+                      href="https://resplendent-yeot-b6f88a.netlify.app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-[var(--brand)] underline hover:opacity-80"
+                    >
+                      Open Fullscreen ↗
+                    </a>
+                  </div>
+                  <div
+                    style={{
+                      position: "relative",
+                      borderRadius: "18px",
+                      padding: "2px",
+                      background: "linear-gradient(135deg, #8B5CF6 0%, #EC4899 50%, #8B5CF6 100%)",
+                      boxShadow: "0 0 40px rgba(139,92,246,0.2)",
+                    }}
+                  >
+                    <BrowserMockup
+                      url="https://resplendent-yeot-b6f88a.netlify.app/"
+                      title="Banking App Preview"
+                      viewportHeight={400}
+                    />
+                  </div>
+                </div>
               </div>
             </section>
 
