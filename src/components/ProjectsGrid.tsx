@@ -27,11 +27,10 @@ export const ProjectsGrid: React.FC<{
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`px-3 py-1 cursor-pointer font-semibold rounded-full text-sm ${
-                filter === f
-                  ? "bg-[var(--brand)] text-white"
-                  : "bg-[var(--surface)] border border-[var(--border)] text-[var(--text)]"
-              }`}
+              className={`px-3 py-1 cursor-pointer font-semibold rounded-full text-sm ${filter === f
+                ? "bg-[var(--brand)] text-white"
+                : "bg-[var(--surface)] border border-[var(--border)] text-[var(--text)]"
+                }`}
             >
               {f}
             </button>
@@ -40,9 +39,8 @@ export const ProjectsGrid: React.FC<{
       )}
 
       <div
-        className={`${
-          showFilters ? "mt-6" : ""
-        } grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6`}
+        className={`${showFilters ? "mt-6" : ""
+          } grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6`}
       >
         {visible.map((p) => (
           <ProjectCard key={p.id} project={p} onOpen={onOpen} />

@@ -11,7 +11,7 @@ export const PORTFOLIO_INFO: Portfolio = {
     name: "Dilantha Ranaweera",
     title: "Software Engineer — Full Stack (Nodejs & React)",
     headline: "React · Nodejs · Php  · Cloud",
-    avatar: "./profile.jpg",
+    avatar: "./profile2.png",
     summary:
       "Motivated Software Engineering undergraduate with a strong foundation in Full Stack Web Development. Proficient in building scalable, user-centric applications using the MERN stack (MongoDB, Express.js, React.js, Node.js). Experienced in developing RESTful APIs, managing SQL/NoSQL databases, and implementing responsive UIs with Tailwind CSS. Adept at TypeScript for type-safe development and committed to writing clean, maintainable code. Seeking an internship or entry-level position to contribute to dynamic development teams",
     contact: {
@@ -380,7 +380,8 @@ export const PORTFOLIO_INFO: Portfolio = {
         "A modern, responsive portfolio built with TypeScript and React to showcase software engineering projects and technical expertise with optimized UI/UX.",
       tags: ["React", "TypeScript", "Tailwind CSS", "Vite"],
       image: "./portf.png",
-      href: "https://dilantha-ranaweera.dev",
+      href: "https://comfy-medovik-ee1f2a.netlify.app/",
+      previewUrl: "https://comfy-medovik-ee1f2a.netlify.app/",
       links: [
         {
           label: "GitHub",

@@ -3,7 +3,10 @@ import type { Personal } from "../types/portfolio";
 
 export const About: React.FC<{ personal: Personal }> = ({ personal }) => {
   return (
-    <>
+    // Replaced the fragment with a grid container
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center max-w-7xl mx-auto px-4">
+
+      {/* LEFT SIDE: Text Content (Takes 2 columns on desktop) */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -26,10 +29,9 @@ export const About: React.FC<{ personal: Personal }> = ({ personal }) => {
           I specialize in UI/UX Design, Responsive Web Design, <br />
           and Visual Development.
         </p>
-
-
       </motion.div>
 
+      {/* RIGHT SIDE: Image Content (Takes 1 column on desktop) */}
       <motion.aside
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -44,7 +46,7 @@ export const About: React.FC<{ personal: Personal }> = ({ personal }) => {
 
         {personal.avatar && (
           <img
-            className="w-full h-full object-contain object-bottom drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-10"
+            className="w-full h-full object-contain object-bottom drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-10 grayscale"
             src={personal.avatar}
             alt="profile"
             style={{
@@ -54,6 +56,7 @@ export const About: React.FC<{ personal: Personal }> = ({ personal }) => {
           />
         )}
       </motion.aside>
-    </>
+
+    </div>
   );
 };

@@ -84,6 +84,7 @@ export type Project = {
   tags?: string[]; // technologies / categories
   image?: Url; // preview image path
   href?: Url; // live url (for playground)
+  previewUrl?: Url; // live url to show inside browser mockup on card
   links?: ProjectLink[]; // alternate links
   date?: DateRange | string;
   featured?: boolean;
