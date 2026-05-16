@@ -42,14 +42,14 @@ const PortfolioPage: React.FC = () => {
           className="relative w-full min-h-screen flex items-center justify-center pt-20 pb-16"
         >
           {/* Absolute Background */}
-          <div className="absolute inset-0 z-0">
+          {/* <div className="absolute inset-0 z-0">
             <Hyperspeed
               effectOptions={{
-                onSpeedUp: () => {},
-                onSlowDown: () => {},
+                onSpeedUp: () => { },
+                onSlowDown: () => { },
                 distortion: "turbulentDistortion",
                 length: 400,
-                roadWidth: 10,
+                roadWidth: 20,
                 islandWidth: 2,
                 lanesPerRoad: 4,
                 fov: 90,
@@ -83,8 +83,8 @@ const PortfolioPage: React.FC = () => {
               }}
             />
             {/* Gradient overlay to smoothly blend the canvas into the rest of the page */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--background)] pointer-events-none" />
-          </div>
+          {/* <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--background)] pointer-events-none" />
+          // </div> */}
 
           {/* Hero Content */}
           <div className="relative z-10 flex flex-col items-center text-center w-full max-w-4xl mx-auto px-6">
@@ -92,7 +92,7 @@ const PortfolioPage: React.FC = () => {
               Radically better <br className="hidden md:block" /> observability
               stack
             </h1>
-            <p className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-white mb-10 max-w-2xl mx-auto">
               Ship higher-quality software faster. Be the hero{" "}
               <br className="hidden md:block" /> of your engineering teams.
             </p>
@@ -108,7 +108,7 @@ const PortfolioPage: React.FC = () => {
             <h2 className="text-2xl font-semibold text-[var(--brand)]">
               Projects
             </h2>
-            <p className="mb-6 text-sm text-gray-500 dark:text-gray-400 mt-1">
+            <p className="mb-6 text-sm text-white mt-1">
               Selected work — click a card for details.
             </p>
             <ProjectsGrid
@@ -121,7 +121,7 @@ const PortfolioPage: React.FC = () => {
             <h2 className="text-2xl font-semibold text-[var(--brand)]">
               Skills
             </h2>
-            <p className="mb-6 text-sm text-gray-500 dark:text-gray-400 mt-1">
+            <p className="mb-6 text-sm text-white mt-1">
               Tools and technologies I use regularly.
             </p>
             <SkillsList skills={PORTFOLIO_INFO.skills} isBar={true} />
@@ -131,7 +131,7 @@ const PortfolioPage: React.FC = () => {
             <h2 className="text-2xl font-semibold text-[var(--brand)]">
               Contact
             </h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            <p className="text-sm text-white mt-1">
               Tell me about your project, or just say hi.
             </p>
             <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -142,17 +142,17 @@ const PortfolioPage: React.FC = () => {
               <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] flex flex-col gap-4">
                 <div>
                   <div className="font-semibold">Let's collaborate</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                  <div className="text-sm text-white">
                     I'm available for freelance and contract work. My inbox is
                     open.
                   </div>
                 </div>
                 <div className="mt-2">
                   <div className="font-semibold">Quick contact</div>
-                  <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                  <div className="mt-2 text-sm text-white">
                     Email: satyasubudhi089@gmail.com
                   </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                  <div className="text-sm text-white">
                     Location: Remote
                   </div>
                 </div>

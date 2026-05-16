@@ -1,139 +1,58 @@
-import { animate, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import type { Personal } from "../types/portfolio";
-import * as SiIcons from "react-icons/si";
-import { Link } from "react-router-dom";
 
 export const About: React.FC<{ personal: Personal }> = ({ personal }) => {
-  const text = personal.name.split("");
-
-  const springScrollTo = (y: number) => {
-    const controls = animate(window.scrollY, y, {
-      type: "spring",
-      stiffness: 200,
-      damping: 30,
-      onUpdate: (latest) => window.scrollTo(0, latest),
-    });
-    return () => controls.stop();
-  };
-
-  const onNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    // normal navigation for external links
-    if (!href.startsWith("#")) return;
-
-    e.preventDefault();
-    const target = document.querySelector(href);
-    if (!target) return;
-
-    const headerEl = document.querySelector("header");
-    const headerH = headerEl?.offsetHeight ?? 0;
-    const y = target.getBoundingClientRect().top + window.scrollY - headerH;
-    springScrollTo(y);
-  };
-
   return (
     <>
       <motion.div
-        initial={{ opacity: 0, y: 6 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="md:col-span-2"
+        className="md:col-span-2 flex flex-col justify-center text-left py-10"
       >
-        <motion.h1 className="text-4xl md:text-5xl font-bold leading-tight text-[var(--brand)]">
-          {text.map((char, i) => (
-            <motion.span
-              key={i}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.5 }}
-            >
-              {char}
-            </motion.span>
-          ))}
+        <motion.h1 className="text-5xl md:text-[5.5rem] font-bold leading-[1.05] text-white tracking-tight">
+          Building digital <br className="hidden md:block" />
+          products, brands
+          <div className="flex items-center gap-4 mt-3 text-[var(--brand)]">
+            <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-[var(--brand)] flex items-center justify-center text-white text-2xl md:text-4xl font-bold">
+              %
+            </div>
+            <span>experience.</span>
+          </div>
         </motion.h1>
-        <p className="mt-4 text-lg max-w-prose">{personal.headline}</p>
 
-        <div className="mt-6 text-md dark:prose-invert max-w-none text-[var(--muted)]">
-          <p>
-            I design and build web applications with attention to performance,
-            accessibility, and delightful details. Currently focusing on React +
-            Tailwind workflows and component driven design.
-          </p>
-          <p>
-            I enjoy shipping small, meaningful features and improving dev DX
-            with tooling and automation.
-          </p>
-        </div>
+        <p className="mt-8 text-lg md:text-xl max-w-lg text-gray-300 font-medium leading-relaxed">
+          a <strong className="text-white">Product Designer</strong> and <strong className="text-white">Visual Developer</strong> in SF. <br />
+          I specialize in UI/UX Design, Responsive Web Design, <br />
+          and Visual Development.
+        </p>
 
-        <div className="mt-6 flex gap-3">
-          <a
-            href="#projects"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--brand)] text-white font-medium"
-            onClick={(e) => onNavClick(e, "#projects")}
-          >
-            See projects
-          </a>
-          <Link
-            to="/resume"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-800"
-          >
-            See Resume
-          </Link>
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-800"
-            onClick={(e) => onNavClick(e, "#contact")}
-          >
-            Get in touch
-          </a>
-        </div>
+
       </motion.div>
 
       <motion.aside
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.15 }}
-        className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)]"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.2, duration: 0.5 }}
+        className="md:col-span-1 relative flex items-end justify-center h-[400px] md:h-[600px]"
       >
-        <div className="flex flex-col items-center text-center gap-4">
-          <div className="w-32 h-32 rounded-full bg-gradient-to-br from-indigo-400 to-pink-400 flex items-center justify-center text-4xl font-bold text-white">
-            {personal.avatar ? (
-              <img
-                className="rounded-full"
-                src={personal.avatar}
-                alt="profile"
-              />
-            ) : (
-              personal.name?.split(" ")[0]?.[0]
-            )}
-          </div>
-          <div className="font-semibold">{personal.name}</div>
-          <div className="text-sm text-gray-500 dark:text-gray-400">
-            {personal.title}
-          </div>
-          <div className="mt-3 flex gap-5 text-[var(--muted)]">
-            {personal?.contact?.socials?.map((social, index) => {
-              const Icon = SiIcons[social.icon as keyof typeof SiIcons];
-              return (
-                <a
-                  key={social.label + index}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2"
-                >
-                  {Icon ? (
-                    <Icon
-                      className="hover:text-[var(--brand)]"
-                      size={social?.size ?? 16}
-                    />
-                  ) : (
-                    <span>{social.label}</span>
-                  )}
-                </a>
-              );
-            })}
-          </div>
-        </div>
+        {/* Floating Decorative Elements */}
+        <div className="absolute top-10 right-10 w-2 h-2 rounded-full bg-[var(--brand)] opacity-60"></div>
+        <div className="absolute bottom-20 left-4 w-3 h-3 rounded-full bg-blue-400 opacity-60"></div>
+        <div className="absolute top-1/2 right-4 w-4 h-[2px] bg-indigo-500 rotate-45 opacity-60"></div>
+        <div className="absolute top-1/4 left-10 w-4 h-[2px] bg-[var(--brand)] -rotate-45 opacity-60"></div>
+
+        {personal.avatar && (
+          <img
+            className="w-full h-full object-contain object-bottom drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-10"
+            src={personal.avatar}
+            alt="profile"
+            style={{
+              maskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)'
+            }}
+          />
+        )}
       </motion.aside>
     </>
   );

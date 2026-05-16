@@ -111,7 +111,7 @@ export const Header: React.FC<{ links?: NavLink[]; onTryCLI?: () => void }> = ({
           <span className="sr-only">Home</span>
           <div className="hidden sm:block leading-tight">
             <div className="font-bold text-[var(--brand)]">{PERSONAL.name}</div>
-            <div className="text-xs text-[var(--muted)]">{PERSONAL.title}</div>
+            <div className="text-xs text-white">{PERSONAL.title}</div>
           </div>
         </a>
 

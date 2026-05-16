@@ -129,7 +129,7 @@ export const ProjectModal: React.FC<{
               {/* Close */}
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 cursor-pointer text-[var(--muted)] hover:text-[var(--text)]"
+                className="absolute top-4 right-4 cursor-pointer text-white hover:text-[var(--text)]"
               >
                 ✕
               </button>
@@ -147,7 +147,7 @@ export const ProjectModal: React.FC<{
                     className={`px-4 py-2 text-sm font-medium cursor-pointer ${
                       activeTab === "details"
                         ? "text-[var(--brand)] border-b-2 border-[var(--brand)]"
-                        : "text-[var(--muted)] hover:text-[var(--text)]"
+                        : "text-white hover:text-[var(--text)]"
                     }`}
                   >
                     Details
@@ -161,7 +161,7 @@ export const ProjectModal: React.FC<{
                     className={`px-4 py-2 text-sm font-medium cursor-pointer ${
                       activeTab === "playground"
                         ? "text-[var(--brand)] border-b-2 border-[var(--brand)]"
-                        : "text-[var(--muted)] hover:text-[var(--text)]"
+                        : "text-white hover:text-[var(--text)]"
                     }`}
                   >
                     Playground

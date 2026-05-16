@@ -6,6 +6,7 @@ import type { Project } from "../types/portfolio";
 import * as SiIcons from "react-icons/si";
 import * as FaIcons from "react-icons/fa";
 import { BsArrowUpRightCircleFill } from "react-icons/bs";
+import ElectricBorder from "./ElectricBorder";
 
 export const ProjectCard: React.FC<{
   project: Project;
@@ -27,10 +28,11 @@ export const ProjectCard: React.FC<{
     <motion.article
       layout
       whileHover={{ y: -6 }}
-      className="p-4 group rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm hover:shadow-md transition-shadow"
+      className="group rounded-2xl bg-[var(--surface)] shadow-sm hover:shadow-md transition-shadow"
     >
-      <div className="flex items-start justify-between gap-4">
-        <div>
+      <ElectricBorder borderRadius={16} color="#5F67E6" className="w-full h-full p-4">
+        <div className="flex items-start justify-between gap-4">
+          <div>
           {/* Arrow overlay */}
           <button
             title="Open project"
@@ -65,10 +67,10 @@ export const ProjectCard: React.FC<{
             {project.title}
           </button>
           {project.isUnderDevelopment && (
-            <span className="text-xs text-[var(--muted)] pl-2">Under Development</span>
+            <span className="text-xs text-white pl-2">Under Development</span>
           )}
-          <p className="text-sm text-[var(--muted)] mt-1 line-clamp-2">{project.description}</p>
-          <div className="mt-4 flex gap-3 flex-wrap text-[var(--muted)]">
+          <p className="text-sm text-white mt-1 line-clamp-2">{project.description}</p>
+          <div className="mt-4 flex gap-3 flex-wrap text-white">
             {project.href && (
               <a
                 href={project.href}
@@ -130,6 +132,7 @@ export const ProjectCard: React.FC<{
           </div>
         </div>
       </div>
+      </ElectricBorder>
     </motion.article>
   );
 };

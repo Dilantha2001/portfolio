@@ -165,7 +165,7 @@ export const SkillsList: React.FC<{
                       <motion.fieldset
                         key={s.name}
                         whileHover={{ y: -6 }}
-                        className="p-4 rounded-xl bg-[var(--surface)] border border-[var(--border)] transition duration-300 cursor-default text-[var(--muted)] hover:text-[var(--text)]"
+                        className="p-4 rounded-xl bg-[var(--surface)] border border-[var(--border)] transition duration-300 cursor-default text-white hover:text-[var(--text)]"
                       >
                         <div className="flex items-start justify-between gap-3">
                           <div>
@@ -182,7 +182,7 @@ export const SkillsList: React.FC<{
 
                           {Icon && (
                             <div className="flex items-center shrink-0">
-                              <Icon className="w-6 h-6 text-[var(--muted)]" />
+                              <Icon className="w-6 h-6 text-white" />
                             </div>
                           )}
                         </div>

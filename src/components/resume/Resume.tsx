@@ -49,10 +49,10 @@ export const Resume: React.FC<{ className?: string }> = ({
             {personal.name}
           </h1>
           {personal.title && (
-            <p className="text-sm text-[var(--muted)] mt-1">{personal.title}</p>
+            <p className="text-sm text-white mt-1">{personal.title}</p>
           )}
           {personal.headline && (
-            <div className="text-sm text-[var(--muted)] mt-1">
+            <div className="text-sm text-white mt-1">
               {personal.headline}
             </div>
           )}
@@ -177,12 +177,12 @@ export const Resume: React.FC<{ className?: string }> = ({
                     >
                       {s.name}
                       {s.years ? (
-                        <span className="ml-2 text-xs text-[var(--muted)]">
+                        <span className="ml-2 text-xs text-white">
                           · {s.years}y
                         </span>
                       ) : null}
                       {s.level ? (
-                        <span className="ml-1 text-xs text-[var(--muted)]">
+                        <span className="ml-1 text-xs text-white">
                           · {s.level}
                         </span>
                       ) : null}
@@ -207,19 +207,19 @@ export const Resume: React.FC<{ className?: string }> = ({
                     <div className="font-medium">
                       {exp.title}
                       {exp.company ? (
-                        <span className="text-[var(--muted)]">
+                        <span className="text-white">
                           {" "}
                           — {exp.company}
                         </span>
                       ) : null}
                     </div>
                     {exp.location && (
-                      <div className="text-xs text-[var(--muted)]">
+                      <div className="text-xs text-white">
                         {exp.location}
                       </div>
                     )}
                   </div>
-                  <div className="text-[var(--muted)] mt-2 sm:mt-0">
+                  <div className="text-white mt-2 sm:mt-0">
                     {formatDate(exp?.date)}
                   </div>
                 </div>
@@ -239,7 +239,7 @@ export const Resume: React.FC<{ className?: string }> = ({
                 )}
 
                 {exp.tech && exp.tech.length > 0 && (
-                  <div className="mt-2 text-xs text-[var(--muted)]">
+                  <div className="mt-2 text-xs text-white">
                     Tech: {exp.tech.join(", ")}
                   </div>
                 )}
@@ -260,10 +260,10 @@ export const Resume: React.FC<{ className?: string }> = ({
                   <div className="font-medium">
                     {p.title}
                     {p.short ? (
-                      <span className="text-[var(--muted)]"> — {p.short}</span>
+                      <span className="text-white"> — {p.short}</span>
                     ) : null}
                   </div>
-                  <div className="text-[var(--muted)]">
+                  <div className="text-white">
                     {typeof p.date === "string" ? p.date : p.date?.start ?? ""}
                   </div>
                 </div>
@@ -302,7 +302,7 @@ export const Resume: React.FC<{ className?: string }> = ({
                   {ed.degree ? <strong>{ed.degree}</strong> : null}
                   {ed.school ? <span className="ml-2">{ed.school}</span> : null}
                 </div>
-                <div className="text-[var(--muted)]">
+                <div className="text-white">
                   {typeof ed.date === "string"
                     ? ed.date
                     : ed.date?.start ?? ed.date?.end ?? ""}
@@ -323,7 +323,7 @@ export const Resume: React.FC<{ className?: string }> = ({
                 <span className="font-medium">
                   {c.name}
                   {(c.issuer || c.url) && (
-                    <span className="text-[var(--muted)]">
+                    <span className="text-white">
                       {c.issuer && (
                         <>
                           {" — "}
@@ -357,7 +357,7 @@ export const Resume: React.FC<{ className?: string }> = ({
                   )}
                 </span>
                 {c.date && (
-                  <span className="text-xs text-[var(--muted)] ml-3">
+                  <span className="text-xs text-white ml-3">
                     {typeof c.date === "string"
                       ? c.date
                       : c.date.start ?? c.date.end}
@@ -370,7 +370,7 @@ export const Resume: React.FC<{ className?: string }> = ({
       )}
 
       {/* Footer: small print / download */}
-      <footer className="mt-6 text-xs text-[var(--muted)]">
+      <footer className="mt-6 text-xs text-white">
         <div className="flex items-center justify-between">
           <div>
             © {new Date().getFullYear()} {personal.name}

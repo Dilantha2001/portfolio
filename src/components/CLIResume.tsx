@@ -525,14 +525,14 @@ export default function CLIResume({ open = false, onClose }: Props) {
                 <div className="text-xs font-medium text-[var(--text)] bg-[var(--bg)] px-2 py-0.5 rounded-sm">
                   Terminal
                 </div>
-                <div className="text-xs text-[var(--muted)] ml-2">
+                <div className="text-xs text-white ml-2">
                   bash —{" "}
                   {resumeData.personal.name.toLowerCase().replace(/\s+/g, "")}
                   @portfolio
                 </div>
               </div>
 
-              <div className="ml-auto flex items-center gap-3 text-[var(--muted)] text-xs">
+              <div className="ml-auto flex items-center gap-3 text-white text-xs">
                 <div className="hidden sm:block">
                   Press{" "}
                   <span className="font-mono text-[var(--text)] bg-[var(--bg)] px-1 rounded">
