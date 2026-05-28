@@ -27,7 +27,7 @@ export const Header: React.FC<{ links?: NavLink[]; onTryCLI?: () => void }> = ({
   useEffect(() => {
     const sections = links
       .map((l) =>
-        l.href.startsWith("#") ? document.querySelector(l.href) : null
+        (l.href.startsWith("#") && !l.href.startsWith("#/")) ? document.querySelector(l.href) : null
       )
       .filter(Boolean) as HTMLElement[];
 
@@ -56,8 +56,8 @@ export const Header: React.FC<{ links?: NavLink[]; onTryCLI?: () => void }> = ({
   };
 
   const onNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    // normal navigation for external links
-    if (!href.startsWith("#")) return;
+    // normal navigation for external links or router routes
+    if (!href.startsWith("#") || href.startsWith("#/")) return;
 
     e.preventDefault();
     const target = document.querySelector(href);
@@ -79,15 +79,14 @@ export const Header: React.FC<{ links?: NavLink[]; onTryCLI?: () => void }> = ({
   return (
     <motion.header
       ref={headerRef}
-      className="fixed top-0 left-0 z-50 w-full border-b border-theme bg-[var(--surface)]/80 backdrop-blur-sm"
+      className="fixed top-0 left-0 z-50 w-full border-b border-purple-950/20 bg-[#020617]/70 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.4),0_1px_0px_rgba(168,85,247,0.05)]"
       style={{ backdropFilter: backdrop, WebkitBackdropFilter: backdrop }}
     >
       {/* animated overlay to add subtle tint regardless of theme */}
       <motion.div
         aria-hidden
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none bg-black/20"
         style={{
-          backgroundColor: `rgba(0,0,0,1)`,
           opacity: overlayOpacity,
         }}
       />
@@ -95,29 +94,19 @@ export const Header: React.FC<{ links?: NavLink[]; onTryCLI?: () => void }> = ({
         {/* Left: brand/home */}
         <a
           href={BASE}
-          className="flex items-center gap-3 text-lg font-semibold text-[var(--text)]"
+          className="flex items-center gap-3 text-lg font-semibold text-white group"
         >
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-400 to-pink-400 flex items-center justify-center text-2xl font-bold text-white overflow-hidden">
-            {PERSONAL.avatar ? (
-              <img
-                className="w-full h-full object-cover rounded-2xl"
-                src={PERSONAL.avatar}
-                alt="profile"
-              />
-            ) : (
-              PERSONAL.name?.split(" ")?.[0]?.[0]
-            )}
-          </div>
+          
           <span className="sr-only">Home</span>
           <div className="hidden sm:block leading-tight">
-            <div className="font-bold text-[var(--brand)]">{PERSONAL.name}</div>
-            <div className="text-xs text-white">{PERSONAL.title}</div>
+            <div className="font-extrabold text-white filter drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] group-hover:text-purple-400 transition-colors duration-300">{PERSONAL.name}</div>
+            <div className="text-[10px] text-white filter drop-shadow-[0_0_6px_rgba(255,255,255,0.2)] font-semibold tracking-wider uppercase font-mono mt-0.5">{PERSONAL.title}</div>
           </div>
         </a>
 
         {/* Right: nav + theme + Try CLI */}
         <nav aria-label="Primary" className="relative flex items-center gap-3">
-          <div className="relative hidden sm:flex gap-4">
+          <div className="relative hidden sm:flex gap-6 items-center">
             {links.map((l) => {
               const isActive = active === l.href;
               return (
@@ -125,14 +114,18 @@ export const Header: React.FC<{ links?: NavLink[]; onTryCLI?: () => void }> = ({
                   key={l.href}
                   href={l.href}
                   onClick={(e) => onNavClick(e, l.href)}
-                  className="relative px-1 py-0.5 text-sm text-[var(--text)]"
+                  className={`relative px-1 py-0.5 text-sm font-bold transition-all duration-300 ${
+                    isActive 
+                      ? "text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-500 filter drop-shadow-[0_0_8px_rgba(168,85,247,0.2)]" 
+                      : "text-slate-200 filter drop-shadow-[0_0_5px_rgba(255,255,255,0.15)] hover:text-purple-400 hover:scale-105"
+                  }`}
                 >
                   {l.label}
                   <AnimatePresence initial={false}>
                     {isActive && (
                       <motion.span
                         layoutId="nav-underline"
-                        className="absolute left-0 right-0 -bottom-1 h-[2px] rounded-full bg-[var(--brand)]"
+                        className="absolute left-0 right-0 -bottom-1 h-[2.5px] rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-[0_0_12px_rgba(168,85,247,0.6)]"
                         transition={{
                           type: "spring",
                           stiffness: 500,
@@ -148,7 +141,7 @@ export const Header: React.FC<{ links?: NavLink[]; onTryCLI?: () => void }> = ({
 
           <button
             onClick={onTryCLI}
-            className="btn-light-flare sm:inline-flex items-center gap-2 px-3 py-1.5 rounded text-sm border border-[var(--border)] hover:bg-[var(--border)]/30 transition cursor-pointer"
+            className="rounded-full border border-purple-500/30 bg-purple-500/5 px-5 py-2 text-sm font-bold text-white transition-all duration-300 hover:border-transparent hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-500 hover:text-white hover:shadow-[0_0_25px_rgba(168,85,247,0.45)] cursor-pointer sm:inline-block hidden"
             aria-label="Try CLI"
           >
             Try CLI
@@ -157,9 +150,9 @@ export const Header: React.FC<{ links?: NavLink[]; onTryCLI?: () => void }> = ({
           <button
             onClick={toggle}
             aria-label="Toggle color theme"
-            className="p-2 rounded-full border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--border)]/30 transition cursor-pointer"
+            className="p-2 rounded-full border border-purple-500/20 bg-purple-500/5 text-slate-300 hover:text-purple-400 hover:border-purple-500/40 hover:bg-purple-500/10 transition duration-300 cursor-pointer"
           >
-            {dark ? <PiSunDuotone size={22} /> : <PiMoonDuotone size={22} />}
+            {dark ? <PiSunDuotone size={20} /> : <PiMoonDuotone size={20} />}
           </button>
         </nav>
       </div>

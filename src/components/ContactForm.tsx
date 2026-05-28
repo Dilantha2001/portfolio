@@ -1,4 +1,6 @@
+// src/components/ContactForm.tsx
 import React, { useState } from "react";
+import { Icon } from "@iconify/react";
 
 type ContactState = { name: string; email: string; message: string };
 
@@ -14,8 +16,8 @@ export const ContactForm: React.FC<{
   const [success, setSuccess] = useState<boolean | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  // pick recipient from prop or from Vite env (if available)
-  const DEFAULT_TO = sendTo ?? import.meta.env.VITE_CONTACT_EMAIL ?? "";
+  // Pick recipient from prop or from Vite env (if available)
+  const DEFAULT_TO = sendTo ?? import.meta.env.VITE_CONTACT_EMAIL ?? "pramudithadilantha89@gmail.com";
 
   function update(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -30,37 +32,43 @@ export const ContactForm: React.FC<{
     setSuccess(null);
     setErrorMsg(null);
 
-    const endpoint = import.meta.env.VITE_MAIL_API_URL + "/send";
+    const endpoint = (import.meta.env.VITE_MAIL_API_URL || "https://api.web3forms.com") + "/submit"; // standard fallback
 
-    // require a recipient address somewhere (either env or passed prop)
+    // Require a recipient address somewhere (either env or passed prop)
     if (!DEFAULT_TO) {
-      console.warn(
-        "ContactForm: no recipient configured. Set VITE_CONTACT_EMAIL or pass sendTo prop."
-      );
-      setErrorMsg(
-        "Recipient address not configured. Contact admin to enable messaging."
-      );
+      setErrorMsg("Recipient address not configured. Contact admin to enable messaging.");
       setSuccess(false);
       setLoading(false);
       return;
     }
 
     const payload = {
+      access_key: import.meta.env.VITE_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HERE", // standard Web3Forms integration or custom mail url
       to: DEFAULT_TO,
-      subject: `Website contact from ${state.name || state.email}`,
-      body: `${state.message}\n\n---\nFrom: ${state.name || "Anonymous"} <${
-        state.email
-      }>`,
-      html: false,
-      from_name: state.name || undefined,
-      from_email: state.email || undefined,
+      subject: `Website Contact from ${state.name || state.email}`,
+      from_name: state.name || "Portfolio Contact",
+      message: `${state.message}\n\n---\nReply to: ${state.name} <${state.email}>`,
     };
 
     try {
-      const res = await fetch(endpoint, {
+      // Direct Web3Forms submission or fall back to native custom mailing endpoint
+      const isCustomApi = import.meta.env.VITE_MAIL_API_URL;
+      const targetUrl = isCustomApi ? `${import.meta.env.VITE_MAIL_API_URL}/send` : "https://api.web3forms.com/submit";
+      const bodyPayload = isCustomApi 
+        ? {
+            to: DEFAULT_TO,
+            subject: payload.subject,
+            body: payload.message,
+            html: false,
+            from_name: state.name || undefined,
+            from_email: state.email || undefined,
+          }
+        : payload;
+
+      const res = await fetch(targetUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(bodyPayload),
       });
 
       if (!res.ok) {
@@ -68,74 +76,110 @@ export const ContactForm: React.FC<{
         throw new Error(text || `Server returned ${res.status}`);
       }
 
-      // success
       setSuccess(true);
       setState({ name: "", email: "", message: "" });
     } catch (err) {
       console.error("Failed to send contact message", err);
       setSuccess(false);
-      setErrorMsg((err as Error).message || "Failed to send message");
+      setErrorMsg((err as Error).message || "Failed to send message. Please try again.");
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <form onSubmit={onSubmit} className="grid gap-3" aria-live="polite">
-      <label htmlFor="name" className="text-sm text-[var(--text)]">Name</label>
-      <input
-        id="name"
-        name="name"
-        title="Name"
-        placeholder="Your name"
-        value={state.name}
-        onChange={update}
-        className="w-full px-3 py-2 rounded-md bg-[var(--surface)] border border-[var(--border)] text-[var(--text)]" />
-      <label htmlFor="email" className="text-sm text-[var(--text)]">Email</label>
-      <input
-        id="email"
-        name="email"
-        type="email"
-        title="Email"
-        placeholder="Your email"
-        value={state.email}
-        onChange={update}
-        className="w-full px-3 py-2 rounded-md bg-[var(--surface)] border border-[var(--border)] text-[var(--text)]" />
-      <label htmlFor="message" className="text-sm text-[var(--text)]">Message</label>
-      <textarea
-        id="message"
-        name="message"
-        title="Message"
-        placeholder="Your message"
-        value={state.message}
-        onChange={update}
-        rows={6}
-        className="w-full px-3 py-2 rounded-md bg-[var(--surface)] border border-[var(--border)] text-[var(--text)]"
-        required
-      />
+    <form onSubmit={onSubmit} className="flex flex-col gap-4 w-full select-none" aria-live="polite">
+      {/* Name Input */}
+      <div className="flex flex-col gap-1.5">
+        <label htmlFor="name" className="text-[10px] font-bold uppercase tracking-wider text-slate-400 font-mono flex items-center gap-1.5">
+          <Icon icon="lucide:user" className="text-xs text-purple-400" />
+          <span>Full Name</span>
+        </label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          placeholder="e.g. John Doe"
+          value={state.name}
+          onChange={update}
+          required
+          className="w-full px-4 py-3 rounded-xl bg-slate-950/60 border border-slate-850 focus:border-purple-500/50 focus:bg-slate-950 focus:ring-1 focus:ring-purple-500/50 text-slate-200 placeholder-slate-600 text-xs sm:text-sm font-light transition-all duration-300 outline-none"
+        />
+      </div>
 
-      <div className="pt-2 flex items-center gap-3">
+      {/* Email Input */}
+      <div className="flex flex-col gap-1.5">
+        <label htmlFor="email" className="text-[10px] font-bold uppercase tracking-wider text-slate-400 font-mono flex items-center gap-1.5">
+          <Icon icon="lucide:mail" className="text-xs text-purple-400" />
+          <span>Email Address</span>
+        </label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          placeholder="e.g. johndoe@example.com"
+          value={state.email}
+          onChange={update}
+          required
+          className="w-full px-4 py-3 rounded-xl bg-slate-950/60 border border-slate-850 focus:border-purple-500/50 focus:bg-slate-950 focus:ring-1 focus:ring-purple-500/50 text-slate-200 placeholder-slate-600 text-xs sm:text-sm font-light transition-all duration-300 outline-none"
+        />
+      </div>
+
+      {/* Message Input */}
+      <div className="flex flex-col gap-1.5">
+        <label htmlFor="message" className="text-[10px] font-bold uppercase tracking-wider text-slate-400 font-mono flex items-center gap-1.5">
+          <Icon icon="lucide:message-square" className="text-xs text-purple-400" />
+          <span>Your Message</span>
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          placeholder="Tell me about your project, idea or question..."
+          value={state.message}
+          onChange={update}
+          rows={5}
+          required
+          className="w-full px-4 py-3 rounded-xl bg-slate-950/60 border border-slate-850 focus:border-purple-500/50 focus:bg-slate-950 focus:ring-1 focus:ring-purple-500/50 text-slate-200 placeholder-slate-600 text-xs sm:text-sm font-light transition-all duration-300 outline-none resize-none"
+        />
+      </div>
+
+      {/* Action Submit */}
+      <div className="pt-2 flex flex-col gap-3">
         <button
           type="submit"
           disabled={loading}
-          className="px-4 py-2 rounded-lg text-white bg-[var(--brand)] disabled:opacity-60"
+          className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-extrabold text-xs tracking-widest uppercase hover:shadow-[0_0_30px_rgba(168,85,247,0.35)] transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60 cursor-pointer flex items-center justify-center gap-2"
         >
-          {loading ? "Sending..." : "Send message"}
+          {loading ? (
+            <>
+              <Icon icon="lucide:loader-2" className="text-base animate-spin" />
+              <span>Transmitting Message...</span>
+            </>
+          ) : (
+            <>
+              <Icon icon="lucide:send" className="text-base" />
+              <span>Send Message</span>
+            </>
+          )}
         </button>
 
+        {/* Action Alerts */}
         {success === true && (
-          <div className="text-sm text-green-600">
-            Message sent — thank you!
+          <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-emerald-500/5 border border-emerald-500/10 text-emerald-400 text-xs font-semibold animate-pulse">
+            <Icon icon="lucide:check-circle" className="text-sm shrink-0" />
+            <span>Message sent successfully! Thank you for connecting.</span>
           </div>
         )}
         {success === false && (
-          <div className="text-sm text-red-600">
-            Failed to send.
+          <div className="flex flex-col gap-1 px-4 py-3 rounded-xl bg-red-500/5 border border-red-500/10 text-red-400 text-xs font-semibold">
+            <div className="flex items-center gap-2">
+              <Icon icon="lucide:alert-circle" className="text-sm shrink-0" />
+              <span>Submission failed.</span>
+            </div>
             {errorMsg && (
-              <>
-                {" "}
-                <span className="block text-xs text-red-400">{errorMsg}</span>
-              </>
+              <span className="block text-[10px] text-red-400/80 font-mono mt-0.5 leading-normal">
+                Detail: {errorMsg}
+              </span>
             )}
           </div>
         )}
@@ -143,3 +187,5 @@ export const ContactForm: React.FC<{
     </form>
   );
 };
+
+export default ContactForm;

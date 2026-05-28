@@ -1,5 +1,5 @@
 // PortfolioPage.tsx
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { ThemeProvider } from "../components/ThemeProvider";
 import { Header } from "../components/shared/Header";
 import { ProjectsGrid } from "../components/ProjectsGrid";
@@ -14,69 +14,24 @@ import { ScrollProgressBar } from "../components/shared/ScrollProgressBar";
 import { ScrollToTop } from "../components/shared/ScrollToTop";
 import CLIResume from "../components/CLIResume";
 import BrowserMockup from "../components/BrowserMockup";
-
-// GSAP Imports
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-// Register ScrollTrigger plugin
-gsap.registerPlugin(ScrollTrigger);
+import { Icon } from "@iconify/react";
 
 const PortfolioPage: React.FC = () => {
   const [selected, setSelected] = useState<Project | null>(null);
   const [showCLI, setShowCLI] = useState(false);
 
-  // Refs for Page Wipe Animation
-  const pageContainerRef = useRef<HTMLDivElement>(null);
-  const firstPageRef = useRef<HTMLDivElement>(null);
-  const secondPageRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const container = pageContainerRef.current;
-    const firstPage = firstPageRef.current;
-    const secondPage = secondPageRef.current;
-
-    if (!container || !firstPage || !secondPage) return;
-
-    // Scroll Animation Timeline
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: container,
-        start: "top top",       // Container එක screen එකේ උඩම වදිද්දී පටන් ගන්නවා
-        end: "+=150%",         // Wipe effect එක සිද්ද වෙන්න scroll කරන්න ඕනෙ දුර
-        scrub: 0.5,            // Reduced lag to prevent incomplete renders
-        pin: true,             // Animation එක ඉවර වෙනකන් මුළු page එකම screen එකේ lock වෙනවා
-        anticipatePin: 1,
-      },
-    });
-
-    // Page Wipe Effect:
-    // දෙවෙනි පිටුව (inset(0% 100% 0% 0%)) වමේ සිට දකුණට slide වෙලා ඇවිත් පළවෙනි පිටුව වහගන්නවා.
-    tl.to(secondPage, {
-      clipPath: "inset(0% -1% 0% 0%)", // Negative inset ensures it covers fully
-      ease: "none",
-      duration: 1,
-    })
-    // Add a buffer so the animation completes before the user finishes scrolling
-    .to({}, { duration: 0.2 });
-
-    return () => {
-      // Clean up triggers on unmount
-      ScrollTrigger.getAll().forEach((t) => t.kill());
-    };
-  }, []);
-
   return (
     <ThemeProvider>
       <ScrollProgressBar />
 
-      {/* Main Page Container - GSAP ScrollTrigger එකෙන් පාලනය කරන්නේ මේකයි */}
-      <div ref={pageContainerRef} className="relative w-full h-screen overflow-hidden z-10">
+      {/* Main Page Container */}
+      <div className="relative w-full z-10">
 
         <Header
           links={[
             { href: "#about", label: "About" },
             { href: "#projects", label: "Projects" },
+            { href: "#/resume", label: "Resume" },
             { href: "#skills", label: "Skills" },
             { href: "#contact", label: "Contact" },
           ]}
@@ -88,58 +43,64 @@ const PortfolioPage: React.FC = () => {
 
         {/* ==================== FIRST PAGE (HERO SECTION) ==================== */}
         <div
-          ref={firstPageRef}
-          className="absolute inset-0 w-full h-full z-10 flex items-center justify-center bg-black"
+          className="relative w-full h-screen z-10 flex items-center justify-center bg-black"
         >
           {/* Video Background */}
-          <div className="absolute inset-0 z-0 opacity-40">
+          <div className="absolute inset-0 z-0 ">
             <video
               src="/video.mp4"
               autoPlay
               loop
               muted
               playsInline
-              className="w-full h-full object-cover grayscale"
+              className="w-full h-full object-cover"
             />
           </div>
 
           {/* Hero Content */}
           <div className="relative z-10 flex flex-col items-center text-center w-full max-w-4xl mx-auto px-6">
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-tight">
-              Radically better <br className="hidden md:block" /> observability stack
+            <h1 className="mb-6 text-5xl font-bold tracking-tight text-white filter [filter:drop-shadow(0_0_15px_rgba(0,0,0,0.5))_drop-shadow(0_0_30px_rgba(0,0,0,0.4))] md:text-7xl lg:text-8xl">
+              Breathe life into your <br />
+              <span className="text-gradient" data-text="worlds.">
+                worlds.
+              </span>
             </h1>
-            <p className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-              Ship higher-quality software faster. Be the hero{" "}
-              <br className="hidden md:block" /> of your engineering teams.
+            <p className="mb-10 max-w-2xl text-lg font-light leading-relaxed text-white md:text-xl [text-shadow:0_0_8px_rgba(0,0,0,1),0_0_12px_rgba(0,0,0,1),0_0_24px_rgba(0,0,0,1),0_0_40px_rgba(0,0,0,0.8)]">
+              Generate breathtaking anime landscapes, dynamic weather, and majestic lighting. <br className="hidden md:block" />
+              Build epic scenes built for true storytelling.
             </p>
+
+            <a
+              href="#about"
+              className="group inline-flex items-center justify-center gap-2 rounded-full bg-brand px-8 py-4 text-lg font-semibold text-white shadow-[0_0_30px_-5px_rgba(34,197,94,0.5)] transition-all duration-300 hover:bg-brand-light hover:text-slate-900 cursor-pointer"
+            >
+              Explore Portfolio
+              <Icon icon="lucide:arrow-right" className="transition-transform group-hover:translate-x-1" />
+            </a>
           </div>
         </div>
 
         {/* ==================== SECOND PAGE (MAIN CONTENT WRAPPER) ==================== */}
         {/* මේක මුලින්ම වමේ ඉඳන් දකුණට clip වෙලා (inset 100%) තියෙන්නේ. Scroll කරද්දී දිග ඇරිලා 1st page එක වහගන්නවා */}
         <div
-          ref={secondPageRef}
-          className="absolute inset-0 w-full h-full z-20 overflow-y-auto bg-[var(--background)]"
-          style={{ clipPath: "inset(0% 100% 0% 0%)", willChange: "clip-path" }}
+          className="relative w-full z-20 bg-[var(--background)]"
         >
           {/* About Section */}
-          <div id="about" className="relative w-full max-w-6xl 2xl:max-w-9xl mx-auto px-6 pt-32 pb-10">
+          <div id="about" className="relative w-full pt-32 pb-10">
             <About personal={PORTFOLIO_INFO.personal} />
           </div>
 
-          {/* Main Content (Projects, Skills, Contact) */}
-          <main className="max-w-6xl 2xl:max-w-9xl mx-auto px-6 py-10">
-
-            {/* ── Live Demo Showcase Section ── */}
-            <section id="live-demo" className="py-10">
-              <div className="mb-6">
-                <h2 className="text-2xl font-semibold text-[var(--brand)]">Live Project Demos</h2>
+          {/* ── Live Demo Showcase Section (Full Viewport Width) ── */}
+          <section id="live-demo" className="w-full py-16 px-6 md:px-12 lg:px-24 bg-[var(--surface)] border-y border-[var(--border)]">
+            <div className="max-w-[1800px] mx-auto">
+              <div className="mb-8">
+                <h2 className="text-3xl font-semibold text-[var(--brand)]">Live Project Demos</h2>
                 <p className="text-sm text-white mt-1">
                   Interact with my live projects directly from here.
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Mockup 1: Portfolio */}
                 <div className="flex flex-col gap-3">
                   <div className="flex justify-between items-center">
@@ -165,7 +126,7 @@ const PortfolioPage: React.FC = () => {
                     <BrowserMockup
                       url="https://comfy-medovik-ee1f2a.netlify.app/"
                       title="Portfolio Preview"
-                      viewportHeight={400}
+                      viewportHeight={550}
                     />
                   </div>
                 </div>
@@ -175,7 +136,7 @@ const PortfolioPage: React.FC = () => {
                   <div className="flex justify-between items-center">
                     <span className="text-sm font-medium text-white">Smart Banking Web</span>
                     <a
-                      href="https://resplendent-yeot-b6f88a.netlify.app/"
+                      href="https://beautiful-travesseiro-228b5f.netlify.app/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-xs text-[var(--brand)] underline hover:opacity-80"
@@ -193,14 +154,18 @@ const PortfolioPage: React.FC = () => {
                     }}
                   >
                     <BrowserMockup
-                      url="https://resplendent-yeot-b6f88a.netlify.app/"
+                      url="https://beautiful-travesseiro-228b5f.netlify.app/"
                       title="Banking App Preview"
-                      viewportHeight={400}
+                      viewportHeight={550}
                     />
                   </div>
                 </div>
               </div>
-            </section>
+            </div>
+          </section>
+
+          {/* Main Content (Projects, Skills, Contact) */}
+          <main className="max-w-[1800px] w-full mx-auto px-6 md:px-12 py-10">
 
             <section id="projects" className="py-8">
               <h2 className="text-2xl font-semibold text-[var(--brand)]">
