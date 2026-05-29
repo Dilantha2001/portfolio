@@ -1,7 +1,6 @@
 // src/components/resume/Resume.tsx
 import React from "react";
 import { Icon } from "@iconify/react";
-import { motion } from "framer-motion";
 import { PORTFOLIO_INFO } from "../../config/portfolioData";
 import type { DateRange, Portfolio } from "../../types/portfolio";
 
@@ -33,7 +32,7 @@ export const Resume: React.FC<{ className?: string }> = ({
   }
 
   // Dynamic Skill Icon Resolver
-  const getSkillIcon = (iconName: string, skillName: string): string => {
+  const getSkillIcon = (_iconName: string, skillName: string): string => {
     const lowerName = skillName.toLowerCase();
     if (lowerName.includes("react")) return "simple-icons:react";
     if (lowerName.includes("typescript")) return "simple-icons:typescript";
@@ -194,7 +193,7 @@ export const Resume: React.FC<{ className?: string }> = ({
                       {ed.school}
                     </p>
                     <span className="text-[10px] font-mono text-emerald-400/80 block mt-1 print:text-slate-600">
-                      {ed.date}
+                      {formatDate(ed.date)}
                     </span>
                   </div>
                 ))}
@@ -222,7 +221,7 @@ export const Resume: React.FC<{ className?: string }> = ({
                       <div className="flex items-center gap-2 mt-1 text-[9px] text-slate-500 font-medium print:text-slate-600">
                         <span>{c.issuer}</span>
                         <span>•</span>
-                        <span>{typeof c.date === "string" ? c.date : c.date.start ?? c.date.end}</span>
+                        <span>{typeof c.date === "string" ? c.date : c.date?.start ?? c.date?.end ?? ""}</span>
                       </div>
                     </div>
                   </div>

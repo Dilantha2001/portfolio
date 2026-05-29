@@ -4,7 +4,7 @@ export const PORTFOLIO_INFO: Portfolio = {
   meta: {
     createdAt: new Date().toISOString(),
     locale: "en-US",
-    url: "https://satya00089.github.io/portfolio", // update if you have a custom domain
+    url: "https://Dilantha2001.github.io/portfolio", // update if you have a custom domain
     pdf: "/resume.pdf",
   },
   personal: {

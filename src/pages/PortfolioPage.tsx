@@ -212,17 +212,20 @@ const PortfolioPage: React.FC = () => {
                   <div className="mt-2">
                     <div className="font-semibold">Quick contact</div>
                     <div className="mt-2 text-sm text-white">
-                      Email: satyasubudhi089@gmail.com
+                      Email: <a href={`mailto:${PORTFOLIO_INFO.personal.contact?.email}`} className="hover:text-[var(--brand)] transition duration-200">{PORTFOLIO_INFO.personal.contact?.email}</a>
                     </div>
-                    <div className="text-sm text-white">
-                      Location: Remote
+                    <div className="text-sm text-white capitalize">
+                      Location: {PORTFOLIO_INFO.personal.contact?.location || "Remote"}
                     </div>
                   </div>
                   <div className="mt-auto">
                     <div className="text-sm font-medium">Resume</div>
                     <a
-                      href="/"
-                      className="block mt-2 px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 text-center"
+                      href={PORTFOLIO_INFO.meta?.pdf || "/resume.pdf"}
+                      download
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block mt-2 px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 text-center transition-all duration-300 hover:border-[var(--brand)] hover:text-[var(--brand)] hover:shadow-[0_0_15px_-3px_rgba(34,197,94,0.3)]"
                     >
                       Download PDF
                     </a>

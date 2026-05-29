@@ -8,8 +8,6 @@ import {
   animate,
   useMotionTemplate,
 } from "framer-motion";
-import { PiSunDuotone, PiMoonDuotone } from "react-icons/pi";
-import { useTheme } from "../../context/ThemeContext";
 import { PORTFOLIO_INFO } from "../../config/portfolioData";
 
 type NavLink = { href: string; label: string };
@@ -18,7 +16,6 @@ export const Header: React.FC<{ links?: NavLink[]; onTryCLI?: () => void }> = ({
   links = [],
   onTryCLI,
 }) => {
-  const { dark, toggle } = useTheme();
   const headerRef = useRef<HTMLElement | null>(null);
 
   const PERSONAL = PORTFOLIO_INFO.personal;
@@ -147,13 +144,7 @@ export const Header: React.FC<{ links?: NavLink[]; onTryCLI?: () => void }> = ({
             Try CLI
           </button>
 
-          <button
-            onClick={toggle}
-            aria-label="Toggle color theme"
-            className="p-2 rounded-full border border-purple-500/20 bg-purple-500/5 text-slate-300 hover:text-purple-400 hover:border-purple-500/40 hover:bg-purple-500/10 transition duration-300 cursor-pointer"
-          >
-            {dark ? <PiSunDuotone size={20} /> : <PiMoonDuotone size={20} />}
-          </button>
+          
         </nav>
       </div>
     </motion.header>

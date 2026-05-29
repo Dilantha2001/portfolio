@@ -123,7 +123,7 @@ export const ProjectCard: React.FC<{
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/60 border border-slate-850 hover:border-purple-500/30 hover:bg-purple-500/5 hover:-translate-y-0.5 text-[11px] font-medium text-slate-300 hover:text-white transition-all duration-300 cursor-pointer"
               >
                 <Icon
-                  icon={getLinkIcon(link.icon, link.label)}
+                  icon={getLinkIcon(link.icon || "", link.label)}
                   className="text-sm text-purple-400 shrink-0"
                 />
                 <span>{link.label}</span>

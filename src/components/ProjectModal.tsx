@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import remarkGfm from "remark-gfm";
 import type { Project } from "../types/portfolio";
-import { useTheme } from "../context/ThemeContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { Spinner } from "./shared/Spinner";
 
@@ -14,7 +13,6 @@ export const ProjectModal: React.FC<{
   open: boolean;
   onClose: () => void;
 }> = ({ project, open, onClose }) => {
-  const { dark } = useTheme();
   const [readme, setReadme] = useState<string | null>(null);
   const [iframeAllowed, setIframeAllowed] = useState(false);
   const [activeTab, setActiveTab] = useState<"details" | "playground">(
@@ -310,7 +308,7 @@ export const ProjectModal: React.FC<{
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-slate-900 border border-slate-850 hover:border-purple-500/30 hover:bg-purple-500/5 transition text-xs font-semibold text-slate-200 cursor-pointer w-full sm:w-auto"
                               >
-                                <Icon icon={getLinkIcon(link.icon, link.label)} className="text-sm text-purple-400 shrink-0" />
+                                <Icon icon={getLinkIcon(link.icon || "", link.label)} className="text-sm text-purple-400 shrink-0" />
                                 <span>{link.label}</span>
                               </a>
                             ))}

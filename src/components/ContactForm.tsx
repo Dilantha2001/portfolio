@@ -32,8 +32,6 @@ export const ContactForm: React.FC<{
     setSuccess(null);
     setErrorMsg(null);
 
-    const endpoint = (import.meta.env.VITE_MAIL_API_URL || "https://api.web3forms.com") + "/submit"; // standard fallback
-
     // Require a recipient address somewhere (either env or passed prop)
     if (!DEFAULT_TO) {
       setErrorMsg("Recipient address not configured. Contact admin to enable messaging.");

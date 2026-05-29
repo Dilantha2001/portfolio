@@ -20,15 +20,7 @@ export const Footer: React.FC = () => {
         
         {/* Left Side: Brand Image & Copyright Signature */}
         <div className="flex items-center gap-4 text-left">
-          {PORTFOLIO_INFO.personal?.avatar && (
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-[1.5px] shadow-lg shadow-purple-500/10 shrink-0 group hover:scale-105 transition-transform duration-300">
-              <img
-                className="w-full h-full object-cover rounded-2xl"
-                src={PORTFOLIO_INFO.personal.avatar}
-                alt={PORTFOLIO_INFO.personal.name}
-              />
-            </div>
-          )}
+          
           <div className="flex flex-col gap-0.5">
             <div className="text-xs font-black tracking-widest text-slate-200 uppercase font-mono">
               DILANTHA RANAWEERA
@@ -57,7 +49,7 @@ export const Footer: React.FC = () => {
               LinkedIn: "simple-icons:linkedin",
               GitHub: "simple-icons:github",
             };
-            const iconName = iconMap[s.icon] || iconMap[s.label] || "lucide:globe";
+            const iconName = (s.icon ? iconMap[s.icon] : undefined) || iconMap[s.label] || "lucide:globe";
             return (
               <a
                 key={s.label}
