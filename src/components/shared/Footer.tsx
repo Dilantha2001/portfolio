@@ -6,16 +6,8 @@ import { PORTFOLIO_INFO } from "../../config/portfolioData";
 export const Footer: React.FC = () => {
   return (
     <footer 
-      className="relative w-full border-t border-slate-900/50 py-16 mt-20 select-none overflow-hidden"
-      style={{
-        backgroundImage: "url('/footer_bg.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
+      className="relative w-full border-t border-slate-900/50 py-16 mt-20 select-none overflow-hidden bg-[var(--background)]"
     >
-      {/* Semi-transparent luxury dark overlay shield (adjusted for full grid visibility) */}
-      <div className="absolute inset-0 bg-[#020617]/40 z-0 pointer-events-none" />
-
       <div className="relative z-10 max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 px-6">
         
         {/* Left Side: Brand Image & Copyright Signature */}

@@ -1,6 +1,7 @@
 // src/components/ContactForm.tsx
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
+import { PORTFOLIO_INFO } from "../config/portfolioData";
 
 type ContactState = { name: string; email: string; message: string };
 
@@ -86,41 +87,44 @@ export const ContactForm: React.FC<{
   }
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-4 w-full select-none" aria-live="polite">
-      {/* Name Input */}
-      <div className="flex flex-col gap-1.5">
-        <label htmlFor="name" className="text-[10px] font-bold uppercase tracking-wider text-slate-400 font-mono flex items-center gap-1.5">
-          <Icon icon="lucide:user" className="text-xs text-purple-400" />
-          <span>Full Name</span>
-        </label>
-        <input
-          id="name"
-          name="name"
-          type="text"
-          placeholder="e.g. John Doe"
-          value={state.name}
-          onChange={update}
-          required
-          className="w-full px-4 py-3 rounded-xl bg-slate-950/60 border border-slate-850 focus:border-purple-500/50 focus:bg-slate-950 focus:ring-1 focus:ring-purple-500/50 text-slate-200 placeholder-slate-600 text-xs sm:text-sm font-light transition-all duration-300 outline-none"
-        />
-      </div>
+    <form onSubmit={onSubmit} className="flex flex-col gap-6 w-full select-none" aria-live="polite">
+      {/* 2-Column Row for Name and Email */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {/* Name Input */}
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="name" className="text-[10px] font-bold uppercase tracking-wider text-slate-400 font-mono flex items-center gap-1.5">
+            <Icon icon="lucide:user" className="text-xs text-purple-400" />
+            <span>Full Name</span>
+          </label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            placeholder="e.g. John Doe"
+            value={state.name}
+            onChange={update}
+            required
+            className="w-full px-4 py-3.5 rounded-2xl bg-slate-950/40 border border-white/5 focus:border-purple-500/70 focus:bg-slate-950/80 focus:ring-4 focus:ring-purple-500/10 text-slate-200 placeholder-slate-600 text-xs sm:text-sm font-light transition-all duration-300 outline-none"
+          />
+        </div>
 
-      {/* Email Input */}
-      <div className="flex flex-col gap-1.5">
-        <label htmlFor="email" className="text-[10px] font-bold uppercase tracking-wider text-slate-400 font-mono flex items-center gap-1.5">
-          <Icon icon="lucide:mail" className="text-xs text-purple-400" />
-          <span>Email Address</span>
-        </label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          placeholder="e.g. johndoe@example.com"
-          value={state.email}
-          onChange={update}
-          required
-          className="w-full px-4 py-3 rounded-xl bg-slate-950/60 border border-slate-850 focus:border-purple-500/50 focus:bg-slate-950 focus:ring-1 focus:ring-purple-500/50 text-slate-200 placeholder-slate-600 text-xs sm:text-sm font-light transition-all duration-300 outline-none"
-        />
+        {/* Email Input */}
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="email" className="text-[10px] font-bold uppercase tracking-wider text-slate-400 font-mono flex items-center gap-1.5">
+            <Icon icon="lucide:mail" className="text-xs text-purple-400" />
+            <span>Email Address</span>
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="e.g. johndoe@example.com"
+            value={state.email}
+            onChange={update}
+            required
+            className="w-full px-4 py-3.5 rounded-2xl bg-slate-950/40 border border-white/5 focus:border-purple-500/70 focus:bg-slate-950/80 focus:ring-4 focus:ring-purple-500/10 text-slate-200 placeholder-slate-600 text-xs sm:text-sm font-light transition-all duration-300 outline-none"
+          />
+        </div>
       </div>
 
       {/* Message Input */}
@@ -137,7 +141,7 @@ export const ContactForm: React.FC<{
           onChange={update}
           rows={5}
           required
-          className="w-full px-4 py-3 rounded-xl bg-slate-950/60 border border-slate-850 focus:border-purple-500/50 focus:bg-slate-950 focus:ring-1 focus:ring-purple-500/50 text-slate-200 placeholder-slate-600 text-xs sm:text-sm font-light transition-all duration-300 outline-none resize-none"
+          className="w-full px-4 py-3.5 rounded-2xl bg-slate-950/40 border border-white/5 focus:border-purple-500/70 focus:bg-slate-950/80 focus:ring-4 focus:ring-purple-500/10 text-slate-200 placeholder-slate-600 text-xs sm:text-sm font-light transition-all duration-300 outline-none resize-none"
         />
       </div>
 
@@ -146,7 +150,7 @@ export const ContactForm: React.FC<{
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-extrabold text-xs tracking-widest uppercase hover:shadow-[0_0_30px_rgba(168,85,247,0.35)] transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60 cursor-pointer flex items-center justify-center gap-2"
+          className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-extrabold text-xs tracking-widest uppercase shadow-[0_4px_25px_-4px_rgba(168,85,247,0.4)] hover:shadow-[0_0_30px_rgba(168,85,247,0.5)] transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60 cursor-pointer flex items-center justify-center gap-2 btn-light-flare"
         >
           {loading ? (
             <>
@@ -163,13 +167,13 @@ export const ContactForm: React.FC<{
 
         {/* Action Alerts */}
         {success === true && (
-          <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-emerald-500/5 border border-emerald-500/10 text-emerald-400 text-xs font-semibold animate-pulse">
+          <div className="flex items-center gap-2 px-4 py-3 rounded-2xl bg-emerald-500/5 border border-emerald-500/10 text-emerald-400 text-xs font-semibold animate-pulse">
             <Icon icon="lucide:check-circle" className="text-sm shrink-0" />
             <span>Message sent successfully! Thank you for connecting.</span>
           </div>
         )}
         {success === false && (
-          <div className="flex flex-col gap-1 px-4 py-3 rounded-xl bg-red-500/5 border border-red-500/10 text-red-400 text-xs font-semibold">
+          <div className="flex flex-col gap-1 px-4 py-3 rounded-2xl bg-red-500/5 border border-red-500/10 text-red-400 text-xs font-semibold">
             <div className="flex items-center gap-2">
               <Icon icon="lucide:alert-circle" className="text-sm shrink-0" />
               <span>Submission failed.</span>
@@ -181,6 +185,53 @@ export const ContactForm: React.FC<{
             )}
           </div>
         )}
+      </div>
+
+      {/* Decorative divider */}
+      <div className="mt-4 border-t border-white/5" />
+
+      {/* Modern Contact Footer */}
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-mono text-slate-400 pt-2">
+        <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+          <a
+            href={`mailto:${PORTFOLIO_INFO.personal.contact?.email}`}
+            className="flex items-center gap-2 hover:text-purple-400 transition-colors duration-300"
+          >
+            <Icon icon="lucide:mail" className="text-purple-400 text-sm" />
+            <span>{PORTFOLIO_INFO.personal.contact?.email}</span>
+          </a>
+          {PORTFOLIO_INFO.personal.contact?.location && (
+            <div className="flex items-center gap-2 text-slate-400">
+              <Icon icon="lucide:map-pin" className="text-purple-400 text-sm" />
+              <span className="capitalize">{PORTFOLIO_INFO.personal.contact.location}</span>
+            </div>
+          )}
+        </div>
+
+        {/* Social sockets */}
+        <div className="flex items-center gap-3">
+          {PORTFOLIO_INFO.personal?.contact?.socials?.map((s) => {
+            const iconMap: Record<string, string> = {
+              SiLinkedin: "simple-icons:linkedin",
+              SiGithub: "simple-icons:github",
+              LinkedIn: "simple-icons:linkedin",
+              GitHub: "simple-icons:github",
+            };
+            const iconName = (s.icon ? iconMap[s.icon] : undefined) || iconMap[s.label] || "lucide:globe";
+            return (
+              <a
+                key={s.label}
+                href={s.url.startsWith("http") ? s.url : `https://${s.url}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-full border border-white/5 bg-slate-950/40 flex items-center justify-center text-slate-400 hover:text-purple-400 hover:border-purple-500/30 transition-all duration-300 shadow-sm hover:scale-105 active:scale-95 cursor-pointer"
+                title={s.label}
+              >
+                <Icon icon={iconName} className="text-sm" />
+              </a>
+            );
+          })}
+        </div>
       </div>
     </form>
   );

@@ -15,6 +15,7 @@ import { ScrollToTop } from "../components/shared/ScrollToTop";
 import CLIResume from "../components/CLIResume";
 import BrowserMockup from "../components/BrowserMockup";
 import { Icon } from "@iconify/react";
+import ElectricBorder from "../components/ElectricBorder";
 
 const PortfolioPage: React.FC = () => {
   const [selected, setSelected] = useState<Project | null>(null);
@@ -59,23 +60,23 @@ const PortfolioPage: React.FC = () => {
 
           {/* Hero Content */}
           <div className="relative z-10 flex flex-col items-center text-center w-full max-w-4xl mx-auto px-6">
-            <h1 className="mb-6 text-5xl font-bold tracking-tight text-white filter [filter:drop-shadow(0_0_15px_rgba(0,0,0,0.5))_drop-shadow(0_0_30px_rgba(0,0,0,0.4))] md:text-7xl lg:text-8xl">
-              Breathe life into your <br />
-              <span className="text-gradient" data-text="worlds.">
-                worlds.
+            <h1 className="mb-6 text-5xl font-bold tracking-tight text-white filter [filter:drop-shadow(0_0_15px_rgba(0,0,0,0.5))_drop-shadow(0_0_30px_rgba(0,0,0,0.4))] md:text-6xl lg:text-7xl">
+              Turning complex logic into <br />
+              <span className="text-gradient font-black" data-text="fluid digital experiences.">
+                fluid digital experiences.
               </span>
             </h1>
-            <p className="mb-10 max-w-2xl text-lg font-light leading-relaxed text-white md:text-xl [text-shadow:0_0_8px_rgba(0,0,0,1),0_0_12px_rgba(0,0,0,1),0_0_24px_rgba(0,0,0,1),0_0_40px_rgba(0,0,0,0.8)]">
-              Generate breathtaking anime landscapes, dynamic weather, and majestic lighting. <br className="hidden md:block" />
-              Build epic scenes built for true storytelling.
+            <p className="mb-10 max-w-3xl text-base sm:text-lg md:text-xl font-light leading-relaxed text-white [text-shadow:0_0_8px_rgba(0,0,0,1),0_0_12px_rgba(0,0,0,1),0_0_24px_rgba(0,0,0,1),0_0_40px_rgba(0,0,0,0.8)]">
+              As a Full-Stack Developer, I bridge the gap between robust backend architecture and breathtaking interactive frontends. <br className="hidden md:block" />
+              Built for performance. Scaled for impact.
             </p>
 
             <a
               href="#about"
-              className="group inline-flex items-center justify-center gap-2 rounded-full bg-brand px-8 py-4 text-lg font-semibold text-white shadow-[0_0_30px_-5px_rgba(34,197,94,0.5)] transition-all duration-300 hover:bg-brand-light hover:text-slate-900 cursor-pointer"
+              className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-lg font-semibold text-slate-950 shadow-[0_0_30px_rgba(255,255,255,0.25)] transition-all duration-300 hover:bg-slate-100 hover:scale-[1.02] cursor-pointer"
             >
               Explore Portfolio
-              <Icon icon="lucide:arrow-right" className="transition-transform group-hover:translate-x-1" />
+              <Icon icon="lucide:arrow-right" className="transition-transform group-hover:translate-x-1 text-slate-950" />
             </a>
           </div>
         </div>
@@ -91,7 +92,7 @@ const PortfolioPage: React.FC = () => {
           </div>
 
           {/* ── Live Demo Showcase Section (Full Viewport Width) ── */}
-          <section id="live-demo" className="w-full py-16 px-6 md:px-12 lg:px-24 bg-[var(--surface)] border-y border-[var(--border)]">
+          <section id="live-demo" className="w-full py-16 px-6 md:px-12 lg:px-24 bg-[var(--background)] border-y border-[var(--border)]">
             <div className="max-w-[1800px] mx-auto">
               <div className="mb-8">
                 <h2 className="text-3xl font-semibold text-[var(--brand)]">Live Project Demos</h2>
@@ -190,46 +191,20 @@ const PortfolioPage: React.FC = () => {
               <SkillsList skills={PORTFOLIO_INFO.skills} isBar={true} />
             </section>
 
-            <section id="contact" className="py-8">
-              <h2 className="text-2xl font-semibold text-[var(--brand)]">
-                Contact
-              </h2>
-              <p className="text-sm text-white mt-1">
-                Tell me about your project, or just say hi.
-              </p>
-              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)]">
-                  <ContactForm />
-                </div>
-
-                <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] flex flex-col gap-4">
-                  <div>
-                    <div className="font-semibold">Let's collaborate</div>
-                    <div className="text-sm text-white">
-                      I'm available for freelance and contract work. My inbox is open.
+            <section id="contact" className="py-8 flex flex-col items-center">
+              <div className="w-full max-w-3xl">
+                <h2 className="text-2xl font-semibold text-[var(--brand)] text-center">
+                  Contact
+                </h2>
+                <p className="text-sm text-white mt-1 text-center">
+                  Tell me about your project, or just say hi.
+                </p>
+                <div className="mt-8">
+                  <ElectricBorder color="#7c3aed" borderRadius={24}>
+                    <div className="p-8 sm:p-10 rounded-[24px] bg-slate-900/40 dark:bg-black/50 backdrop-blur-xl border border-white/5 shadow-2xl">
+                      <ContactForm />
                     </div>
-                  </div>
-                  <div className="mt-2">
-                    <div className="font-semibold">Quick contact</div>
-                    <div className="mt-2 text-sm text-white">
-                      Email: <a href={`mailto:${PORTFOLIO_INFO.personal.contact?.email}`} className="hover:text-[var(--brand)] transition duration-200">{PORTFOLIO_INFO.personal.contact?.email}</a>
-                    </div>
-                    <div className="text-sm text-white capitalize">
-                      Location: {PORTFOLIO_INFO.personal.contact?.location || "Remote"}
-                    </div>
-                  </div>
-                  <div className="mt-auto">
-                    <div className="text-sm font-medium">Resume</div>
-                    <a
-                      href={PORTFOLIO_INFO.meta?.pdf || "/resume.pdf"}
-                      download
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block mt-2 px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 text-center transition-all duration-300 hover:border-[var(--brand)] hover:text-[var(--brand)] hover:shadow-[0_0_15px_-3px_rgba(34,197,94,0.3)]"
-                    >
-                      Download PDF
-                    </a>
-                  </div>
+                  </ElectricBorder>
                 </div>
               </div>
             </section>

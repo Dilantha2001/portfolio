@@ -5,7 +5,7 @@ import type { Personal } from "../types/portfolio";
 
 export const About: React.FC<{ personal: Personal }> = ({ personal }) => {
   return (
-    <div className="relative w-full min-h-[85vh] flex flex-col justify-end rounded-3xl bg-slate-950/45 border border-slate-800/70 text-slate-100 overflow-hidden pt-12 md:pt-16 lg:pt-20 px-6 md:px-12 lg:px-16 pb-0 shadow-[0_0_50px_rgba(168,85,247,0.03)] mx-auto">
+    <div className="relative w-full min-h-[85vh] flex flex-col justify-end rounded-3xl bg-[var(--background)] border border-slate-800/70 text-slate-100 overflow-hidden pt-12 md:pt-16 lg:pt-20 px-6 md:px-12 lg:px-16 pb-0 shadow-[0_0_50px_rgba(168,85,247,0.03)] mx-auto">
       
       {/* ── AMBIENT BACKLIGHT GLOW (3D Avatar Aura) ── */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[300px] sm:w-[450px] h-[300px] sm:h-[450px] rounded-full bg-gradient-to-tr from-indigo-500/15 via-purple-500/20 to-pink-500/15 blur-[90px] pointer-events-none z-0" />

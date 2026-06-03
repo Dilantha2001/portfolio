@@ -65,7 +65,6 @@ export const Resume: React.FC<{ className?: string }> = ({
     if (lower.includes("twitter") || lower.includes("x")) return "simple-icons:x";
     return "lucide:globe";
   };
-
   return (
     <article
       className={`w-full max-w-[1400px] mx-auto print:bg-white print:text-black print:p-0 print:max-w-none transition-all duration-300 ${className}`}
@@ -73,13 +72,13 @@ export const Resume: React.FC<{ className?: string }> = ({
       id="resume-print-area"
     >
       {/* ── HEADER PROFILE BAR ── */}
-      <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-slate-800/60 mb-8 print:border-slate-300 print:pb-4 print:mb-4">
+      <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 mb-6">
         <div className="space-y-2">
           <h1 className="text-4xl font-extrabold tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent print:text-slate-900 print:bg-none print:text-3xl">
             {personal.name}
           </h1>
           {personal.title && (
-            <p className="text-sm font-semibold tracking-wide text-emerald-400 uppercase font-mono print:text-slate-700 print:text-xs">
+            <p className="text-sm font-semibold tracking-wide text-purple-400 uppercase font-mono print:text-slate-700 print:text-xs">
               {personal.title}
             </p>
           )}
@@ -101,8 +100,8 @@ export const Resume: React.FC<{ className?: string }> = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-xs text-slate-400 font-medium print:text-slate-700 print:grid-cols-1 print:gap-1">
           {contact.email && (
             <div className="flex items-center gap-2 group">
-              <Icon icon="lucide:mail" className="text-emerald-400 shrink-0 text-sm print:text-slate-700" />
-              <a href={`mailto:${contact.email}`} className="hover:text-emerald-400 transition underline decoration-slate-800 print:text-slate-900 print:no-underline">
+              <Icon icon="lucide:mail" className="text-purple-400 shrink-0 text-sm print:text-slate-700" />
+              <a href={`mailto:${contact.email}`} className="hover:text-purple-400 transition underline decoration-slate-800 print:text-slate-900 print:no-underline">
                 {contact.email}
               </a>
             </div>
@@ -110,19 +109,19 @@ export const Resume: React.FC<{ className?: string }> = ({
 
           {contact.phone && (
             <div className="flex items-center gap-2">
-              <Icon icon="lucide:phone" className="text-emerald-400 shrink-0 text-sm print:text-slate-700" />
+              <Icon icon="lucide:phone" className="text-purple-400 shrink-0 text-sm print:text-slate-700" />
               <span className="print:text-slate-900">{contact.phone}</span>
             </div>
           )}
 
           {contact.website && (
             <div className="flex items-center gap-2 group">
-              <Icon icon="lucide:globe" className="text-emerald-400 shrink-0 text-sm print:text-slate-700" />
+              <Icon icon="lucide:globe" className="text-purple-400 shrink-0 text-sm print:text-slate-700" />
               <a
                 href={contact.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-emerald-400 transition underline decoration-slate-800 print:text-slate-900 print:no-underline"
+                className="hover:text-purple-400 transition underline decoration-slate-800 print:text-slate-900 print:no-underline"
               >
                 {contact.website.replace(/(^\w+:|^)\/\//, "")}
               </a>
@@ -131,7 +130,7 @@ export const Resume: React.FC<{ className?: string }> = ({
 
           {contact.location && (
             <div className="flex items-center gap-2">
-              <Icon icon="lucide:map-pin" className="text-emerald-400 shrink-0 text-sm print:text-slate-700" />
+              <Icon icon="lucide:map-pin" className="text-purple-400 shrink-0 text-sm print:text-slate-700" />
               <span className="capitalize print:text-slate-900">{contact.location}</span>
             </div>
           )}
@@ -147,8 +146,8 @@ export const Resume: React.FC<{ className?: string }> = ({
           {/* Social Links Card */}
           {contact.socials && contact.socials.length > 0 && (
             <div className="bg-[#020617]/40 backdrop-blur-xl border border-slate-800/60 p-5 rounded-2xl print:bg-transparent print:border-none print:p-0">
-              <h2 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-3 pb-2 border-b border-slate-800/60 flex items-center gap-2 print:text-slate-900 print:border-slate-300">
-                <Icon icon="lucide:share-2" className="text-emerald-400 print:text-slate-900" /> Professional Channels
+              <h2 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-3 flex items-center gap-2 print:text-slate-900">
+                <Icon icon="lucide:share-2" className="text-purple-400 print:text-slate-900" /> Professional Channels
               </h2>
               <div className="flex flex-col gap-2.5">
                 {contact.socials.map((s) => (
@@ -157,11 +156,11 @@ export const Resume: React.FC<{ className?: string }> = ({
                     href={s.url.startsWith("http") ? s.url : `https://${s.url}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-3 p-2.5 rounded-lg bg-slate-950/40 border border-slate-900 hover:border-emerald-500/30 hover:bg-emerald-500/5 transition duration-300 group print:bg-transparent print:border-none print:p-0"
+                    className="flex items-center gap-3 p-2.5 rounded-lg bg-slate-950/40 border border-slate-900 hover:border-purple-500/30 hover:bg-purple-500/5 transition duration-300 group print:bg-transparent print:border-none print:p-0"
                   >
                     <Icon
                       icon={getSocialIcon(s.label)}
-                      className="text-base text-slate-400 group-hover:text-emerald-400 transition print:text-slate-900"
+                      className="text-base text-slate-400 group-hover:text-purple-400 transition print:text-slate-900"
                     />
                     <div className="min-w-0">
                       <div className="text-xs font-bold text-slate-300 group-hover:text-white transition print:text-slate-900">{s.label}</div>
@@ -178,21 +177,21 @@ export const Resume: React.FC<{ className?: string }> = ({
           {/* Education Card */}
           {resumeInfo.education && resumeInfo.education.length > 0 && (
             <div className="bg-[#020617]/40 backdrop-blur-xl border border-slate-800/60 p-5 rounded-2xl print:bg-transparent print:border-none print:p-0">
-              <h2 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-4 pb-2 border-b border-slate-800/60 flex items-center gap-2 print:text-slate-900 print:border-slate-300">
-                <Icon icon="lucide:graduation-cap" className="text-emerald-400 print:text-slate-900" /> Education
+              <h2 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-4 flex items-center gap-2 print:text-slate-900">
+                <Icon icon="lucide:graduation-cap" className="text-purple-400 print:text-slate-900" /> Education
               </h2>
               <div className="flex flex-col gap-4">
                 {resumeInfo.education.map((ed, idx) => (
                   <div key={idx} className="relative pl-5 border-l-2 border-slate-800/80 last:border-l-transparent pb-1 last:pb-0 print:border-slate-300">
                     {/* Tiny node */}
-                    <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.4)] print:bg-slate-900 print:shadow-none" />
+                    <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-purple-400 shadow-[0_0_8px_rgba(168,85,247,0.4)] print:bg-slate-900 print:shadow-none" />
                     <h3 className="text-xs font-bold text-slate-200 print:text-slate-900">
                       {ed.degree}
                     </h3>
                     <p className="text-[11px] text-slate-400 mt-0.5 print:text-slate-700">
                       {ed.school}
                     </p>
-                    <span className="text-[10px] font-mono text-emerald-400/80 block mt-1 print:text-slate-600">
+                    <span className="text-[10px] font-mono text-purple-400/80 block mt-1 print:text-slate-600">
                       {formatDate(ed.date)}
                     </span>
                   </div>
@@ -204,16 +203,16 @@ export const Resume: React.FC<{ className?: string }> = ({
           {/* Certifications Card */}
           {resumeInfo.certifications && resumeInfo.certifications.length > 0 && (
             <div className="bg-[#020617]/40 backdrop-blur-xl border border-slate-800/60 p-5 rounded-2xl print:bg-transparent print:border-none print:p-0">
-              <h2 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-3 pb-2 border-b border-slate-800/60 flex items-center gap-2 print:text-slate-900 print:border-slate-300">
-                <Icon icon="lucide:award" className="text-emerald-400 print:text-slate-900" /> Certifications
+              <h2 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-3 flex items-center gap-2 print:text-slate-900">
+                <Icon icon="lucide:award" className="text-purple-400 print:text-slate-900" /> Certifications
               </h2>
               <div className="flex flex-col gap-3">
                 {resumeInfo.certifications.map((c, idx) => (
                   <div
                     key={idx}
-                    className="flex gap-3 items-start p-2.5 rounded-xl bg-slate-950/40 border border-slate-900 hover:border-emerald-500/20 transition duration-300 print:bg-transparent print:border-none print:p-0 print:gap-1"
+                    className="flex gap-3 items-start p-2.5 rounded-xl bg-slate-950/40 border border-slate-900 hover:border-purple-500/20 transition duration-300 print:bg-transparent print:border-none print:p-0 print:gap-1"
                   >
-                    <Icon icon="lucide:check-circle" className="text-sm text-emerald-400 shrink-0 mt-0.5 print:text-slate-700" />
+                    <Icon icon="lucide:check-circle" className="text-sm text-purple-400 shrink-0 mt-0.5 print:text-slate-700" />
                     <div className="min-w-0">
                       <h4 className="text-[11px] font-bold text-slate-200 leading-snug print:text-slate-900">
                         {c.name}
@@ -233,8 +232,8 @@ export const Resume: React.FC<{ className?: string }> = ({
           {/* Languages & Interests Card */}
           {resumeInfo.extras && (
             <div className="bg-[#020617]/40 backdrop-blur-xl border border-slate-800/60 p-5 rounded-2xl print:bg-transparent print:border-none print:p-0">
-              <h2 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-4 pb-2 border-b border-slate-800/60 flex items-center gap-2 print:text-slate-900 print:border-slate-300">
-                <Icon icon="lucide:user" className="text-emerald-400 print:text-slate-900" /> Extras
+              <h2 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-4 flex items-center gap-2 print:text-slate-900">
+                <Icon icon="lucide:user" className="text-purple-400 print:text-slate-900" /> Extras
               </h2>
               <div className="space-y-4">
                 {resumeInfo.extras.languages && (
@@ -277,8 +276,8 @@ export const Resume: React.FC<{ className?: string }> = ({
           {/* Summary Box */}
           {personal.summary && (
             <section className="bg-[#020617]/40 backdrop-blur-xl border border-slate-800/60 p-5 rounded-2xl print:bg-transparent print:border-none print:p-0">
-              <h2 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-3 pb-2 border-b border-slate-800/60 flex items-center gap-2 print:text-slate-900 print:border-slate-300">
-                <Icon icon="lucide:file-text" className="text-emerald-400 print:text-slate-900" /> Profile Summary
+              <h2 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-3 flex items-center gap-2 print:text-slate-900">
+                <Icon icon="lucide:file-text" className="text-purple-400 print:text-slate-900" /> Profile Summary
               </h2>
               <p className="text-xs text-slate-300 leading-relaxed text-justify print:text-slate-800">
                 {personal.summary}
@@ -289,13 +288,13 @@ export const Resume: React.FC<{ className?: string }> = ({
           {/* Highlights Box */}
           {resumeInfo.highlights && resumeInfo.highlights.length > 0 && (
             <section className="bg-[#020617]/40 backdrop-blur-xl border border-slate-800/60 p-5 rounded-2xl print:bg-transparent print:border-none print:p-0">
-              <h2 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-3 pb-2 border-b border-slate-800/60 flex items-center gap-2 print:text-slate-900 print:border-slate-300">
-                <Icon icon="lucide:sparkles" className="text-emerald-400 print:text-slate-900" /> Career Highlights
+              <h2 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-3 flex items-center gap-2 print:text-slate-900">
+                <Icon icon="lucide:sparkles" className="text-purple-400 print:text-slate-900" /> Career Highlights
               </h2>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-300 print:grid-cols-1 print:gap-1 print:text-slate-800">
                 {resumeInfo.highlights.map((h, idx) => (
                   <li key={idx} className="flex gap-2.5 items-start">
-                    <Icon icon="lucide:check" className="text-emerald-400 shrink-0 text-sm mt-0.5 print:text-slate-700" />
+                    <Icon icon="lucide:check" className="text-purple-400 shrink-0 text-sm mt-0.5 print:text-slate-700" />
                     <span>{h}</span>
                   </li>
                 ))}
@@ -306,8 +305,8 @@ export const Resume: React.FC<{ className?: string }> = ({
           {/* Skills Breakdown Grid */}
           {resumeInfo.skills && resumeInfo.skills.length > 0 && (
             <section className="bg-[#020617]/40 backdrop-blur-xl border border-slate-800/60 p-5 rounded-2xl print:bg-transparent print:border-none print:p-0">
-              <h2 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-4 pb-2 border-b border-slate-800/60 flex items-center gap-2 print:text-slate-900 print:border-slate-300">
-                <Icon icon="lucide:cpu" className="text-emerald-400 print:text-slate-900" /> Technical Skills
+              <h2 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-4 flex items-center gap-2 print:text-slate-900">
+                <Icon icon="lucide:cpu" className="text-purple-400 print:text-slate-900" /> Technical Skills
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 print:grid-cols-1 print:gap-2">
                 {resumeInfo.skills.map((group, gi) => (
@@ -315,16 +314,16 @@ export const Resume: React.FC<{ className?: string }> = ({
                     key={gi}
                     className="p-4 rounded-xl bg-slate-950/40 border border-slate-900 hover:border-slate-800 transition duration-300 print:bg-transparent print:border-none print:p-0"
                   >
-                    <h3 className="text-xs font-bold text-emerald-400 uppercase tracking-widest mb-3 font-mono print:text-slate-900 print:mb-1">
+                    <h3 className="text-xs font-bold text-purple-400 uppercase tracking-widest mb-3 font-mono print:text-slate-900 print:mb-1">
                       {group.title}
                     </h3>
                     <div className="flex flex-wrap gap-1.5">
                       {group.skills.map((s) => (
                         <div
                           key={s.name}
-                          className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900/60 border border-slate-850 hover:border-emerald-500/20 hover:bg-emerald-500/5 transition duration-300 text-xs font-medium text-slate-200 print:bg-transparent print:border-none print:text-slate-900 print:p-0 print:after:content-[','] last:print:after:content-none print:after:mr-1"
+                          className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900/60 border border-slate-850 hover:border-purple-500/20 hover:bg-purple-500/5 transition duration-300 text-xs font-medium text-slate-200 print:bg-transparent print:border-none print:text-slate-900 print:p-0 print:after:content-[','] last:print:after:content-none print:after:mr-1"
                         >
-                          <Icon icon={getSkillIcon(s.icon ?? "", s.name)} className="text-xs text-emerald-400 shrink-0 print:hidden" />
+                          <Icon icon={getSkillIcon(s.icon ?? "", s.name)} className="text-xs text-purple-400 shrink-0 print:hidden" />
                           <span>{s.name}</span>
                           {s.years ? (
                             <span className="text-[9px] text-slate-500 font-mono print:text-slate-600">
@@ -343,8 +342,8 @@ export const Resume: React.FC<{ className?: string }> = ({
           {/* Work Experience Timeline */}
           {resumeInfo.experience && resumeInfo.experience.length > 0 && (
             <section className="bg-[#020617]/40 backdrop-blur-xl border border-slate-800/60 p-5 rounded-2xl print:bg-transparent print:border-none print:p-0">
-              <h2 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-5 pb-2 border-b border-slate-800/60 flex items-center gap-2 print:text-slate-900 print:border-slate-300">
-                <Icon icon="lucide:briefcase" className="text-emerald-400 print:text-slate-900" /> Work Experience
+              <h2 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-5 flex items-center gap-2 print:text-slate-900">
+                <Icon icon="lucide:briefcase" className="text-purple-400 print:text-slate-900" /> Work Experience
               </h2>
               <div className="space-y-6">
                 {resumeInfo.experience.map((exp, idx) => (
@@ -353,11 +352,11 @@ export const Resume: React.FC<{ className?: string }> = ({
                     className="relative pl-6 border-l-2 border-slate-800/80 last:border-l-transparent pb-4 last:pb-0 group/exp print:border-slate-300 print:pb-2"
                   >
                     {/* Timeline Node */}
-                    <div className="absolute -left-[7px] top-1.5 w-3.5 h-3.5 rounded-full bg-[#020617] border-2 border-emerald-500 group-hover/exp:bg-emerald-500 group-hover/exp:scale-110 transition duration-300 shadow-[0_0_8px_rgba(16,185,129,0.3)] print:bg-slate-900 print:border-slate-900 print:shadow-none" />
+                    <div className="absolute -left-[7px] top-1.5 w-3.5 h-3.5 rounded-full bg-[#020617] border-2 border-purple-500 group-hover/exp:bg-purple-500 group-hover/exp:scale-110 transition duration-300 shadow-[0_0_8px_rgba(168,85,247,0.3)] print:bg-slate-900 print:border-slate-900 print:shadow-none" />
                     
                     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1">
                       <div>
-                        <h3 className="text-sm font-bold text-slate-100 group-hover/exp:text-emerald-400 transition print:text-slate-900">
+                        <h3 className="text-sm font-bold text-slate-100 group-hover/exp:text-purple-400 transition print:text-slate-900">
                           {exp.title}
                         </h3>
                         <p className="text-xs font-semibold text-slate-300 mt-0.5 print:text-slate-700">
@@ -367,7 +366,7 @@ export const Resume: React.FC<{ className?: string }> = ({
                           )}
                         </p>
                       </div>
-                      <span className="text-[10px] font-mono text-emerald-400/80 mt-1 sm:mt-0 px-2 py-0.5 rounded bg-slate-950/60 border border-slate-900 print:bg-transparent print:border-none print:text-slate-600 print:p-0">
+                      <span className="text-[10px] font-mono text-purple-400/80 mt-1 sm:mt-0 px-2 py-0.5 rounded bg-slate-950/60 border border-slate-900 print:bg-transparent print:border-none print:text-slate-600 print:p-0">
                         {formatDate(exp.date)}
                       </span>
                     </div>
@@ -410,17 +409,17 @@ export const Resume: React.FC<{ className?: string }> = ({
           {/* Selected Projects */}
           {resumeInfo.projects && resumeInfo.projects.length > 0 && (
             <section className="bg-[#020617]/40 backdrop-blur-xl border border-slate-800/60 p-5 rounded-2xl print:bg-transparent print:border-none print:p-0">
-              <h2 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-5 pb-2 border-b border-slate-800/60 flex items-center gap-2 print:text-slate-900 print:border-slate-300">
-                <Icon icon="lucide:folder-git-2" className="text-emerald-400 print:text-slate-900" /> Selected Projects
+              <h2 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-5 flex items-center gap-2 print:text-slate-900">
+                <Icon icon="lucide:folder-git-2" className="text-purple-400 print:text-slate-900" /> Selected Projects
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 print:grid-cols-1 print:gap-3">
                 {resumeInfo.projects.slice(0, 4).map((p) => (
                   <div
                     key={p.id ?? p.title}
-                    className="p-4 rounded-xl bg-slate-950/40 border border-slate-900 hover:border-emerald-500/20 hover:bg-emerald-500/5 transition duration-300 flex flex-col justify-between group/project print:bg-transparent print:border-none print:p-0"
+                    className="p-4 rounded-xl bg-slate-950/40 border border-slate-900 hover:border-purple-500/30 hover:bg-purple-500/5 transition duration-300 flex flex-col justify-between group/project print:bg-transparent print:border-none print:p-0"
                   >
                     <div>
-                      <h3 className="text-xs font-bold text-slate-200 group-hover/project:text-emerald-400 transition print:text-slate-900">
+                      <h3 className="text-xs font-bold text-slate-200 group-hover/project:text-purple-400 transition print:text-slate-900">
                         {p.title}
                       </h3>
                       {p.description && (
@@ -459,7 +458,7 @@ export const Resume: React.FC<{ className?: string }> = ({
         <div className="flex items-center gap-3 print:hidden">
           <a
             href={meta.pdf ?? "/resume.pdf"}
-            className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-emerald-400 transition underline decoration-slate-800"
+            className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-purple-400 transition underline decoration-slate-800"
             download
           >
             <Icon icon="lucide:download" className="text-xs" /> Download PDF Version
