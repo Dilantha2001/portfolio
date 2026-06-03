@@ -1,13 +1,16 @@
 // PortfolioPage.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ThemeProvider } from "../components/ThemeProvider";
 import { Header } from "../components/shared/Header";
 import { ProjectsGrid } from "../components/ProjectsGrid";
+import { Specializations } from "../components/Specializations";
 import { SkillsList } from "../components/SkillsList";
 import { ContactForm } from "../components/ContactForm";
 import { Footer } from "../components/shared/Footer";
 import { PORTFOLIO_INFO } from "../config/portfolioData";
 import { About } from "../components/About";
+import { StatsSection } from "../components/StatsSection";
+import { FAQSection } from "../components/FAQSection";
 import type { Project } from "../types/portfolio";
 import { ProjectModal } from "../components/ProjectModal";
 import { ScrollProgressBar } from "../components/shared/ScrollProgressBar";
@@ -16,10 +19,86 @@ import CLIResume from "../components/CLIResume";
 import BrowserMockup from "../components/BrowserMockup";
 import { Icon } from "@iconify/react";
 import ElectricBorder from "../components/ElectricBorder";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const PortfolioPage: React.FC = () => {
   const [selected, setSelected] = useState<Project | null>(null);
   const [showCLI, setShowCLI] = useState(false);
+
+  const heroRef = useRef<HTMLDivElement>(null);
+  const secondPageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const heroPin = ScrollTrigger.create({
+      trigger: heroRef.current,
+      start: "top top",
+      end: "bottom+=100% top",
+      pin: true,
+      pinSpacing: false,
+    });
+
+    const maskAnimation = gsap.fromTo(
+      secondPageRef.current,
+      {
+        clipPath: "inset(0% 100% 0% 0%)",
+      },
+      {
+        clipPath: "inset(0% 0% 0% 0%)",
+        ease: "none",
+        scrollTrigger: {
+          trigger: secondPageRef.current,
+          start: "top bottom",
+          end: "top top",
+          scrub: true,
+          onLeave: () => {
+            gsap.set(secondPageRef.current, { clipPath: "none" });
+          },
+          onEnterBack: () => {
+            gsap.set(secondPageRef.current, { clipPath: "inset(0% 0% 0% 0%)" });
+          },
+          onLeaveBack: () => {
+            gsap.set(secondPageRef.current, { clipPath: "inset(0% 100% 0% 0%)" });
+          }
+        },
+      }
+    );
+
+    // Unified scroll-reveal animation for page sections (reveals around 50%-80% of viewport)
+    const revealTargets = gsap.utils.toArray<HTMLElement>(".scroll-reveal");
+    const revealAnims = revealTargets.map((sec) => {
+      return gsap.fromTo(
+        sec,
+        {
+          opacity: 0,
+          y: 70,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.85,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: sec,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+    });
+
+    return () => {
+      heroPin.kill();
+      maskAnimation.scrollTrigger?.kill();
+      maskAnimation.kill();
+      revealAnims.forEach((anim) => {
+        anim.scrollTrigger?.kill();
+        anim.kill();
+      });
+    };
+  }, []);
 
   return (
     <ThemeProvider>
@@ -44,6 +123,7 @@ const PortfolioPage: React.FC = () => {
 
         {/* ==================== FIRST PAGE (HERO SECTION) ==================== */}
         <div
+          ref={heroRef}
           className="relative w-full h-screen z-10 flex items-center justify-center bg-black"
         >
           {/* Video Background */}
@@ -84,15 +164,22 @@ const PortfolioPage: React.FC = () => {
         {/* ==================== SECOND PAGE (MAIN CONTENT WRAPPER) ==================== */}
         {/* මේක මුලින්ම වමේ ඉඳන් දකුණට clip වෙලා (inset 100%) තියෙන්නේ. Scroll කරද්දී දිග ඇරිලා 1st page එක වහගන්නවා */}
         <div
+          ref={secondPageRef}
           className="relative w-full z-20 bg-[var(--background)]"
+          style={{ clipPath: "inset(0% 100% 0% 0%)" }}
         >
           {/* About Section */}
-          <div id="about" className="relative w-full pt-32 pb-10">
+          <div id="about" className="relative w-full pt-32 pb-10 scroll-reveal">
             <About personal={PORTFOLIO_INFO.personal} />
           </div>
 
+          {/* Milestone Stats Section */}
+          <div className="scroll-reveal">
+            <StatsSection />
+          </div>
+
           {/* ── Live Demo Showcase Section (Full Viewport Width) ── */}
-          <section id="live-demo" className="w-full py-16 px-6 md:px-12 lg:px-24 bg-[var(--background)] border-y border-[var(--border)]">
+          <section id="live-demo" className="w-full py-16 px-6 md:px-12 lg:px-24 bg-[var(--background)] border-y border-[var(--border)] scroll-reveal">
             <div className="max-w-[1800px] mx-auto">
               <div className="mb-8">
                 <h2 className="text-3xl font-semibold text-[var(--brand)]">Live Project Demos</h2>
@@ -168,7 +255,8 @@ const PortfolioPage: React.FC = () => {
           {/* Main Content (Projects, Skills, Contact) */}
           <main className="max-w-[1800px] w-full mx-auto px-6 md:px-12 py-10">
 
-            <section id="projects" className="py-8">
+
+            <section id="projects" className="py-8 scroll-reveal">
               <h2 className="text-2xl font-semibold text-[var(--brand)]">
                 Projects
               </h2>
@@ -181,7 +269,16 @@ const PortfolioPage: React.FC = () => {
               />
             </section>
 
-            <section id="skills" className="py-8">
+            <div id="specializations" className="scroll-reveal">
+              <Specializations />
+            </div>
+
+            {/* FAQ Accordion Section */}
+            <div id="faq" className="scroll-reveal">
+              <FAQSection />
+            </div>
+
+            <section id="skills" className="py-8 scroll-reveal">
               <h2 className="text-2xl font-semibold text-[var(--brand)]">
                 Skills
               </h2>
@@ -191,7 +288,7 @@ const PortfolioPage: React.FC = () => {
               <SkillsList skills={PORTFOLIO_INFO.skills} isBar={true} />
             </section>
 
-            <section id="contact" className="py-8 flex flex-col items-center">
+            <section id="contact" className="py-8 flex flex-col items-center scroll-reveal">
               <div className="w-full max-w-3xl">
                 <h2 className="text-2xl font-semibold text-[var(--brand)] text-center">
                   Contact
