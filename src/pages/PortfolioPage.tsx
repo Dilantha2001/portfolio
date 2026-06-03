@@ -137,7 +137,7 @@ const PortfolioPage: React.FC = () => {
               loop
               muted
               playsInline
-              className="w-full h-full object-cover"
+              className="absolute left-0 top-1/2 -translate-y-1/2 w-full aspect-[700/846] object-cover md:absolute md:inset-0 md:translate-y-0 md:w-full md:h-full md:aspect-auto md:object-cover"
             />
           </div>
 
