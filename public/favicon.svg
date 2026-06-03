@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6" />
+      <stop offset="50%" stop-color="#EC4899" />
+      <stop offset="100%" stop-color="#3B82F6" />
+    </linearGradient>
+    <filter id="neon-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  <!-- Background plate -->
+  <rect width="100" height="100" rx="28" fill="#030712" />
+  <!-- Stylized border -->
+  <rect x="2" y="2" width="96" height="96" rx="26" fill="none" stroke="url(#logo-grad)" stroke-width="2" opacity="0.3" />
+  <!-- Stylized letter D with gradient and neon glow -->
+  <path d="M35 28 C35 28 45 28 55 28 C68 28 75 36 75 50 C75 64 68 72 55 72 C45 72 35 72 35 72 Z M47 38 V62 H53 C60 62 63 58 63 50 C63 42 60 38 53 38 Z" fill="url(#logo-grad)" filter="url(#neon-glow)" />
+</svg>

@@ -13,24 +13,24 @@ interface StatItem {
 
 const STATS: StatItem[] = [
   {
-    value: 6,
+    value: 2,
     suffix: "+",
     label: "Years of Experience",
-    desc: "Architecting scalable web solutions and enterprise integrations since 2020.",
+    desc: "Architecting scalable web solutions and interactive interfaces since 2024.",
     icon: "lucide:history",
   },
   {
-    value: 80,
+    value: 10,
     suffix: "+",
     label: "Projects Worldwide",
     desc: "Successfully deployed full-stack SaaS apps, database designs, and automation pipelines.",
     icon: "lucide:globe",
   },
   {
-    value: 60,
+    value: 10,
     suffix: "+",
     label: "Clients Worldwide",
-    desc: "Partnering with global startups, digital agencies, and educational institutions.",
+    desc: "Partnering with global startups, digital agencies, and independent businesses.",
     icon: "lucide:users",
   },
   {

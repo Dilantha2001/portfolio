@@ -198,7 +198,7 @@ export const About: React.FC<{ personal: Personal }> = ({ personal }) => {
               />
               {/* Main Profile Image */}
               <img
-                className="relative w-full h-full object-contain object-bottom z-10 drop-shadow-[0_20px_50px_rgba(0,0,0,0.35)] scale-[1.45] lg:scale-[1.55] origin-bottom translate-y-[20px] md:translate-y-[35px] lg:translate-y-[50px] transition-transform duration-700 ease-out group-hover:scale-[1.5] group-hover:lg:scale-[1.6]"
+                className="relative w-full h-full object-contain object-bottom z-10 drop-shadow-[0_20px_50px_rgba(0,0,0,0.35)] scale-[1.45] lg:scale-[1.55] origin-bottom translate-y-[20px] filter grayscale md:translate-y-[35px] lg:translate-y-[50px] transition-transform duration-700 ease-out group-hover:scale-[1.5] group-hover:lg:scale-[1.6]"
                 src={personal.avatar}
                 alt="profile-main"
               />
