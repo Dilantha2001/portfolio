@@ -11,7 +11,7 @@ export const About: React.FC<{ personal: Personal }> = ({ personal }) => {
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[300px] sm:w-[450px] h-[300px] sm:h-[450px] rounded-full bg-gradient-to-tr from-indigo-500/15 via-purple-500/20 to-pink-500/15 blur-[90px] pointer-events-none z-0" />
 
       {/* ── BACKGROUND GIANT TEXT (Glow-Backlit White Highlight) ── */}
-      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none select-none z-0 overflow-hidden">
+      <div className="hidden sm:flex absolute inset-x-0 top-1/2 -translate-y-1/2 items-center justify-center pointer-events-none select-none z-0 overflow-hidden">
         <h2 className="text-[14vw] font-black tracking-tighter text-white/35 uppercase leading-none text-center w-full whitespace-nowrap drop-shadow-[0_0_35px_rgba(255,255,255,0.6)] select-none pointer-events-none">
           DILANTHA
         </h2>
@@ -88,117 +88,117 @@ export const About: React.FC<{ personal: Personal }> = ({ personal }) => {
               <motion.div
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[10%] left-[12%] sm:left-[18%] lg:left-[8%] xl:left-[15%] z-20 flex items-center gap-2.5 px-4.5 py-2.5 rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(99,102,241,0.25)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
+                className="absolute top-[10%] left-[0%] sm:left-[18%] lg:left-[8%] xl:left-[15%] z-20 flex items-center gap-1.5 sm:gap-2.5 px-2.5 py-1.5 sm:px-4.5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(99,102,241,0.25)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
               >
-                <Icon icon="logos:react" className="w-6 h-6 group-hover/float:rotate-[360deg] transition-transform duration-[2000ms] ease-in-out" />
-                <span className="text-xs font-mono font-bold tracking-wider text-slate-200">React</span>
+                <Icon icon="logos:react" className="w-4.5 h-4.5 sm:w-6 sm:h-6 group-hover/float:rotate-[360deg] transition-transform duration-[2000ms] ease-in-out" />
+                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-slate-200">React</span>
               </motion.div>
 
               {/* Floating Badge 2: Node.js (Hugging Top Right) */}
               <motion.div
                 animate={{ y: [0, -12, 0] }}
                 transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[12%] right-[12%] sm:right-[18%] lg:right-[8%] xl:right-[15%] z-20 flex items-center gap-2.5 px-4.5 py-2.5 rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(34,197,94,0.2)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
+                className="absolute top-[12%] right-[0%] sm:right-[18%] lg:right-[8%] xl:right-[15%] z-20 flex items-center gap-1.5 sm:gap-2.5 px-2.5 py-1.5 sm:px-4.5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(34,197,94,0.2)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
               >
-                <Icon icon="logos:nodejs-icon" className="w-6 h-6" />
-                <span className="text-xs font-mono font-bold tracking-wider text-slate-200">Node.js</span>
+                <Icon icon="logos:nodejs-icon" className="w-4.5 h-4.5 sm:w-6 sm:h-6" />
+                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-slate-200">Node.js</span>
               </motion.div>
 
               {/* Floating Badge 3: TypeScript (Hugging Upper Mid-Left) */}
               <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[28%] left-[4%] sm:left-[10%] lg:left-[2%] xl:left-[8%] z-20 flex items-center gap-2.5 px-4.5 py-2.5 rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(59,130,246,0.25)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
+                className="absolute top-[28%] left-[-2%] sm:left-[10%] lg:left-[2%] xl:left-[8%] z-20 flex items-center gap-1.5 sm:gap-2.5 px-2.5 py-1.5 sm:px-4.5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(59,130,246,0.25)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
               >
-                <Icon icon="logos:typescript-icon" className="w-6 h-6" />
-                <span className="text-xs font-mono font-bold tracking-wider text-slate-200">TypeScript</span>
+                <Icon icon="logos:typescript-icon" className="w-4.5 h-4.5 sm:w-6 sm:h-6" />
+                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-slate-200">TypeScript</span>
               </motion.div>
 
               {/* Floating Badge 4: JavaScript (Hugging Upper Mid-Right) */}
               <motion.div
                 animate={{ y: [0, -9, 0] }}
                 transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[30%] right-[4%] sm:right-[10%] lg:right-[2%] xl:right-[8%] z-20 flex items-center gap-2.5 px-4.5 py-2.5 rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(251,191,36,0.2)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
+                className="absolute top-[30%] right-[-2%] sm:right-[10%] lg:right-[2%] xl:right-[8%] z-20 flex items-center gap-1.5 sm:gap-2.5 px-2.5 py-1.5 sm:px-4.5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(251,191,36,0.2)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
               >
-                <Icon icon="logos:javascript" className="w-6 h-6 rounded-md" />
-                <span className="text-xs font-mono font-bold tracking-wider text-slate-200">JavaScript</span>
+                <Icon icon="logos:javascript" className="w-4.5 h-4.5 sm:w-6 sm:h-6 rounded-md" />
+                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-slate-200">JavaScript</span>
               </motion.div>
 
               {/* Floating Badge 5: AWS (Hugging Middle Left) */}
               <motion.div
                 animate={{ y: [0, -11, 0] }}
                 transition={{ duration: 3.9, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[48%] left-[2%] sm:left-[8%] lg:left-[0%] xl:left-[5%] z-20 flex items-center gap-2.5 px-4.5 py-2.5 rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(251,191,36,0.2)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
+                className="absolute top-[48%] left-[-4%] sm:left-[8%] lg:left-[0%] xl:left-[5%] z-20 flex items-center gap-1.5 sm:gap-2.5 px-2.5 py-1.5 sm:px-4.5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(251,191,36,0.2)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
               >
-                <Icon icon="logos:aws" className="w-6 h-6" />
-                <span className="text-xs font-mono font-bold tracking-wider text-slate-200">AWS</span>
+                <Icon icon="logos:aws" className="w-4.5 h-4.5 sm:w-6 sm:h-6" />
+                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-slate-200">AWS</span>
               </motion.div>
 
               {/* Floating Badge 6: Tailwind CSS (Hugging Middle Right) */}
               <motion.div
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 4.3, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[50%] right-[2%] sm:right-[8%] lg:right-[0%] xl:right-[5%] z-20 flex items-center gap-2.5 px-4.5 py-2.5 rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(14,165,233,0.2)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
+                className="absolute top-[50%] right-[-4%] sm:right-[8%] lg:right-[0%] xl:right-[5%] z-20 flex items-center gap-1.5 sm:gap-2.5 px-2.5 py-1.5 sm:px-4.5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(14,165,233,0.2)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
               >
-                <Icon icon="logos:tailwindcss-icon" className="w-6 h-6" />
-                <span className="text-xs font-mono font-bold tracking-wider text-slate-200">Tailwind</span>
+                <Icon icon="logos:tailwindcss-icon" className="w-4.5 h-4.5 sm:w-6 sm:h-6" />
+                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-slate-200">Tailwind</span>
               </motion.div>
 
               {/* Floating Badge 7: Docker (Hugging Lower Mid-Left) */}
               <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 3.7, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[68%] left-[8%] sm:left-[14%] lg:left-[4%] xl:left-[10%] z-20 flex items-center gap-2.5 px-4.5 py-2.5 rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(14,165,233,0.25)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
+                className="absolute top-[68%] left-[-1%] sm:left-[14%] lg:left-[4%] xl:left-[10%] z-20 flex items-center gap-1.5 sm:gap-2.5 px-2.5 py-1.5 sm:px-4.5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(14,165,233,0.25)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
               >
-                <Icon icon="logos:docker-icon" className="w-6 h-6" />
-                <span className="text-xs font-mono font-bold tracking-wider text-slate-200">Docker</span>
+                <Icon icon="logos:docker-icon" className="w-4.5 h-4.5 sm:w-6 sm:h-6" />
+                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-slate-200">Docker</span>
               </motion.div>
 
               {/* Floating Badge 8: MongoDB (Hugging Lower Mid-Right) */}
               <motion.div
                 animate={{ y: [0, -12, 0] }}
                 transition={{ duration: 4.6, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[70%] right-[8%] sm:right-[14%] lg:right-[4%] xl:right-[10%] z-20 flex items-center gap-2.5 px-4.5 py-2.5 rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(34,197,94,0.2)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
+                className="absolute top-[70%] right-[-1%] sm:right-[14%] lg:right-[4%] xl:right-[10%] z-20 flex items-center gap-1.5 sm:gap-2.5 px-2.5 py-1.5 sm:px-4.5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(34,197,94,0.2)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
               >
-                <Icon icon="logos:mongodb-icon" className="w-6 h-6" />
-                <span className="text-xs font-mono font-bold tracking-wider text-slate-200">MongoDB</span>
+                <Icon icon="logos:mongodb-icon" className="w-4.5 h-4.5 sm:w-6 sm:h-6" />
+                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-slate-200">MongoDB</span>
               </motion.div>
 
               {/* Floating Badge 9: MySQL (Hugging Bottom Left) */}
               <motion.div
                 animate={{ y: [0, -9, 0] }}
                 transition={{ duration: 4.1, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[86%] left-[15%] sm:left-[22%] lg:left-[10%] xl:left-[18%] z-20 flex items-center gap-2.5 px-4.5 py-2.5 rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(0,117,143,0.2)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
+                className="absolute top-[86%] left-[4%] sm:left-[22%] lg:left-[10%] xl:left-[18%] z-20 flex items-center gap-1.5 sm:gap-2.5 px-2.5 py-1.5 sm:px-4.5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(0,117,143,0.2)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
               >
-                <Icon icon="logos:mysql-icon" className="w-6 h-6" />
-                <span className="text-xs font-mono font-bold tracking-wider text-slate-200">MySQL</span>
+                <Icon icon="logos:mysql-icon" className="w-4.5 h-4.5 sm:w-6 sm:h-6" />
+                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-slate-200">MySQL</span>
               </motion.div>
 
               {/* Floating Badge 10: PHP (Hugging Bottom Right) */}
               <motion.div
                 animate={{ y: [0, -11, 0] }}
                 transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[88%] right-[15%] sm:right-[22%] lg:right-[10%] xl:right-[18%] z-20 flex items-center gap-2.5 px-4.5 py-2.5 rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(120,119,190,0.2)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
+                className="absolute top-[88%] right-[4%] sm:right-[22%] lg:right-[10%] xl:right-[18%] z-20 flex items-center gap-1.5 sm:gap-2.5 px-2.5 py-1.5 sm:px-4.5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(120,119,190,0.2)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
               >
-                <Icon icon="logos:php" className="w-6 h-6" />
-                <span className="text-xs font-mono font-bold tracking-wider text-slate-200">PHP</span>
+                <Icon icon="logos:php" className="w-4.5 h-4.5 sm:w-6 sm:h-6" />
+                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-slate-200">PHP</span>
               </motion.div>
 
               {/* Trail 3 */}
               <img
-                className="absolute w-full h-full object-contain object-bottom opacity-10 -translate-x-[40px] scale-[1.35] lg:scale-[1.45] origin-bottom translate-y-[20px] md:translate-y-[35px] lg:translate-y-[50px] filter grayscale transition-transform duration-700 ease-out group-hover:-translate-x-[60px] group-hover:scale-[1.4] group-hover:lg:scale-[1.5]"
+                className="absolute w-full h-full object-contain object-bottom opacity-10 -translate-x-[40px] scale-[1.1] sm:scale-[1.25] md:scale-[1.35] lg:scale-[1.45] origin-bottom translate-y-[20px] md:translate-y-[35px] lg:translate-y-[50px] filter grayscale transition-transform duration-700 ease-out group-hover:-translate-x-[60px] group-hover:scale-[1.15] group-hover:sm:scale-[1.3] group-hover:lg:scale-[1.5]"
                 src={personal.avatar}
                 alt="profile-trail-2"
               />
               {/* Trail 2 */}
               <img
-                className="absolute w-full h-full object-contain object-bottom opacity-30 -translate-x-[20px] scale-[1.4] lg:scale-[1.5] origin-bottom translate-y-[20px] md:translate-y-[35px] lg:translate-y-[50px] filter grayscale transition-transform duration-700 ease-out group-hover:-translate-x-[30px] group-hover:scale-[1.45] group-hover:lg:scale-[1.55]"
+                className="absolute w-full h-full object-contain object-bottom opacity-30 -translate-x-[20px] scale-[1.15] sm:scale-[1.3] md:scale-[1.4] lg:scale-[1.5] origin-bottom translate-y-[20px] md:translate-y-[35px] lg:translate-y-[50px] filter grayscale transition-transform duration-700 ease-out group-hover:-translate-x-[30px] group-hover:scale-[1.2] group-hover:sm:scale-[1.35] group-hover:lg:scale-[1.55]"
                 src={personal.avatar}
                 alt="profile-trail-1"
               />
               {/* Main Profile Image */}
               <img
-                className="relative w-full h-full object-contain object-bottom z-10 drop-shadow-[0_20px_50px_rgba(0,0,0,0.35)] scale-[1.45] lg:scale-[1.55] origin-bottom translate-y-[20px] filter grayscale md:translate-y-[35px] lg:translate-y-[50px] transition-transform duration-700 ease-out group-hover:scale-[1.5] group-hover:lg:scale-[1.6]"
+                className="relative w-full h-full object-contain object-bottom z-10 drop-shadow-[0_20px_50px_rgba(0,0,0,0.35)] scale-[1.2] sm:scale-[1.35] md:scale-[1.45] lg:scale-[1.55] origin-bottom translate-y-[20px] filter grayscale md:translate-y-[35px] lg:translate-y-[50px] transition-transform duration-700 ease-out group-hover:scale-[1.25] group-hover:sm:scale-[1.4] group-hover:lg:scale-[1.6]"
                 src={personal.avatar}
                 alt="profile-main"
               />
