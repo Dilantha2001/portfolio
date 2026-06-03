@@ -11,6 +11,7 @@ import { PORTFOLIO_INFO } from "../config/portfolioData";
 import { About } from "../components/About";
 import { StatsSection } from "../components/StatsSection";
 import { FAQSection } from "../components/FAQSection";
+import { Preloader } from "../components/Preloader";
 import type { Project } from "../types/portfolio";
 import { ProjectModal } from "../components/ProjectModal";
 import { ScrollProgressBar } from "../components/shared/ScrollProgressBar";
@@ -25,6 +26,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 const PortfolioPage: React.FC = () => {
   const [selected, setSelected] = useState<Project | null>(null);
   const [showCLI, setShowCLI] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const heroRef = useRef<HTMLDivElement>(null);
   const secondPageRef = useRef<HTMLDivElement>(null);
@@ -102,6 +104,7 @@ const PortfolioPage: React.FC = () => {
 
   return (
     <ThemeProvider>
+      {loading && <Preloader onComplete={() => setLoading(false)} />}
       <ScrollProgressBar />
 
       {/* Main Page Container */}
