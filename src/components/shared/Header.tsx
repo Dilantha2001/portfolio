@@ -12,9 +12,8 @@ import { PORTFOLIO_INFO } from "../../config/portfolioData";
 
 type NavLink = { href: string; label: string };
 
-export const Header: React.FC<{ links?: NavLink[]; onTryCLI?: () => void }> = ({
+export const Header: React.FC<{ links?: NavLink[] }> = ({
   links = [],
-  onTryCLI,
 }) => {
   const headerRef = useRef<HTMLElement | null>(null);
 
@@ -136,15 +135,7 @@ export const Header: React.FC<{ links?: NavLink[]; onTryCLI?: () => void }> = ({
             })}
           </div>
 
-          <button
-            onClick={onTryCLI}
-            className="rounded-full border border-purple-500/30 bg-purple-500/5 px-5 py-2 text-sm font-bold text-white transition-all duration-300 hover:border-transparent hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-500 hover:text-white hover:shadow-[0_0_25px_rgba(168,85,247,0.45)] cursor-pointer sm:inline-block hidden"
-            aria-label="Try CLI"
-          >
-            Try CLI
-          </button>
-
-          
+        
         </nav>
       </div>
     </motion.header>

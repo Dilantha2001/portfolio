@@ -40,9 +40,9 @@ export const ProjectCard: React.FC<{
 
   return (
     <motion.article
-      layout
       whileHover={{ y: -6 }}
-      className="group relative flex flex-col justify-between rounded-2xl bg-[#020617]/40 backdrop-blur-xl border border-slate-800/60 hover:border-purple-500/30 transition-all duration-500 p-5 h-full overflow-hidden hover:shadow-[0_0_30px_-5px_rgba(168,85,247,0.12)] w-full select-none"
+      transition={{ type: "spring", stiffness: 260, damping: 20 }}
+      className="group relative flex flex-col justify-between rounded-2xl bg-[#070b1a] border border-slate-800/80 hover:border-purple-500/30 transition-[border-color,background-color,box-shadow] duration-300 p-5 h-full overflow-hidden hover:shadow-[0_0_30px_-5px_rgba(168,85,247,0.12)] w-full select-none"
     >
       <div>
         {/* ── CINEMA WIDESCREEN IMAGE COVER ── */}

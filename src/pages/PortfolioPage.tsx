@@ -1,27 +1,35 @@
-// PortfolioPage.tsx
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { ThemeProvider } from "../components/ThemeProvider";
 import { Header } from "../components/shared/Header";
-import { ProjectsGrid } from "../components/ProjectsGrid";
-import { Specializations } from "../components/Specializations";
-import { SkillsList } from "../components/SkillsList";
-import { ContactForm } from "../components/ContactForm";
 import { Footer } from "../components/shared/Footer";
 import { PORTFOLIO_INFO } from "../config/portfolioData";
-import { About } from "../components/About";
-import { StatsSection } from "../components/StatsSection";
-import { FAQSection } from "../components/FAQSection";
 import { Preloader } from "../components/Preloader";
 import type { Project } from "../types/portfolio";
 import { ProjectModal } from "../components/ProjectModal";
 import { ScrollProgressBar } from "../components/shared/ScrollProgressBar";
 import { ScrollToTop } from "../components/shared/ScrollToTop";
-import CLIResume from "../components/CLIResume";
-import BrowserMockup from "../components/BrowserMockup";
 import { Icon } from "@iconify/react";
-import ElectricBorder from "../components/ElectricBorder";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ScrollReveal from "../components/shared/ScrollReveal";
+
+// Lazy-loaded components below the fold
+const About = lazy(() => import("../components/About"));
+const StatsSection = lazy(() => import("../components/StatsSection"));
+const Specializations = lazy(() => import("../components/Specializations"));
+const ProjectsGrid = lazy(() => import("../components/ProjectsGrid"));
+const FAQSection = lazy(() => import("../components/FAQSection"));
+const SkillsList = lazy(() => import("../components/SkillsList"));
+const ContactForm = lazy(() => import("../components/ContactForm"));
+const CLIResume = lazy(() => import("../components/CLIResume"));
+const BrowserMockup = lazy(() => import("../components/BrowserMockup"));
+const ElectricBorder = lazy(() => import("../components/ElectricBorder"));
+
+const SectionLoader = () => (
+  <div className="w-full h-32 flex items-center justify-center">
+    <div className="w-6 h-6 border-2 border-purple-500/20 border-t-purple-500 rounded-full animate-spin" />
+  </div>
+);
 
 const PortfolioPage: React.FC = () => {
   const [selected, setSelected] = useState<Project | null>(null);
@@ -45,7 +53,7 @@ const PortfolioPage: React.FC = () => {
     const maskAnimation = gsap.fromTo(
       secondPageRef.current,
       {
-        clipPath: "inset(0% 100% 0% 0%)",
+        clipPath: "inset(100% 0% 0% 0%)",
       },
       {
         clipPath: "inset(0% 0% 0% 0%)",
@@ -62,43 +70,16 @@ const PortfolioPage: React.FC = () => {
             gsap.set(secondPageRef.current, { clipPath: "inset(0% 0% 0% 0%)" });
           },
           onLeaveBack: () => {
-            gsap.set(secondPageRef.current, { clipPath: "inset(0% 100% 0% 0%)" });
+            gsap.set(secondPageRef.current, { clipPath: "inset(100% 0% 0% 0%)" });
           }
         },
       }
     );
 
-    // Unified scroll-reveal animation for page sections (reveals around 50%-80% of viewport)
-    const revealTargets = gsap.utils.toArray<HTMLElement>(".scroll-reveal");
-    const revealAnims = revealTargets.map((sec) => {
-      return gsap.fromTo(
-        sec,
-        {
-          opacity: 0,
-          y: 70,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.85,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: sec,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
-    });
-
     return () => {
       heroPin.kill();
       maskAnimation.scrollTrigger?.kill();
       maskAnimation.kill();
-      revealAnims.forEach((anim) => {
-        anim.scrollTrigger?.kill();
-        anim.kill();
-      });
     };
   }, []);
 
@@ -118,11 +99,12 @@ const PortfolioPage: React.FC = () => {
             { href: "#skills", label: "Skills" },
             { href: "#contact", label: "Contact" },
           ]}
-          onTryCLI={() => setShowCLI(true)}
         />
 
         {/* CLI panel */}
-        <CLIResume open={showCLI} onClose={() => setShowCLI(false)} />
+        <Suspense fallback={null}>
+          <CLIResume open={showCLI} onClose={() => setShowCLI(false)} />
+        </Suspense>
 
         {/* ==================== FIRST PAGE (HERO SECTION) ==================== */}
         <div
@@ -137,6 +119,7 @@ const PortfolioPage: React.FC = () => {
               loop
               muted
               playsInline
+              preload="metadata"
               className="absolute left-0 top-1/2 -translate-y-1/2 w-full aspect-[700/846] object-cover md:absolute md:inset-0 md:translate-y-0 md:w-full md:h-full md:aspect-auto md:object-cover"
             />
           </div>
@@ -154,159 +137,195 @@ const PortfolioPage: React.FC = () => {
               Built for performance. Scaled for impact.
             </p>
 
-            <a
-              href="#about"
-              className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-lg font-semibold text-slate-950 shadow-[0_0_30px_rgba(255,255,255,0.25)] transition-all duration-300 hover:bg-slate-100 hover:scale-[1.02] cursor-pointer"
+            <button
+              onClick={() => {
+                const target = document.querySelector("#about");
+                if (target) {
+                  const header = document.querySelector("header");
+                  const headerH = header?.offsetHeight ?? 0;
+                  const y = target.getBoundingClientRect().top + window.scrollY - headerH;
+                  window.scrollTo({ top: y, behavior: "smooth" });
+                }
+              }}
+              className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-lg font-semibold text-slate-950 shadow-[0_0_30px_rgba(255,255,255,0.25)] transition-all duration-300 hover:bg-slate-100 hover:scale-[1.02] cursor-pointer animate-btn-pulse"
             >
-              Explore Portfolio
-              <Icon icon="lucide:arrow-right" className="transition-transform group-hover:translate-x-1 text-slate-950" />
-            </a>
+              Scroll Now
+              <Icon icon="lucide:chevron-down" className="text-slate-950 animate-chevron-bounce" />
+            </button>
           </div>
         </div>
 
         {/* ==================== SECOND PAGE (MAIN CONTENT WRAPPER) ==================== */}
-        {/* මේක මුලින්ම වමේ ඉඳන් දකුණට clip වෙලා (inset 100%) තියෙන්නේ. Scroll කරද්දී දිග ඇරිලා 1st page එක වහගන්නවා */}
         <div
           ref={secondPageRef}
           className="relative w-full z-20 bg-[var(--background)]"
-          style={{ clipPath: "inset(0% 100% 0% 0%)" }}
+          style={{ clipPath: "inset(100% 0% 0% 0%)" }}
         >
           {/* About Section */}
-          <div id="about" className="relative w-full pt-32 pb-10 scroll-reveal">
-            <About personal={PORTFOLIO_INFO.personal} />
+          <div id="about" className="relative w-full pt-32 pb-10">
+            <Suspense fallback={<SectionLoader />}>
+              <ScrollReveal>
+                <About personal={PORTFOLIO_INFO.personal} />
+              </ScrollReveal>
+            </Suspense>
           </div>
 
           {/* Milestone Stats Section */}
-          <div className="scroll-reveal">
-            <StatsSection />
-          </div>
+          <Suspense fallback={<SectionLoader />}>
+            <ScrollReveal>
+              <StatsSection />
+            </ScrollReveal>
+          </Suspense>
 
           {/* ── Live Demo Showcase Section (Full Viewport Width) ── */}
-          <section id="live-demo" className="w-full py-16 px-6 md:px-12 lg:px-24 bg-[var(--background)] border-y border-[var(--border)] scroll-reveal">
-            <div className="max-w-[1800px] mx-auto">
-              <div className="mb-8">
-                <h2 className="text-3xl font-semibold text-[var(--brand)]">Live Project Demos</h2>
-                <p className="text-sm text-white mt-1">
-                  Interact with my live projects directly from here.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Mockup 1: Portfolio */}
-                <div className="flex flex-col gap-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium text-white">Professional Portfolio</span>
-                    <a
-                      href="https://comfy-medovik-ee1f2a.netlify.app/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs text-[var(--brand)] underline hover:opacity-80"
-                    >
-                      Open Fullscreen ↗
-                    </a>
+          <section id="live-demo" className="w-full py-16 px-6 md:px-12 lg:px-24 bg-[var(--background)] border-y border-[var(--border)]">
+            <Suspense fallback={<SectionLoader />}>
+              <ScrollReveal>
+                <div className="max-w-[1800px] mx-auto">
+                  <div className="mb-8">
+                    <h2 className="text-3xl font-semibold text-[var(--brand)]">Live Project Demos</h2>
+                    <p className="text-sm text-white mt-1">
+                      Interact with my live projects directly from here.
+                    </p>
                   </div>
-                  <div
-                    style={{
-                      position: "relative",
-                      borderRadius: "18px",
-                      padding: "2px",
-                      background: "linear-gradient(135deg, #5F67E6 0%, #8B5CF6 50%, #5F67E6 100%)",
-                      boxShadow: "0 0 40px rgba(95,103,230,0.2)",
-                    }}
-                  >
-                    <BrowserMockup
-                      url="https://comfy-medovik-ee1f2a.netlify.app/"
-                      title="Portfolio Preview"
-                      viewportHeight={550}
-                    />
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {/* Mockup 1: Portfolio */}
+                    <div className="flex flex-col gap-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm font-medium text-white">Professional Portfolio</span>
+                        <a
+                          href="https://comfy-medovik-ee1f2a.netlify.app/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-[var(--brand)] underline hover:opacity-80"
+                        >
+                          Open Fullscreen ↗
+                        </a>
+                      </div>
+                      <div
+                        style={{
+                          position: "relative",
+                          borderRadius: "18px",
+                          padding: "2px",
+                          background: "linear-gradient(135deg, #5F67E6 0%, #8B5CF6 50%, #5F67E6 100%)",
+                          boxShadow: "0 0 40px rgba(95,103,230,0.2)",
+                        }}
+                      >
+                        <BrowserMockup
+                          url="https://comfy-medovik-ee1f2a.netlify.app/"
+                          title="Portfolio Preview"
+                          viewportHeight={550}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Mockup 2: Smart Banking */}
+                    <div className="flex flex-col gap-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm font-medium text-white">Smart Banking Web</span>
+                        <a
+                          href="https://beautiful-travesseiro-228b5f.netlify.app/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-[var(--brand)] underline hover:opacity-80"
+                        >
+                          Open Fullscreen ↗
+                        </a>
+                      </div>
+                      <div
+                        style={{
+                          position: "relative",
+                          borderRadius: "18px",
+                          padding: "2px",
+                          background: "linear-gradient(135deg, #8B5CF6 0%, #EC4899 50%, #8B5CF6 100%)",
+                          boxShadow: "0 0 40px rgba(139,92,246,0.2)",
+                        }}
+                      >
+                        <BrowserMockup
+                          url="https://beautiful-travesseiro-228b5f.netlify.app/"
+                          title="Banking App Preview"
+                          viewportHeight={550}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
-
-                {/* Mockup 2: Smart Banking */}
-                <div className="flex flex-col gap-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium text-white">Smart Banking Web</span>
-                    <a
-                      href="https://beautiful-travesseiro-228b5f.netlify.app/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs text-[var(--brand)] underline hover:opacity-80"
-                    >
-                      Open Fullscreen ↗
-                    </a>
-                  </div>
-                  <div
-                    style={{
-                      position: "relative",
-                      borderRadius: "18px",
-                      padding: "2px",
-                      background: "linear-gradient(135deg, #8B5CF6 0%, #EC4899 50%, #8B5CF6 100%)",
-                      boxShadow: "0 0 40px rgba(139,92,246,0.2)",
-                    }}
-                  >
-                    <BrowserMockup
-                      url="https://beautiful-travesseiro-228b5f.netlify.app/"
-                      title="Banking App Preview"
-                      viewportHeight={550}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+              </ScrollReveal>
+            </Suspense>
           </section>
 
           {/* Main Content (Projects, Skills, Contact) */}
           <main className="max-w-[1800px] w-full mx-auto px-6 md:px-12 py-10">
 
-
-            <section id="projects" className="py-8 scroll-reveal">
-              <h2 className="text-2xl font-semibold text-[var(--brand)]">
-                Projects
-              </h2>
-              <p className="mb-6 text-sm text-white mt-1">
-                Selected work — click a card for details.
-              </p>
-              <ProjectsGrid
-                projects={PORTFOLIO_INFO.projects}
-                onOpen={setSelected}
-              />
+            <section id="projects" className="py-8">
+              <Suspense fallback={<SectionLoader />}>
+                <ScrollReveal>
+                  <h2 className="text-2xl font-semibold text-[var(--brand)]">
+                    Projects
+                  </h2>
+                  <p className="mb-6 text-sm text-white mt-1">
+                    Selected work — click a card for details.
+                  </p>
+                  <ProjectsGrid
+                    projects={PORTFOLIO_INFO.projects}
+                    onOpen={setSelected}
+                  />
+                </ScrollReveal>
+              </Suspense>
             </section>
 
-            <div id="specializations" className="scroll-reveal">
-              <Specializations />
+            <div id="specializations">
+              <Suspense fallback={<SectionLoader />}>
+                <ScrollReveal>
+                  <Specializations />
+                </ScrollReveal>
+              </Suspense>
             </div>
 
             {/* FAQ Accordion Section */}
-            <div id="faq" className="scroll-reveal">
-              <FAQSection />
+            <div id="faq">
+              <Suspense fallback={<SectionLoader />}>
+                <ScrollReveal>
+                  <FAQSection />
+                </ScrollReveal>
+              </Suspense>
             </div>
 
-            <section id="skills" className="py-8 scroll-reveal">
-              <h2 className="text-2xl font-semibold text-[var(--brand)]">
-                Skills
-              </h2>
-              <p className="mb-6 text-sm text-white mt-1">
-                Tools and technologies I use regularly.
-              </p>
-              <SkillsList skills={PORTFOLIO_INFO.skills} isBar={true} />
+            <section id="skills" className="py-8">
+              <Suspense fallback={<SectionLoader />}>
+                <ScrollReveal>
+                  <h2 className="text-2xl font-semibold text-[var(--brand)]">
+                    Skills
+                  </h2>
+                  <p className="mb-6 text-sm text-white mt-1">
+                    Tools and technologies I use regularly.
+                  </p>
+                  <SkillsList skills={PORTFOLIO_INFO.skills} isBar={true} />
+                </ScrollReveal>
+              </Suspense>
             </section>
 
-            <section id="contact" className="py-8 flex flex-col items-center scroll-reveal">
-              <div className="w-full max-w-3xl">
-                <h2 className="text-2xl font-semibold text-[var(--brand)] text-center">
-                  Contact
-                </h2>
-                <p className="text-sm text-white mt-1 text-center">
-                  Tell me about your project, or just say hi.
-                </p>
-                <div className="mt-8">
-                  <ElectricBorder color="#7c3aed" borderRadius={24}>
-                    <div className="p-8 sm:p-10 rounded-[24px] bg-slate-900/40 dark:bg-black/50 backdrop-blur-xl border border-white/5 shadow-2xl">
-                      <ContactForm />
+            <section id="contact" className="py-8 flex flex-col items-center">
+              <Suspense fallback={<SectionLoader />}>
+                <ScrollReveal>
+                  <div className="w-full max-w-3xl">
+                    <h2 className="text-2xl font-semibold text-[var(--brand)] text-center">
+                      Contact
+                    </h2>
+                    <p className="text-sm text-white mt-1 text-center">
+                      Tell me about your project, or just say hi.
+                    </p>
+                    <div className="mt-8">
+                      <ElectricBorder color="#7c3aed" borderRadius={24}>
+                        <div className="p-8 sm:p-10 rounded-[24px] bg-slate-900/40 dark:bg-black/50 backdrop-blur-xl border border-white/5 shadow-2xl">
+                          <ContactForm />
+                        </div>
+                      </ElectricBorder>
                     </div>
-                  </ElectricBorder>
-                </div>
-              </div>
+                  </div>
+                </ScrollReveal>
+              </Suspense>
             </section>
           </main>
 

@@ -1,8 +1,7 @@
-import React, { useMemo, useState, useEffect, useRef } from "react";
+import React, { useMemo, useState, useRef } from "react";
 import { ProjectCard } from "./ProjectCard";
 import type { Project } from "../types/portfolio";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion, useInView } from "framer-motion";
 
 export const ProjectsGrid: React.FC<{
   projects?: Project[];
@@ -23,33 +22,30 @@ export const ProjectsGrid: React.FC<{
     (p) => filter === "All" || (p.tags || []).includes(filter)
   );
 
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
+  const isInView = useInView(gridRef, { once: true, amount: 0.1 });
 
-    const cards = gridRef.current?.children;
-    if (!cards || cards.length === 0) return;
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.06,
+      },
+    },
+  };
 
-    // Reset initial values before starting reveal animation
-    gsap.set(cards, { opacity: 0, y: 30 });
-
-    const scrollAnim = gsap.to(cards, {
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
       opacity: 1,
       y: 0,
-      duration: 0.6,
-      stagger: 0.08,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: gridRef.current,
-        start: "top 85%", // starts when top of container is at 85% viewport height
-        toggleActions: "play none none none",
+      transition: {
+        type: "spring" as const,
+        stiffness: 80,
+        damping: 14,
       },
-    });
-
-    return () => {
-      scrollAnim.scrollTrigger?.kill();
-      scrollAnim.kill();
-    };
-  }, [visible]);
+    },
+  };
 
   return (
     <section>
@@ -70,15 +66,22 @@ export const ProjectsGrid: React.FC<{
         </div>
       )}
 
-      <div
+      <motion.div
         ref={gridRef}
+        variants={containerVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
         className={`${showFilters ? "mt-6" : ""
           } grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6`}
       >
         {visible.map((p) => (
-          <ProjectCard key={p.id} project={p} onOpen={onOpen} />
+          <motion.div key={p.id} variants={cardVariants} className="h-full w-full">
+            <ProjectCard project={p} onOpen={onOpen} />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 };
+
+export default ProjectsGrid;

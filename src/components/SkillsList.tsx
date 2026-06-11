@@ -4,6 +4,7 @@ import type { SkillGroup } from "../types/portfolio";
 import { SkillCircle } from "./SkillCircle";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa6";
 import { Icon } from "@iconify/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // Robust mapper function to fetch standard high-resolution developer logos from Iconify
 const getIconifyName = (iconName: string | undefined, skillName: string): string => {
@@ -127,6 +128,11 @@ export const SkillsList: React.FC<{
     };
   }, [filteredGroups, collapsedPx, selectedTitles, totalSkillCount, expanded]);
 
+  useEffect(() => {
+    // Refresh GSAP scroll triggers since layout height has changed
+    ScrollTrigger.refresh();
+  }, [expanded, hasOverflow]);
+
   useEffect(() => setExpanded(false), [selectedTitles]);
 
   // If no overflow, collapsedHeightTarget is "auto" (so no empty space).
@@ -223,7 +229,8 @@ export const SkillsList: React.FC<{
                       <motion.div
                         key={s.name}
                         whileHover={{ y: -5, scale: 1.02 }}
-                        className="relative group overflow-hidden p-5 rounded-2xl bg-gradient-to-br from-slate-950/70 to-slate-900/40 border border-slate-800/50 backdrop-blur-xl transition-all duration-300 hover:border-purple-500/30 hover:shadow-[0_0_30px_rgba(168,85,247,0.1)] cursor-default"
+                        transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                        className="relative group overflow-hidden p-5 rounded-2xl bg-gradient-to-br from-[#0c1020] to-[#080b18] border border-slate-800/60 transition-[border-color,box-shadow] duration-300 hover:border-purple-500/30 hover:shadow-[0_0_30px_rgba(168,85,247,0.1)] cursor-default"
                       >
                         {/* Subtle interactive glow background */}
                         <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-purple-500/0 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />

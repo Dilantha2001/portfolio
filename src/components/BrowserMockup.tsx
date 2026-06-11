@@ -1,7 +1,7 @@
 // BrowserMockup.tsx
 // Realistic macOS-style browser window frame with a live scrollable iframe inside
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useRef } from "react";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 
 interface BrowserMockupProps {
   url: string;
@@ -19,6 +19,8 @@ const BrowserMockup: React.FC<BrowserMockupProps> = ({
 }) => {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isVisible = useInView(containerRef, { once: true, margin: "200px" });
 
   // Scale trick: render iframe at 160% width/height then scale down to 62.5%
   // so the site looks like a proper desktop page inside the frame
@@ -30,6 +32,7 @@ const BrowserMockup: React.FC<BrowserMockupProps> = ({
 
   return (
     <div
+      ref={containerRef}
       className={`browser-mockup-root ${className}`}
       style={{
         borderRadius: "14px",
@@ -105,7 +108,7 @@ const BrowserMockup: React.FC<BrowserMockupProps> = ({
           <span
             style={{
               fontSize: 11,
-              color: "rgba(255,255,255,0.55)",
+              color: "rgba(255, 255, 255, 0.55)",
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
@@ -224,7 +227,7 @@ const BrowserMockup: React.FC<BrowserMockupProps> = ({
         )}
 
         {/* The live iframe */}
-        {!error && (
+        {!error && isVisible ? (
           <iframe
             src={url}
             title={title}
@@ -244,7 +247,11 @@ const BrowserMockup: React.FC<BrowserMockupProps> = ({
             loading="lazy"
             sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
           />
-        )}
+        ) : !error ? (
+          <div className="absolute inset-0 bg-[#0f0f11] flex items-center justify-center">
+            <span className="text-xs text-slate-500">Scroll down to load interactive preview</span>
+          </div>
+        ) : null}
 
         {/* Bottom fade */}
         <div

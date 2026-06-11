@@ -186,19 +186,19 @@ export const About: React.FC<{ personal: Personal }> = ({ personal }) => {
 
               {/* Trail 3 */}
               <img
-                className="absolute w-full h-full object-contain object-bottom opacity-10 -translate-x-[40px] scale-[1.1] sm:scale-[1.25] md:scale-[1.35] lg:scale-[1.45] origin-bottom translate-y-[20px] md:translate-y-[35px] lg:translate-y-[50px] filter grayscale transition-transform duration-700 ease-out group-hover:-translate-x-[60px] group-hover:scale-[1.15] group-hover:sm:scale-[1.3] group-hover:lg:scale-[1.5]"
+                className="absolute w-full h-full object-contain object-bottom opacity-10 -translate-x-[40px] scale-[0.9] sm:scale-[0.9] md:scale-[0.9] lg:scale-[1.15] origin-bottom translate-y-0 md:translate-y-0 lg:translate-y-[70px] filter grayscale transition-transform duration-700 ease-out group-hover:-translate-x-[60px] group-hover:scale-[0.95] group-hover:lg:scale-[1.2]"
                 src={personal.avatar}
                 alt="profile-trail-2"
               />
               {/* Trail 2 */}
               <img
-                className="absolute w-full h-full object-contain object-bottom opacity-30 -translate-x-[20px] scale-[1.15] sm:scale-[1.3] md:scale-[1.4] lg:scale-[1.5] origin-bottom translate-y-[20px] md:translate-y-[35px] lg:translate-y-[50px] filter grayscale transition-transform duration-700 ease-out group-hover:-translate-x-[30px] group-hover:scale-[1.2] group-hover:sm:scale-[1.35] group-hover:lg:scale-[1.55]"
+                className="absolute w-full h-full object-contain object-bottom opacity-30 -translate-x-[20px] scale-[0.95] sm:scale-[0.95] md:scale-[0.95] lg:scale-[1.2] origin-bottom translate-y-0 md:translate-y-0 lg:translate-y-[70px] filter grayscale transition-transform duration-700 ease-out group-hover:-translate-x-[30px] group-hover:scale-[1.0] group-hover:lg:scale-[1.25]"
                 src={personal.avatar}
                 alt="profile-trail-1"
               />
               {/* Main Profile Image */}
               <img
-                className="relative w-full h-full object-contain object-bottom z-10 drop-shadow-[0_20px_50px_rgba(0,0,0,0.35)] scale-[1.2] sm:scale-[1.35] md:scale-[1.45] lg:scale-[1.55] origin-bottom translate-y-[20px] filter grayscale md:translate-y-[35px] lg:translate-y-[50px] transition-transform duration-700 ease-out group-hover:scale-[1.25] group-hover:sm:scale-[1.4] group-hover:lg:scale-[1.6]"
+                className="relative w-full h-full object-contain object-bottom z-10 drop-shadow-[0_20px_50px_rgba(0,0,0,0.35)] scale-[1.0] sm:scale-[1.0] md:scale-[1.0] lg:scale-[1.25] origin-bottom translate-y-0 filter grayscale md:translate-y-0 lg:translate-y-[70px] transition-transform duration-700 ease-out group-hover:scale-[1.05] group-hover:lg:scale-[1.3]"
                 src={personal.avatar}
                 alt="profile-main"
               />

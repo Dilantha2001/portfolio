@@ -160,7 +160,7 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const octaves = 10;
+    const octaves = 4; // Reduced from 10 to 4 for 60%+ CPU performance boost
     const lacunarity = 1.6;
     const gain = 0.7;
     const amplitude = chaos;
@@ -186,8 +186,10 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
 
     let { width, height } = updateSize();
 
+    let isIntersecting = false;
+
     const drawElectricBorder = (currentTime: number) => {
-      if (!canvas || !ctx) return;
+      if (!canvas || !ctx || !isIntersecting) return;
 
       const deltaTime = (currentTime - lastFrameTimeRef.current) / 1000;
       timeRef.current += deltaTime * speed;
@@ -267,13 +269,22 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
     });
     resizeObserver.observe(container);
 
-    animationRef.current = requestAnimationFrame(drawElectricBorder);
+    const intersectionObserver = new IntersectionObserver(([entry]) => {
+      const wasIntersecting = isIntersecting;
+      isIntersecting = entry.isIntersecting;
+      if (isIntersecting && !wasIntersecting) {
+        lastFrameTimeRef.current = performance.now();
+        animationRef.current = requestAnimationFrame(drawElectricBorder);
+      }
+    }, { threshold: 0.01 });
+    intersectionObserver.observe(container);
 
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
       resizeObserver.disconnect();
+      intersectionObserver.disconnect();
     };
   }, [color, speed, chaos, borderRadius, octavedNoise, getRoundedRectPoint]);
 

@@ -4,40 +4,39 @@ export const PORTFOLIO_INFO: Portfolio = {
   meta: {
     createdAt: new Date().toISOString(),
     locale: "en-US",
-    url: "https://Dilantha2001.github.io/portfolio", // update if you have a custom domain
+    url: "https://pramuditha.dev", // update if you have a custom domain
     pdf: "/resume.pdf",
   },
   personal: {
     name: "Dilantha Ranaweera",
-    title: "Software Engineer — Full Stack (Nodejs & React)",
-    headline: "React · Nodejs · Php  · Cloud",
+    title: "Full-Stack Developer",
+    headline: "React · Node.js · Express · Databases",
     avatar: "./profile2.png",
     summary:
-      "Motivated Software Engineering undergraduate with a strong foundation in Full Stack Web Development. Proficient in building scalable, user-centric applications using the MERN stack (MongoDB, Express.js, React.js, Node.js). Experienced in developing RESTful APIs, managing SQL/NoSQL databases, and implementing responsive UIs with Tailwind CSS. Adept at TypeScript for type-safe development and committed to writing clean, maintainable code. Seeking an internship or entry-level position to contribute to dynamic development teams",
+      "Software engineering undergraduate with 6 months of industry experience developing full-stack web applications using React, Node.js, Express.js, MongoDB, PostgreSQL, and MySQL. Experienced in REST APIs, authentication, database design, and responsive UI development. Seeking an Associate Software Engineer position.",
     contact: {
       email: "pramudithadilantha89@gmail.com",
-      phone: "+94 756813888",
-      location: "kegalle",
-
+      phone: "+94 75 681 3888",
+      location: "Colombo, Sri Lanka",
+      website: "https://pramuditha.dev",
       socials: [
         {
           label: "LinkedIn",
-          url: "www.linkedin.com/in/dilantha-ranaweera-825148295",
+          url: "https://linkedin.com/in/pramuditha-ranaweera",
           icon: "SiLinkedin",
         },
-
         {
           label: "GitHub",
-          url: "https://github.com/Dilantha2001",
+          url: "https://github.com/pramuditha-ranaweera",
           icon: "SiGithub",
         },
       ],
     },
   },
   highlights: [
-    "Software Engineer Internship at postal headquarters (6 mounths)",
-    "2+ years focused on Nodejs and React",
-    "Experienced with AWS, Azure, Terraform, and CI/CD pipelines",
+    "Intern Software Developer at Department of Posts (6 months)",
+    "Full-stack development experience with React, Node.js, and Databases",
+    "Experienced in REST APIs, JWT authentication, and responsive UI design",
   ],
   skills: [
     {
@@ -235,13 +234,13 @@ export const PORTFOLIO_INFO: Portfolio = {
       location: "Colombo, Sri Lanka",
       date: { start: "2025-07", end: "2026-01", present: false },
       summary:
-        "Contributed to full-stack development by building scalable React frontends and Node.js RESTful APIs, optimizing MySQL schemas, and refactoring legacy PHP systems for enhanced stability and security.",
+        "Developed and maintained full-stack web applications, built secure RESTful APIs, designed relational databases, and enhanced legacy systems during a 6-month software development internship.",
       bullets: [
-        "Developed a high-performance React.js with Tailwind CSS, optimizing state management and component reusability for enhanced user engagement.",
-        "Built scalable RESTful APIs using Node.js and Express.js, ensuring seamless data synchronization and efficient server-side logic execution.",
-        "Database Optimization: Designed normalized MySQL schemas for logistics tracking, optimizing complex queries to handle high-volume data with maximum integrity.",
-        "Implemented JWT authentication, Anti-CSRF measures, and strict input validation to mitigate vulnerabilities and secure sensitive user data.",
-        "Refactored legacy PHP modules and integrated them with modern JavaScript architectures to improve system stability and performance.",
+        "Developed web applications using React.js and Tailwind CSS",
+        "Built REST APIs using Node.js and Express.js",
+        "Designed MySQL databases for logistics tracking systems",
+        "Implemented JWT authentication and security validation",
+        "Maintained and enhanced existing PHP applications",
       ],
       tech: [
         "React.js",
@@ -255,35 +254,100 @@ export const PORTFOLIO_INFO: Portfolio = {
     },
   ],
   projects: [
+   
     {
       id: "music-streaming-app",
-      title: "Dynamic Music Application",
+      title: "Music Streaming Application",
       description:
-        "Full-stack music engine with custom audio playback, MongoDB aggregation pipelines for trending charts, and JWT-based authentication for a secure user ecosystem.",
-      tags: ["React", "Node.js", "MongoDB", "Express", "Cloudinary", "Redux"],
+        "Developed a dynamic, full-stack music streaming platform featuring seamless audio playback. Designed a responsive user interface with React and Tailwind CSS, incorporating a custom audio player with global state management. Implemented scalable Node.js and Express.js RESTful APIs to handle high-frequency requests for song streaming and artist metadata. Engineered complex MongoDB aggregation pipelines (using $lookup, $unwind, and $facet) to generate real-time trending charts. Developed a secure ecosystem featuring JWT authentication, user engagement tools (likes/comments), and artist verification badges.",
+      tags: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS", "Cloudinary"],
       image: "/neon.png",
       href: "#",
       links: [
         {
           label: "GitHub",
-          url: "https://github.com/Dilantha2001/MusicApplication",
+          url: "https://github.com/pramuditha-ranaweera/MusicApplication",
           icon: "SiGithub",
         },
       ],
     },
-
+    {
+      id: "trust-post-logistics",
+      title: "Trust Post Logistics System",
+      description:
+        "Developed a mobile and web-based parcel pickup and delivery system for the Sri Lankan Postal Department. Built the frontend using React to deliver an intuitive, responsive, and user-friendly interface. Designed the backend architecture with Node.js and PostgreSQL, integrating GPS APIs for real-time tracking and secure transactions. Implemented core modules enabling customers to place orders, track shipments, estimate costs, and interact with an automated chatbot. Developed an administrative web panel for managers to approve drivers, oversee orders, and monitor nationwide postal operations.",
+      tags: [
+        "React",
+        "Node.js",
+        "PostgreSQL",
+        "GPS APIs",
+        "Full Stack",
+        "Logistics",
+      ],
+      image: "./post.png",
+      href: "#",
+      links: [
+        {
+          label: "GitHub",
+          url: "https://github.com/pramuditha-ranaweera/trust-post-logistics",
+          icon: "SiGithub",
+        },
+      ],
+    },
     {
       id: "online-book-store",
-      title: "MERN Online Book Store",
+      title: "Online Book Store",
       description:
-        "A full-stack bookshop enabling users to browse and purchase books. Includes an admin dashboard for inventory management and order status tracking.",
-      tags: ["React", "Tailwind CSS", "MongoDB", "Express", "Chart.js"],
+        "Developed a full-stack online bookshop enabling users to browse, search, and purchase books online. Built a mobile-friendly frontend using React and Tailwind CSS for seamless cross-device compatibility. Designed a MongoDB database schema to efficiently manage books, categories, and user accounts. Integrated shopping cart functionality and a secure checkout process to ensure smooth user transactions. Created an administrative dashboard to manage inventory, track orders, and monitor overall store performance.",
+      tags: ["React", "Tailwind CSS", "MongoDB", "Express", "Full Stack"],
       image: "./book.png",
       href: "#",
       links: [
         {
           label: "GitHub",
-          url: "https://github.com/Dilantha2001/book-store",
+          url: "https://github.com/pramuditha-ranaweera/book-store",
+          icon: "SiGithub",
+        },
+      ],
+    },
+     {
+      id: "dog-behavior-ai",
+      title: "AI-Based Dog Behavior & Emotion Monitoring System",
+      description:
+        "Developed a Multimodal AI system to classify canine emotions and behaviors (Aggression, Stress) for German Shepherds. Built a Dual-Pathway Visual Module utilizing YOLOv8 for object detection and ResNet-50 for facial expression/emotion recognition. Implemented Temporal Action Recognition by tracking skeletal key points via YOLO-Pose and LSTM networks. Integrated an Audio Analysis Module using 2D CNNs to classify vocalizations (Barks, Growls) from Mel-spectrograms. Applied Decision-Level Fusion techniques to synchronize video and audio data, ensuring high accuracy in real-world environments.",
+      tags: [
+        "Python",
+        "YOLOv8",
+        "TensorFlow",
+        "ResNet-50",
+        "LSTM",
+        "Computer Vision",
+        "Multimodal AI",
+        "Research",
+      ],
+      image: "./dog.png",
+      href: "#",
+      date: "Nov 2025 - Present",
+      links: [
+        {
+          label: "GitHub",
+          url: "https://github.com/pramuditha-ranaweera/dogsense-analytics",
+          icon: "SiGithub",
+        },
+      ],
+    },
+    {
+      id: "tuition-class-app",
+      title: "Tuition Class Management Mobile App",
+      description:
+        "Developed a mobile application to streamline tuition class administration and scheduling. Built core features for student enrollment, automated class scheduling, and real-time attendance tracking. Integrated Firebase for secure user authentication, real-time database management, and cloud storage.",
+      tags: ["Android", "Firebase", "Mobile App", "Java/Kotlin"],
+      image: "./screen-3.jpg",
+      href: "#",
+      links: [
+        {
+          label: "GitHub",
+          url: "https://github.com/pramuditha-ranaweera/TuitionClassManager",
           icon: "SiGithub",
         },
       ],
@@ -304,7 +368,7 @@ export const PORTFOLIO_INFO: Portfolio = {
         },
         {
           label: "GitHub",
-          url: "https://github.com/yourusername/fullstack-ecommerce",
+          url: "https://github.com/pramuditha-ranaweera/fullstack-ecommerce",
           icon: "SiGithub",
         },
       ],
@@ -320,59 +384,11 @@ export const PORTFOLIO_INFO: Portfolio = {
       links: [
         {
           label: "GitHub",
-          url: "https://github.com/Dilantha2001/Photography-Web",
+          url: "https://github.com/pramuditha-ranaweera/Photography-Web",
           icon: "SiGithub",
         },
       ],
     },
-
-    {
-      id: "dog-behavior-ai",
-      title: "AI-Powered Dog Behavior Monitoring",
-      description:
-        "A multimodal AI system using YOLOv8, ResNet-50, and LSTM to classify canine emotions and behaviors. Features dual-pathway visual processing and audio signal analysis for real-time monitoring.",
-      tags: [
-        "Python",
-        "YOLOv8",
-        "TensorFlow",
-        "Computer Vision",
-        "Multimodal AI",
-        "Research",
-      ],
-      image: "./dog.png",
-      href: "#",
-      links: [
-        {
-          label: "GitHub",
-          url: "https://github.com/Dilantha2001/dogsense-analytics",
-          icon: "SiGithub",
-        },
-      ],
-    },
-    {
-      id: "trust-post-logistics",
-      title: "Trust Post Logistics System",
-      description:
-        "A comprehensive parcel delivery platform developed for the Sri Lankan Postal Department. Features real-time GPS tracking, secure transactions, and a specialized admin/manager dashboard.",
-      tags: [
-        "React",
-        "Node.js",
-        "PostgreSQL",
-        "GPS APIs",
-        "Full Stack",
-        "Logistics",
-      ],
-      image: "./post.png",
-      href: "#",
-      links: [
-        {
-          label: "GitHub",
-          url: "https://github.com/Dilantha-Ranaweera/trust-post-logistics",
-          icon: "SiGithub",
-        },
-      ],
-    },
-
     {
       id: "portfolio-website",
       title: "Professional Portfolio",
@@ -385,7 +401,7 @@ export const PORTFOLIO_INFO: Portfolio = {
       links: [
         {
           label: "GitHub",
-          url: "https://github.com/Dilantha2001/portfolio",
+          url: "https://github.com/pramuditha-ranaweera/portfolio",
           icon: "SiGithub",
         },
       ],
@@ -401,7 +417,7 @@ export const PORTFOLIO_INFO: Portfolio = {
       links: [
         {
           label: "GitHub",
-          url: "https://github.com/Dilantha2001/php-ordering-system",
+          url: "https://github.com/pramuditha-ranaweera/php-ordering-system",
           icon: "SiGithub",
         },
       ],
@@ -422,7 +438,7 @@ export const PORTFOLIO_INFO: Portfolio = {
         },
         {
           label: "GitHub",
-          url: "https://github.com/Dilantha2001/Payment-Website",
+          url: "https://github.com/pramuditha-ranaweera/Payment-Website",
           icon: "SiGithub",
         },
       ],
