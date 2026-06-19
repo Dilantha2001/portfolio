@@ -44,10 +44,16 @@ export const ScrollToTop: React.FC = () => {
       ).matches;
     }
 
+    let ticking = false;
     const onScroll = () => {
-      // Only show button if not currently flying
-      if (!flying) {
-        setVisible(window.scrollY > SHOW_AFTER);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (!flying) {
+            setVisible(window.scrollY > SHOW_AFTER);
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 

@@ -64,7 +64,11 @@ export const StatsSection: React.FC = () => {
         scrollTrigger: {
           trigger: el,
           start: "top 90%",
-          toggleActions: "play none none none",
+          toggleActions: "play none none reset",
+          onLeaveBack: () => {
+            obj.val = 0;
+            el.textContent = "0";
+          }
         },
         onUpdate: () => {
           el.textContent = Math.floor(obj.val).toString();

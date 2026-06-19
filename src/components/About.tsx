@@ -248,13 +248,8 @@ export const About: React.FC<{ personal: Personal }> = ({ personal }) => {
               Crafted with absolute engineering precision.
             </p>
             {/* Down Arrow scroll trigger */}
-            <a
-              href="#projects"
-              className="w-12 h-12 rounded-full border border-slate-800 bg-slate-950/60 flex items-center justify-center text-slate-300 hover:text-purple-400 hover:border-purple-500/40 hover:scale-105 active:scale-95 transition-all duration-300 shadow-md cursor-pointer select-none pointer-events-auto"
-              aria-label="Scroll to projects"
-            >
-              <Icon icon="lucide:arrow-down" className="text-lg animate-bounce" />
-            </a>
+           
+              
           </div>
         </motion.div>
 

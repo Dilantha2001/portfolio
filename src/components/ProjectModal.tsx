@@ -47,35 +47,56 @@ export const ProjectModal: React.FC<{
     }
   }, [project]);
 
-  // Fetch GitHub README
+  // Fetch GitHub README (Updated with URL parsing & master branch fallback)
   useEffect(() => {
     async function fetchReadme() {
       if (!project) return;
-      const githubLink = project.links?.find((l) => l.label.toLowerCase() === "github");
+      
+      const githubLink = project.links?.find(
+        (l) => l.label.toLowerCase() === "github"
+      );
+      
       if (!githubLink) {
         setReadme(null);
         return;
       }
 
       try {
-        const regex = /github\.com\/([^/]+)\/([^/]+)/;
-        const match = regex.exec(githubLink.url);
-        if (!match) return;
+        const url = new URL(githubLink.url);
+        const pathSegments = url.pathname.split('/').filter(Boolean);
 
-        const [, owner, repo] = match;
-        const res = await fetch(
+        if (pathSegments.length < 2) {
+          setReadme(null);
+          return;
+        }
+
+        const owner = pathSegments[0];
+        const repo = pathSegments[1].replace(/\.git$/, '');
+
+        // Try main branch first
+        let res = await fetch(
           `https://raw.githubusercontent.com/${owner}/${repo}/main/README.md`
         );
+
+        // If main fails, try master branch
+        if (!res.ok) {
+          res = await fetch(
+            `https://raw.githubusercontent.com/${owner}/${repo}/master/README.md`
+          );
+        }
 
         if (res.ok) {
           setReadme(await res.text());
         } else {
+          console.warn("README file not found in both main and master branches.");
           setReadme(null);
         }
-      } catch {
+      } catch (error) {
+        console.error("Error fetching README:", error);
         setReadme(null);
       }
     }
+
     if (open) fetchReadme();
   }, [open, project]);
 

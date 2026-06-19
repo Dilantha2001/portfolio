@@ -6,7 +6,8 @@ interface ScrollRevealProps {
   className?: string;
   delay?: number;
   direction?: "up" | "down" | "left" | "right" | "none";
-  amount?: number; // percentage of element visible before triggering (0.1 = 10%)
+  amount?: number; // percentage of element visible before triggering (0.08 = 8%)
+  once?: boolean;
 }
 
 export const ScrollReveal: React.FC<ScrollRevealProps> = ({
@@ -14,10 +15,11 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   className = "",
   delay = 0,
   direction = "up",
-  amount = 0.15,
+  amount = 0.08,
+  once = false,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount });
+  const isInView = useInView(ref, { once, amount });
 
   const directionOffset = {
     up: { y: 40 },
@@ -37,10 +39,8 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
       x: 0,
       y: 0,
       transition: {
-        type: "spring" as const,
-        stiffness: 70,
-        damping: 15,
-        mass: 0.8,
+        duration: 0.6,
+        ease: [0.16, 1, 0.3, 1] as const, // easeOutExpo
         delay: delay,
       },
     },
@@ -60,3 +60,4 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
 };
 
 export default ScrollReveal;
+

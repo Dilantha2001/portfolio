@@ -266,7 +266,7 @@ export const PORTFOLIO_INFO: Portfolio = {
       links: [
         {
           label: "GitHub",
-          url: "https://github.com/pramuditha-ranaweera/MusicApplication",
+          url: "https://github.com/Dilantha2001/MusicApplication",
           icon: "SiGithub",
         },
       ],
@@ -289,7 +289,7 @@ export const PORTFOLIO_INFO: Portfolio = {
       links: [
         {
           label: "GitHub",
-          url: "https://github.com/pramuditha-ranaweera/trust-post-logistics",
+          url: "https://github.com/Dilantha2001/PostOffice",
           icon: "SiGithub",
         },
       ],
@@ -305,7 +305,7 @@ export const PORTFOLIO_INFO: Portfolio = {
       links: [
         {
           label: "GitHub",
-          url: "https://github.com/pramuditha-ranaweera/book-store",
+          url: "https://github.com/Dilantha2001/BookShop",
           icon: "SiGithub",
         },
       ],
@@ -331,7 +331,7 @@ export const PORTFOLIO_INFO: Portfolio = {
       links: [
         {
           label: "GitHub",
-          url: "https://github.com/pramuditha-ranaweera/dogsense-analytics",
+          url: "https://github.com/Dilantha2001/dogsense-analytics",
           icon: "SiGithub",
         },
       ],
@@ -347,7 +347,7 @@ export const PORTFOLIO_INFO: Portfolio = {
       links: [
         {
           label: "GitHub",
-          url: "https://github.com/pramuditha-ranaweera/TuitionClassManager",
+          url: "https://github.com/Dilantha2001/Mobile-E-Learning-App",
           icon: "SiGithub",
         },
       ],
@@ -368,7 +368,7 @@ export const PORTFOLIO_INFO: Portfolio = {
         },
         {
           label: "GitHub",
-          url: "https://github.com/pramuditha-ranaweera/fullstack-ecommerce",
+          url: "https://github.com/Dilantha2001/Private-Store",
           icon: "SiGithub",
         },
       ],
@@ -384,7 +384,7 @@ export const PORTFOLIO_INFO: Portfolio = {
       links: [
         {
           label: "GitHub",
-          url: "https://github.com/pramuditha-ranaweera/Photography-Web",
+          url: "https://github.com/Dilantha2001/Photography-Web",
           icon: "SiGithub",
         },
       ],
@@ -401,7 +401,7 @@ export const PORTFOLIO_INFO: Portfolio = {
       links: [
         {
           label: "GitHub",
-          url: "https://github.com/pramuditha-ranaweera/portfolio",
+          url: "https://github.com/Dilantha2001/portfolio",
           icon: "SiGithub",
         },
       ],
@@ -438,7 +438,7 @@ export const PORTFOLIO_INFO: Portfolio = {
         },
         {
           label: "GitHub",
-          url: "https://github.com/pramuditha-ranaweera/Payment-Website",
+          url: "https://github.com/Dilantha2001/Payment-Website",
           icon: "SiGithub",
         },
       ],

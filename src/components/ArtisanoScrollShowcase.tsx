@@ -43,11 +43,11 @@ export const ArtisanoScrollShowcase: React.FC<Props> = ({ projects, onOpen }) =>
       if (index === 0) {
         gsap.set(bgImages[index], { opacity: 1, scale: 1 });
         gsap.set(textBlocks[index], { opacity: 1, y: 0 });
-        gsap.set(`#indicator-fill-${index}`, { height: "100%" });
+        gsap.set(`#indicator-fill-${index}`, { scaleY: 1, transformOrigin: "top" });
       } else {
         gsap.set(bgImages[index], { opacity: 0, scale: 0.95 });
         gsap.set(textBlocks[index], { opacity: 0, y: 50 });
-        gsap.set(`#indicator-fill-${index}`, { height: "0%" });
+        gsap.set(`#indicator-fill-${index}`, { scaleY: 0, transformOrigin: "top" });
       }
     });
 
@@ -81,7 +81,8 @@ export const ArtisanoScrollShowcase: React.FC<Props> = ({ projects, onOpen }) =>
       .to(
         `#indicator-fill-${nextIndex}`,
         {
-          height: "100%",
+          scaleY: 1,
+          transformOrigin: "top",
           duration: 1,
           ease: "power2.inOut",
         },
@@ -121,6 +122,7 @@ export const ArtisanoScrollShowcase: React.FC<Props> = ({ projects, onOpen }) =>
     });
 
     return () => {
+      tl.kill();
       ScrollTrigger.getAll().forEach((trigger) => {
         if (trigger.vars.trigger === container) {
           trigger.kill();
@@ -146,6 +148,7 @@ export const ArtisanoScrollShowcase: React.FC<Props> = ({ projects, onOpen }) =>
             <div
               key={`bg-${project.id ?? idx}`}
               className="artisano-bg-image absolute inset-0 w-full h-full origin-center select-none pointer-events-none"
+              style={{ willChange: "transform, opacity" }}
             >
               {project.image ? (
                 <img
@@ -170,7 +173,10 @@ export const ArtisanoScrollShowcase: React.FC<Props> = ({ projects, onOpen }) =>
                 key={`slide-${project.id ?? idx}`}
                 className="artisano-slide absolute inset-x-6 top-1/2 -translate-y-1/2 flex flex-col items-center text-center justify-center pointer-events-none"
               >
-                <div className="artisano-text-block w-full flex flex-col items-center pointer-events-auto">
+                <div
+                  className="artisano-text-block w-full flex flex-col items-center pointer-events-auto"
+                  style={{ willChange: "transform, opacity" }}
+                >
                   {/* Category / Project Index */}
                   <span className="text-xs md:text-sm font-mono font-bold tracking-widest text-[var(--brand)] uppercase mb-3 drop-shadow">
                     Featured Project {String(idx + 1).padStart(2, "0")}
@@ -247,7 +253,8 @@ export const ArtisanoScrollShowcase: React.FC<Props> = ({ projects, onOpen }) =>
             >
               <div
                 id={`indicator-fill-${idx}`}
-                className="w-full h-0 bg-[var(--brand)] rounded-full transition-all duration-100"
+                className="w-full h-full bg-[var(--brand)] rounded-full origin-top"
+                style={{ transform: "scaleY(0)" }}
               />
             </div>
           ))}

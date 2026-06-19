@@ -12,6 +12,8 @@ import { Icon } from "@iconify/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ScrollReveal from "../components/shared/ScrollReveal";
+import { useLenis } from "lenis/react";
+
 
 // Lazy-loaded components below the fold
 const About = lazy(() => import("../components/About"));
@@ -38,6 +40,8 @@ const PortfolioPage: React.FC = () => {
 
   const heroRef = useRef<HTMLDivElement>(null);
   const secondPageRef = useRef<HTMLDivElement>(null);
+  const lenis = useLenis();
+
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -143,8 +147,12 @@ const PortfolioPage: React.FC = () => {
                 if (target) {
                   const header = document.querySelector("header");
                   const headerH = header?.offsetHeight ?? 0;
-                  const y = target.getBoundingClientRect().top + window.scrollY - headerH;
-                  window.scrollTo({ top: y, behavior: "smooth" });
+                  if (lenis) {
+                    lenis.scrollTo(target as HTMLElement, { offset: -headerH, duration: 1.2 });
+                  } else {
+                    const y = target.getBoundingClientRect().top + window.scrollY - headerH;
+                    window.scrollTo({ top: y, behavior: "smooth" });
+                  }
                 }
               }}
               className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-lg font-semibold text-slate-950 shadow-[0_0_30px_rgba(255,255,255,0.25)] transition-all duration-300 hover:bg-slate-100 hover:scale-[1.02] cursor-pointer animate-btn-pulse"

@@ -23,7 +23,7 @@ export const Specializations: React.FC = () => {
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top 85%",
-        toggleActions: "play none none none",
+        toggleActions: "play none none reset",
       },
     });
 

@@ -9,6 +9,8 @@ import {
   useMotionTemplate,
 } from "framer-motion";
 import { PORTFOLIO_INFO } from "../../config/portfolioData";
+import { useLenis } from "lenis/react";
+
 
 type NavLink = { href: string; label: string };
 
@@ -16,6 +18,8 @@ export const Header: React.FC<{ links?: NavLink[] }> = ({
   links = [],
 }) => {
   const headerRef = useRef<HTMLElement | null>(null);
+  const lenis = useLenis();
+
 
   const PERSONAL = PORTFOLIO_INFO.personal;
 
@@ -61,8 +65,13 @@ export const Header: React.FC<{ links?: NavLink[] }> = ({
 
     const headerEl = headerRef.current ?? document.querySelector("header");
     const headerH = headerEl?.offsetHeight ?? 0;
-    const y = target.getBoundingClientRect().top + window.scrollY - headerH;
-    springScrollTo(y);
+    
+    if (lenis) {
+      lenis.scrollTo(target as HTMLElement, { offset: -headerH, duration: 1.2 });
+    } else {
+      const y = target.getBoundingClientRect().top + window.scrollY - headerH;
+      springScrollTo(y);
+    }
   };
 
   const { scrollY } = useScroll();

@@ -412,6 +412,7 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
         this.clock = new THREE.Clock();
         this.assets = {};
         this.disposed = false;
+        this.isVisible = false;
 
         this.road = new Road(this, options);
         this.leftCarLights = new CarLights(
@@ -688,6 +689,7 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
 
       tick() {
         if (this.disposed) return;
+        if (!this.isVisible) return;
 
         if (!this.hasValidSize) {
           const w = this.container.offsetWidth;
@@ -1282,9 +1284,26 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
 
     const myApp = new App(container, options);
     appRef.current = myApp;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const isVisible = entry.isIntersecting;
+        const wasVisible = myApp.isVisible;
+        myApp.isVisible = isVisible;
+        if (isVisible && !wasVisible) {
+          // Reset/discard accumulated elapsed time since pause to avoid huge jump spikes
+          myApp.clock.getDelta();
+          myApp.tick();
+        }
+      },
+      { threshold: 0.01 }
+    );
+    observer.observe(container);
+
     myApp.loadAssets().then(myApp.init);
 
     return () => {
+      observer.disconnect();
       if (appRef.current) {
         appRef.current.dispose();
       }
