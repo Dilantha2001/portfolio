@@ -39,6 +39,7 @@ const PortfolioPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   const heroRef = useRef<HTMLDivElement>(null);
+  const heroContentRef = useRef<HTMLDivElement>(null);
   const secondPageRef = useRef<HTMLDivElement>(null);
   const lenis = useLenis();
 
@@ -71,10 +72,50 @@ const PortfolioPage: React.FC = () => {
     const heroPin = ScrollTrigger.create({
       trigger: heroRef.current,
       start: "top top",
-      end: "bottom+=100% top",
+      end: "bottom+=40% top",
       pin: true,
       pinSpacing: false,
     });
+
+    const heroContentAnimation = gsap.fromTo(
+      heroContentRef.current,
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+      },
+      {
+        opacity: 0,
+        y: -100,
+        scale: 0.95,
+        ease: "none",
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "top top",
+          end: "bottom+=40% top",
+          scrub: true,
+        }
+      }
+    );
+
+    const videoAnimation = gsap.fromTo(
+      ".hero-video",
+      {
+        scale: 1,
+        opacity: 1,
+      },
+      {
+        scale: 1.1,
+        opacity: 0.3,
+        ease: "none",
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "top top",
+          end: "bottom+=40% top",
+          scrub: true,
+        }
+      }
+    );
 
     const maskAnimation = gsap.fromTo(
       secondPageRef.current,
@@ -104,6 +145,10 @@ const PortfolioPage: React.FC = () => {
 
     return () => {
       heroPin.kill();
+      heroContentAnimation.scrollTrigger?.kill();
+      heroContentAnimation.kill();
+      videoAnimation.scrollTrigger?.kill();
+      videoAnimation.kill();
       maskAnimation.scrollTrigger?.kill();
       maskAnimation.kill();
     };
@@ -115,7 +160,7 @@ const PortfolioPage: React.FC = () => {
       <ScrollProgressBar />
 
       {/* Main Page Container */}
-      <div className="relative w-full z-10">
+      <div className="relative w-full overflow-x-hidden z-10">
 
         <Header
           links={[
@@ -135,33 +180,35 @@ const PortfolioPage: React.FC = () => {
         {/* ==================== FIRST PAGE (HERO SECTION) ==================== */}
         <div
           ref={heroRef}
-          className="relative w-full h-screen z-10 flex items-center justify-center bg-black"
+          className="relative w-full h-screen z-10 flex items-end justify-center bg-black pb-16 md:pb-24 lg:pb-32"
         >
           {/* Video Background */}
           <div className="absolute inset-0 z-0">
             <video
-              src="/video.mp4"
+              src={`${import.meta.env.BASE_URL}video.mp4`}
               autoPlay
               loop
               muted
               playsInline
               preload="metadata"
-              className="absolute left-0 top-1/2 -translate-y-1/2 w-full aspect-[700/846] object-cover md:absolute md:inset-0 md:translate-y-0 md:w-full md:h-full md:aspect-auto md:object-cover"
+              className="w-full h-full object-cover hero-video"
             />
           </div>
 
           {/* Hero Content */}
-          <div className="relative z-10 w-full max-w-[1800px] mx-auto px-6 md:px-12 lg:px-24">
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-18 lg:gap-32">
+          <div ref={heroContentRef} className="relative z-10 w-full max-w-[1800px] mx-auto px-6 md:px-12 lg:px-24">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-12 lg:gap-32">
               {/* Left Column - Heading */}
               <div className="max-w-3xl text-left">
-                <h4 className="text-xl font-bold tracking-tight text-white filter [filter:drop-shadow(0_0_15px_rgba(0,0,0,0.5))_drop-shadow(0_0_30px_rgba(0,0,0,0.4))] md:text-5xl lg:text-6xl xl:text-7xl leading-[1.1] md:leading-[1.1]">
+                <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white filter [filter:drop-shadow(0_0_15px_rgba(0,0,0,0.5))_drop-shadow(0_0_30px_rgba(0,0,0,0.4))] md:text-5xl lg:text-6xl xl:text-7xl leading-[1.1] md:leading-[1.1]">
                   Turning  <br className="hidden sm:block" />
                   logic into <br />
-                  <span className="text-gradient font-black block mt-2" data-text="fluid digital experiences.">
-                    fluid digital experiences.
+                  <span className="text-white font-black block mt-2">
+                    fluid digital 
+                    <br />
+                    <span className="text-purple-400">experiences</span>
                   </span>
-                </h4>
+                </h1>
               </div>
 
               {/* Right Column - Description & Call to Action */}

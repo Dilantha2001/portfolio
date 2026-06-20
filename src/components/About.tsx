@@ -21,9 +21,10 @@ export const About: React.FC<{ personal: Personal }> = ({ personal }) => {
         
         {/* ── LEFT COLUMN: Professional Bio & Social Connections ── */}
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           className="lg:col-span-1 flex flex-col gap-6 text-left pb-8 md:pb-12 lg:pb-16 order-1 lg:order-none self-end"
         >
           {/* Status Badge */}
@@ -75,8 +76,9 @@ export const About: React.FC<{ personal: Personal }> = ({ personal }) => {
         {/* ── CENTER COLUMN: Avatar with 10 Orbiting Technology Badges (Hug Avatar Position) ── */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
           className="lg:col-span-2 relative flex items-end justify-center h-[380px] sm:h-[480px] md:h-[520px] lg:h-[580px] overflow-visible group select-none order-3 lg:order-none self-end"
         >
           {personal.avatar && (
@@ -208,9 +210,10 @@ export const About: React.FC<{ personal: Personal }> = ({ personal }) => {
 
         {/* ── RIGHT COLUMN: Overview & Key Statistics (Breathing & Sleek) ── */}
         <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
           className="lg:col-span-1 flex flex-col justify-between h-full text-left gap-8 pb-8 md:pb-12 lg:pb-16 order-2 lg:order-none self-stretch"
         >
           {/* Quick Info Dashboard */}

@@ -261,7 +261,7 @@ export const PORTFOLIO_INFO: Portfolio = {
       description:
         "Developed a dynamic, full-stack music streaming platform featuring seamless audio playback. Designed a responsive user interface with React and Tailwind CSS, incorporating a custom audio player with global state management. Implemented scalable Node.js and Express.js RESTful APIs to handle high-frequency requests for song streaming and artist metadata. Engineered complex MongoDB aggregation pipelines (using $lookup, $unwind, and $facet) to generate real-time trending charts. Developed a secure ecosystem featuring JWT authentication, user engagement tools (likes/comments), and artist verification badges.",
       tags: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS", "Cloudinary"],
-      image: "/neon.png",
+      image: "./neon.png",
       href: "#",
       links: [
         {

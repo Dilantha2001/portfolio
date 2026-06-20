@@ -16,7 +16,7 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   delay = 0,
   direction = "up",
   amount = 0.08,
-  once = false,
+  once = true,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once, amount });
@@ -39,7 +39,7 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
       x: 0,
       y: 0,
       transition: {
-        duration: 0.6,
+        duration: 0.8,
         ease: [0.16, 1, 0.3, 1] as const, // easeOutExpo
         delay: delay,
       },

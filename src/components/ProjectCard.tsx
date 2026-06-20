@@ -40,10 +40,18 @@ export const ProjectCard: React.FC<{
 
   return (
     <motion.article
+      onClick={() => onOpen?.(project)}
       whileHover={{ y: -6 }}
       transition={{ type: "spring", stiffness: 260, damping: 20 }}
-      className="group relative flex flex-col justify-between rounded-2xl bg-[#070b1a] border border-slate-800/80 hover:border-purple-500/30 transition-[border-color,background-color,box-shadow] duration-300 p-5 h-full overflow-hidden hover:shadow-[0_0_30px_-5px_rgba(168,85,247,0.12)] w-full select-none"
+      className="group relative flex flex-col justify-between rounded-2xl bg-[#070b1a] border border-slate-800/80 hover:border-purple-500/30 transition-[border-color,background-color,box-shadow] duration-300 p-5 h-full overflow-hidden hover:shadow-[0_0_30px_-5px_rgba(168,85,247,0.12)] w-full select-none cursor-pointer"
     >
+      {/* View Details Hint Badge */}
+      <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-950/80 border border-purple-500/20 text-purple-300 text-[9px] uppercase font-mono tracking-widest opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300 backdrop-blur-md">
+        <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
+        Details
+        <Icon icon="lucide:arrow-up-right" className="text-[10px] stroke-[2.5]" />
+      </div>
+
       <div>
         {/* ── CINEMA WIDESCREEN IMAGE COVER ── */}
         {project.image && (
