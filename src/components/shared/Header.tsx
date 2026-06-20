@@ -119,7 +119,7 @@ export const Header: React.FC<{ links?: NavLink[] }> = ({
             <div className="font-bold text-sm sm:text-base text-white tracking-tight group-hover:text-purple-400 transition-colors duration-300">
               {PERSONAL.name}
             </div>
-            <div className="text-[9px] text-slate-400 font-semibold tracking-widest uppercase font-mono mt-0.5 hidden sm:block">
+            <div className="text-[11px] text-slate-400 font-semibold tracking-widest uppercase font-mono mt-0.5 hidden sm:block">
               {PERSONAL.title}
             </div>
           </div>

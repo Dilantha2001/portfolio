@@ -148,42 +148,53 @@ const PortfolioPage: React.FC = () => {
               preload="metadata"
               className="absolute left-0 top-1/2 -translate-y-1/2 w-full aspect-[700/846] object-cover md:absolute md:inset-0 md:translate-y-0 md:w-full md:h-full md:aspect-auto md:object-cover"
             />
-            {/* Gradient overlay fading to black at the bottom for smooth transition */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none" />
           </div>
 
           {/* Hero Content */}
-          <div className="relative z-10 flex flex-col items-center text-center w-full max-w-4xl mx-auto px-6">
-            <h1 className="mb-6 text-5xl font-bold tracking-tight text-white filter [filter:drop-shadow(0_0_15px_rgba(0,0,0,0.5))_drop-shadow(0_0_30px_rgba(0,0,0,0.4))] md:text-6xl lg:text-7xl">
-              Turning complex logic into <br />
-              <span className="text-gradient font-black" data-text="fluid digital experiences.">
-                fluid digital experiences.
-              </span>
-            </h1>
-            <p className="mb-10 max-w-3xl text-base sm:text-lg md:text-xl font-light leading-relaxed text-white [text-shadow:0_0_8px_rgba(0,0,0,1),0_0_12px_rgba(0,0,0,1),0_0_24px_rgba(0,0,0,1),0_0_40px_rgba(0,0,0,0.8)]">
-              As a Full-Stack Developer, I bridge the gap between robust backend architecture and breathtaking interactive frontends. <br className="hidden md:block" />
-              Built for performance. Scaled for impact.
-            </p>
+          <div className="relative z-10 w-full max-w-[1800px] mx-auto px-6 md:px-12 lg:px-24">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-18 lg:gap-32">
+              {/* Left Column - Heading */}
+              <div className="max-w-3xl text-left">
+                <h4 className="text-xl font-bold tracking-tight text-white filter [filter:drop-shadow(0_0_15px_rgba(0,0,0,0.5))_drop-shadow(0_0_30px_rgba(0,0,0,0.4))] md:text-5xl lg:text-6xl xl:text-7xl leading-[1.1] md:leading-[1.1]">
+                  Turning  <br className="hidden sm:block" />
+                  logic into <br />
+                  <span className="text-gradient font-black block mt-2" data-text="fluid digital experiences.">
+                    fluid digital experiences.
+                  </span>
+                </h4>
+              </div>
 
-            <button
-              onClick={() => {
-                const target = document.querySelector("#about");
-                if (target) {
-                  const header = document.querySelector("header");
-                  const headerH = header?.offsetHeight ?? 0;
-                  if (lenis) {
-                    lenis.scrollTo(target as HTMLElement, { offset: -headerH, duration: 1.2 });
-                  } else {
-                    const y = target.getBoundingClientRect().top + window.scrollY - headerH;
-                    window.scrollTo({ top: y, behavior: "smooth" });
-                  }
-                }
-              }}
-              className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-lg font-semibold text-slate-950 shadow-[0_0_30px_rgba(255,255,255,0.25)] transition-all duration-300 hover:bg-slate-100 hover:scale-[1.02] cursor-pointer animate-btn-pulse"
-            >
-              Scroll Now
-              <Icon icon="lucide:chevron-down" className="text-slate-950 animate-chevron-bounce" />
-            </button>
+              {/* Right Column - Description & Call to Action */}
+              <div className="max-w-md w-full flex flex-col items-start text-left">
+                <div className="w-12 h-[2px] bg-purple-500 mb-6 hidden lg:block" />
+                <p className="mb-8 text-base sm:text-lg md:text-xl font-light leading-relaxed text-white/90 [text-shadow:0_0_8px_rgba(0,0,0,0.8),0_0_16px_rgba(0,0,0,0.6)]">
+                  As a Full-Stack Developer, I bridge the gap between robust backend architecture and breathtaking interactive frontends.
+                  <span className="block mt-4 font-normal text-purple-400">
+                    Built for performance. Scaled for impact.
+                  </span>
+                </p>
+
+                <button
+                  onClick={() => {
+                    const target = document.querySelector("#about");
+                    if (target) {
+                      const header = document.querySelector("header");
+                      const headerH = header?.offsetHeight ?? 0;
+                      if (lenis) {
+                        lenis.scrollTo(target as HTMLElement, { offset: -headerH, duration: 1.2 });
+                      } else {
+                        const y = target.getBoundingClientRect().top + window.scrollY - headerH;
+                        window.scrollTo({ top: y, behavior: "smooth" });
+                      }
+                    }
+                  }}
+                  className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-lg font-semibold text-slate-950 shadow-[0_0_30px_rgba(255,255,255,0.25)] transition-all duration-300 hover:bg-slate-100 hover:scale-[1.02] cursor-pointer animate-btn-pulse"
+                >
+                  Scroll Now
+                  <Icon icon="lucide:chevron-down" className="text-slate-950 animate-chevron-bounce" />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
