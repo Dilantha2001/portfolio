@@ -14,12 +14,25 @@ export const ProjectModal: React.FC<{
   onClose: () => void;
 }> = ({ project, open, onClose }) => {
   const [readme, setReadme] = useState<string | null>(null);
+  const [readmeBranch, setReadmeBranch] = useState<string>("main");
   const [iframeAllowed, setIframeAllowed] = useState(false);
   const [activeTab, setActiveTab] = useState<"details" | "playground">(
     "details"
   );
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [iframeReady, setIframeReady] = useState(false);
+
+  // Scroll lock effect to prevent background page from scrolling
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   // Reset state when modal opens
   useEffect(() => {
@@ -77,15 +90,18 @@ export const ProjectModal: React.FC<{
         let res = await fetch(
           `https://raw.githubusercontent.com/${owner}/${repo}/main/README.md`
         );
+        let activeBranch = "main";
 
         // If main fails, try master branch
         if (!res.ok) {
           res = await fetch(
             `https://raw.githubusercontent.com/${owner}/${repo}/master/README.md`
           );
+          activeBranch = "master";
         }
 
         if (res.ok) {
+          setReadmeBranch(activeBranch);
           setReadme(await res.text());
         } else {
           console.warn("README file not found in both main and master branches.");
@@ -128,48 +144,61 @@ export const ProjectModal: React.FC<{
           {/* Custom Portable Dark Markdown Styles */}
           <style>{`
             .custom-md-body {
-              font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-              line-height: 1.6;
+              font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+              line-height: 1.7;
               color: #cbd5e1;
             }
             .custom-md-body h1, .custom-md-body h2, .custom-md-body h3, .custom-md-body h4 {
-              margin-top: 24px;
+              margin-top: 28px;
               margin-bottom: 16px;
-              font-weight: 600;
-              line-height: 1.25;
-              color: #f8fafc;
-              border-bottom: 1px solid #1e293b;
-              padding-bottom: 0.3em;
+              font-weight: 700;
+              line-height: 1.3;
+              color: #ffffff;
+              border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+              padding-bottom: 0.4em;
             }
-            .custom-md-body h1 { font-size: 1.4em; }
-            .custom-md-body h2 { font-size: 1.25em; }
-            .custom-md-body h3 { font-size: 1.1em; }
-            .custom-md-body p { margin-top: 0; margin-bottom: 14px; font-size: 13px; font-weight: 300; }
-            .custom-md-body ul, .custom-md-body ol { padding-left: 1.5em; margin-bottom: 14px; margin-top: 0; list-style-type: disc; }
-            .custom-md-body li { font-size: 13px; font-weight: 300; margin-bottom: 4px; }
+            .custom-md-body h1 { font-size: 1.5em; }
+            .custom-md-body h2 { font-size: 1.3em; }
+            .custom-md-body h3 { font-size: 1.15em; }
+            .custom-md-body p { margin-top: 0; margin-bottom: 16px; font-size: 14px; font-weight: 400; color: #94a3b8; }
+            .custom-md-body ul, .custom-md-body ol { padding-left: 1.5em; margin-bottom: 16px; margin-top: 0; }
+            .custom-md-body ul { list-style-type: disc !important; }
+            .custom-md-body ol { list-style-type: decimal !important; }
+            .custom-md-body li { font-size: 14px; font-weight: 400; margin-bottom: 6px; color: #cbd5e1; }
+            .custom-md-body img {
+              max-width: 100%;
+              height: auto;
+              border-radius: 8px;
+              margin: 20px auto;
+              display: block;
+              border: 1px solid rgba(255, 255, 255, 0.08);
+              box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            }
             .custom-md-body code {
-              padding: 0.15em 0.35em;
+              padding: 0.2em 0.4em;
               margin: 0;
               font-size: 85%;
-              background-color: #0f172a;
-              border-radius: 4px;
+              background-color: rgba(255, 255, 255, 0.06);
+              border-radius: 6px;
+              border: 1px solid rgba(255, 255, 255, 0.04);
               font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, monospace;
               color: #c084fc;
             }
             .custom-md-body pre {
-              padding: 14px;
+              padding: 16px;
               overflow: auto;
               font-size: 85%;
               line-height: 1.45;
-              background-color: #020617;
+              background-color: #030712;
               border-radius: 8px;
-              border: 1px solid #1e293b;
-              margin-bottom: 14px;
+              border: 1px solid rgba(255, 255, 255, 0.06);
+              margin-bottom: 16px;
             }
             .custom-md-body pre code {
               background-color: transparent;
               padding: 0;
               color: #e2e8f0;
+              border: none;
             }
             .custom-md-body a {
               color: #818cf8;
@@ -179,25 +208,25 @@ export const ProjectModal: React.FC<{
               padding: 0 1em;
               color: #94a3b8;
               border-left: 0.25em solid #334155;
-              margin: 0 0 14px 0;
+              margin: 0 0 16px 0;
             }
             .custom-md-body table {
               border-spacing: 0;
               border-collapse: collapse;
-              margin-bottom: 14px;
+              margin-bottom: 16px;
               width: 100%;
-              font-size: 12px;
+              font-size: 13px;
             }
             .custom-md-body table th, .custom-md-body table td {
-              padding: 6px 13px;
-              border: 1px solid #1e293b;
+              padding: 8px 13px;
+              border: 1px solid rgba(255, 255, 255, 0.08);
             }
             .custom-md-body table tr {
               background-color: transparent;
-              border-top: 1px solid #1e293b;
+              border-top: 1px solid rgba(255, 255, 255, 0.08);
             }
             .custom-md-body table tr:nth-child(2n) {
-              background-color: #0f172a/20;
+              background-color: rgba(255, 255, 255, 0.02);
             }
           `}</style>
 
@@ -280,7 +309,10 @@ export const ProjectModal: React.FC<{
             </div>
 
             {/* ── MODAL SCROLLABLE CONTENTS ── */}
-            <div className="flex-1 overflow-y-auto pr-1 min-h-0 custom-scroll">
+            <div
+              data-lenis-prevent
+              className="flex-1 overflow-y-auto pr-1 min-h-0 custom-scroll"
+            >
               <AnimatePresence mode="wait">
                 {activeTab === "details" && (
                   <motion.div
@@ -289,12 +321,12 @@ export const ProjectModal: React.FC<{
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -15 }}
                     transition={{ duration: 0.3 }}
-                    className="lg:grid lg:grid-cols-12 lg:gap-8 h-full flex flex-col gap-6"
+                    className="lg:grid lg:grid-cols-12 lg:gap-8 flex flex-col gap-6"
                   >
-                    {/* Left Panel: Cinema Showcase (cols 5) */}
-                    <div className="lg:col-span-5 flex flex-col gap-5">
+                    {/* Left Panel: Sticky on desktop */}
+                    <div className="lg:col-span-5 flex flex-col gap-5 lg:sticky lg:top-1 lg:h-fit">
                       {project.image && (
-                        <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden border border-slate-900/80 bg-slate-950 shrink-0 shadow-lg">
+                        <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden border border-slate-800 bg-slate-950 shrink-0 shadow-lg">
                           <img
                             src={project.image}
                             alt={project.title}
@@ -314,7 +346,7 @@ export const ProjectModal: React.FC<{
                                 href={project.href}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 hover:opacity-90 transition text-xs font-semibold text-white shadow-md shadow-purple-500/10 cursor-pointer w-full sm:w-auto"
+                                className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 hover:opacity-90 transition text-xs font-semibold text-white shadow-md shadow-purple-500/10 cursor-pointer w-full sm:w-auto animate-btn-pulse"
                               >
                                 <Icon icon="lucide:external-link" className="text-sm shrink-0" />
                                 <span>Live Demo</span>
@@ -327,7 +359,7 @@ export const ProjectModal: React.FC<{
                                 href={link.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-slate-900 border border-slate-850 hover:border-purple-500/30 hover:bg-purple-500/5 transition text-xs font-semibold text-slate-200 cursor-pointer w-full sm:w-auto"
+                                className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-purple-500/30 hover:bg-purple-500/5 transition text-xs font-semibold text-slate-200 cursor-pointer w-full sm:w-auto"
                               >
                                 <Icon icon={getLinkIcon(link.icon || "", link.label)} className="text-sm text-purple-400 shrink-0" />
                                 <span>{link.label}</span>
@@ -352,26 +384,77 @@ export const ProjectModal: React.FC<{
                       )}
                     </div>
 
-                    {/* Right Panel: Widescreen Documentation / README (cols 7) */}
-                    <div className="lg:col-span-7 flex flex-col gap-4 min-h-0 h-full">
+                    {/* Right Panel: Scrolls naturally */}
+                    <div className="lg:col-span-7 flex flex-col gap-6">
                       
                       {/* Project description box */}
-                      <div className="p-5 rounded-xl bg-slate-950/40 border border-slate-900/80 leading-relaxed text-slate-300 text-sm md:text-base font-light font-sans text-justify shrink-0">
+                      <div className="p-6 rounded-xl bg-slate-950/40 border border-slate-900/80 leading-relaxed text-slate-300 text-sm md:text-base font-light font-sans text-justify shrink-0">
                         <h4 className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2 font-mono">Project Overview</h4>
                         {project.description}
                       </div>
 
                       {/* GitHub README Viewer Terminal */}
                       {readme ? (
-                        <div className="flex-1 min-h-[300px] overflow-hidden rounded-xl border border-slate-900/80 bg-slate-950/40 flex flex-col">
-                          <div className="px-4 py-2.5 bg-slate-950 border-b border-slate-900 flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-slate-500 shrink-0 font-mono">
-                            <span>Repository Documentation</span>
-                            <Icon icon="simple-icons:github" className="text-sm text-slate-400" />
+                        <div className="w-full rounded-xl border border-white/5 bg-slate-950/20 flex flex-col shadow-2xl">
+                          <div className="px-5 py-3 bg-slate-950/80 border-b border-white/5 flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-slate-400 shrink-0 font-mono">
+                            <div className="flex items-center gap-1.5">
+                              <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+                              <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+                              <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
+                              <span className="ml-2.5 text-slate-400 font-mono">README.md</span>
+                            </div>
+                            <Icon icon="simple-icons:github" className="text-sm text-slate-500" />
                           </div>
-                          <div className="flex-1 overflow-y-auto p-5 custom-scroll bg-slate-950/10">
+                          <div className="p-6 bg-slate-950/5">
                             <div className="markdown-body custom-md-body">
                               <React.Suspense fallback={<div className="flex items-center justify-center p-8"><Spinner size={30} color="var(--brand)" /></div>}>
-                                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                <ReactMarkdown
+                                  remarkPlugins={[remarkGfm]}
+                                  components={{
+                                    img: ({ node, src, ...props }) => {
+                                      if (src && !src.startsWith("http") && !src.startsWith("data:")) {
+                                        const githubLink = project.links?.find(
+                                          (l) => l.label.toLowerCase() === "github"
+                                        );
+                                        if (githubLink) {
+                                          try {
+                                            const url = new URL(githubLink.url);
+                                            const pathSegments = url.pathname.split('/').filter(Boolean);
+                                            const owner = pathSegments[0];
+                                            const repo = pathSegments[1].replace(/\.git$/, '');
+                                            const cleanSrc = src.startsWith("./") ? src.substring(2) : src;
+                                            const absoluteSrc = `https://raw.githubusercontent.com/${owner}/${repo}/${readmeBranch}/${cleanSrc}`;
+                                            return <img src={absoluteSrc} {...props} />;
+                                          } catch (e) {
+                                            console.error("Error transforming image src in README", e);
+                                          }
+                                        }
+                                      }
+                                      return <img src={src} {...props} />;
+                                    },
+                                    a: ({ node, href, ...props }) => {
+                                      if (href && !href.startsWith("http") && !href.startsWith("#")) {
+                                        const githubLink = project.links?.find(
+                                          (l) => l.label.toLowerCase() === "github"
+                                        );
+                                        if (githubLink) {
+                                          try {
+                                            const url = new URL(githubLink.url);
+                                            const pathSegments = url.pathname.split('/').filter(Boolean);
+                                            const owner = pathSegments[0];
+                                            const repo = pathSegments[1].replace(/\.git$/, '');
+                                            const cleanHref = href.startsWith("./") ? href.substring(2) : href;
+                                            const absoluteHref = `https://github.com/${owner}/${repo}/blob/${readmeBranch}/${cleanHref}`;
+                                            return <a href={absoluteHref} target="_blank" rel="noopener noreferrer" {...props} />;
+                                          } catch (e) {
+                                            console.error("Error transforming link href in README", e);
+                                          }
+                                        }
+                                      }
+                                      return <a href={href} target="_blank" rel="noopener noreferrer" {...props} />;
+                                    }
+                                  }}
+                                >
                                   {readme}
                                 </ReactMarkdown>
                               </React.Suspense>
@@ -379,9 +462,10 @@ export const ProjectModal: React.FC<{
                           </div>
                         </div>
                       ) : (
-                        <div className="flex-1 min-h-[250px] rounded-xl border border-slate-900 bg-slate-950/15 p-5 flex flex-col items-center justify-center text-center text-slate-500 py-10">
-                          <Icon icon="lucide:terminal" className="text-3xl text-slate-700 mb-2" />
-                          <span className="text-xs font-mono">No repository documentation available.</span>
+                        <div className="w-full rounded-xl border border-slate-900/60 bg-slate-950/20 p-10 flex flex-col items-center justify-center text-center text-slate-500 py-12">
+                          <Icon icon="lucide:lock" className="text-3xl text-purple-500/80 mb-3 animate-pulse" />
+                          <span className="text-sm font-bold text-slate-200 mb-1 font-sans">Private Repository</span>
+                          <span className="text-xs font-mono text-slate-550">Documentation is restricted or private.</span>
                         </div>
                       )}
                     </div>

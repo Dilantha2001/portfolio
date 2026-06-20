@@ -10,7 +10,7 @@ import {
 } from "framer-motion";
 import { PORTFOLIO_INFO } from "../../config/portfolioData";
 import { useLenis } from "lenis/react";
-
+import { Icon } from "@iconify/react";
 
 type NavLink = { href: string; label: string };
 
@@ -19,7 +19,7 @@ export const Header: React.FC<{ links?: NavLink[] }> = ({
 }) => {
   const headerRef = useRef<HTMLElement | null>(null);
   const lenis = useLenis();
-
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const PERSONAL = PORTFOLIO_INFO.personal;
 
@@ -57,9 +57,22 @@ export const Header: React.FC<{ links?: NavLink[] }> = ({
 
   const onNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     // normal navigation for external links or router routes
-    if (!href.startsWith("#") || href.startsWith("#/")) return;
+    if (href.startsWith("#/")) {
+      setMobileMenuOpen(false);
+      return;
+    }
 
     e.preventDefault();
+    setMobileMenuOpen(false);
+
+    // If we are on the resume page, we need to go back to the homepage first
+    const isHomePage = window.location.hash === "#/" || window.location.hash === "" || !window.location.hash.includes("/resume");
+    if (!isHomePage) {
+      sessionStorage.setItem("scroll-to-section", href);
+      window.location.href = window.location.origin + window.location.pathname + "#/";
+      return;
+    }
+
     const target = document.querySelector(href);
     if (!target) return;
 
@@ -76,7 +89,7 @@ export const Header: React.FC<{ links?: NavLink[] }> = ({
 
   const { scrollY } = useScroll();
   const blurPx = useTransform(scrollY, [0, 200], [8, 16]);
-  const overlayOpacity = useTransform(scrollY, [0, 200], [0.08, 0.14]);
+  const overlayOpacity = useTransform(scrollY, [0, 200], [0.05, 0.12]);
   const backdrop = useMotionTemplate`blur(${blurPx}px)`;
 
   const BASE = import.meta.env.BASE_URL || "/";
@@ -84,34 +97,38 @@ export const Header: React.FC<{ links?: NavLink[] }> = ({
   return (
     <motion.header
       ref={headerRef}
-      className="fixed top-0 left-0 z-50 w-full border-b border-purple-950/20 bg-[#020617]/70 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.4),0_1px_0px_rgba(168,85,247,0.05)]"
+      className="fixed top-0 left-0 z-50 w-full border-b border-white/10 bg-slate-950/60 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.3)] transition-all duration-300"
       style={{ backdropFilter: backdrop, WebkitBackdropFilter: backdrop }}
     >
-      {/* animated overlay to add subtle tint regardless of theme */}
+      {/* animated overlay */}
       <motion.div
         aria-hidden
-        className="absolute inset-0 pointer-events-none bg-black/20"
+        className="absolute inset-0 pointer-events-none bg-black/10"
         style={{
           opacity: overlayOpacity,
         }}
       />
-      <div className="relative max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="relative w-full px-6 py-3 flex items-center justify-between">
         {/* Left: brand/home */}
         <a
           href={BASE}
           className="flex items-center gap-3 text-lg font-semibold text-white group"
         >
-          
           <span className="sr-only">Home</span>
-          <div className="hidden sm:block leading-tight">
-            <div className="font-extrabold text-white filter drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] group-hover:text-purple-400 transition-colors duration-300">{PERSONAL.name}</div>
-            <div className="text-[10px] text-white filter drop-shadow-[0_0_6px_rgba(255,255,255,0.2)] font-semibold tracking-wider uppercase font-mono mt-0.5">{PERSONAL.title}</div>
+          <div className="leading-tight">
+            <div className="font-bold text-sm sm:text-base text-white tracking-tight group-hover:text-purple-400 transition-colors duration-300">
+              {PERSONAL.name}
+            </div>
+            <div className="text-[9px] text-slate-400 font-semibold tracking-widest uppercase font-mono mt-0.5 hidden sm:block">
+              {PERSONAL.title}
+            </div>
           </div>
         </a>
 
-        {/* Right: nav + theme + Try CLI */}
-        <nav aria-label="Primary" className="relative flex items-center gap-3">
-          <div className="relative hidden sm:flex gap-6 items-center">
+        {/* Right: nav menu */}
+        <nav aria-label="Primary" className="relative flex items-center">
+          {/* Desktop Links */}
+          <div className="relative hidden sm:flex gap-1 items-center bg-white/5 border border-white/5 backdrop-blur-md rounded-full p-1">
             {links.map((l) => {
               const isActive = active === l.href;
               return (
@@ -119,22 +136,20 @@ export const Header: React.FC<{ links?: NavLink[] }> = ({
                   key={l.href}
                   href={l.href}
                   onClick={(e) => onNavClick(e, l.href)}
-                  className={`relative px-1 py-0.5 text-sm font-bold transition-all duration-300 ${
-                    isActive 
-                      ? "text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-500 filter drop-shadow-[0_0_8px_rgba(168,85,247,0.2)]" 
-                      : "text-slate-200 filter drop-shadow-[0_0_5px_rgba(255,255,255,0.15)] hover:text-purple-400 hover:scale-105"
+                  className={`relative px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors duration-300 ${
+                    isActive ? "text-white" : "text-slate-400 hover:text-white"
                   }`}
                 >
-                  {l.label}
-                  <AnimatePresence initial={false}>
+                  <span className="relative z-10">{l.label}</span>
+                  <AnimatePresence>
                     {isActive && (
                       <motion.span
-                        layoutId="nav-underline"
-                        className="absolute left-0 right-0 -bottom-1 h-[2.5px] rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-[0_0_12px_rgba(168,85,247,0.6)]"
+                        layoutId="nav-pill"
+                        className="absolute inset-0 rounded-full bg-white/10 border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]"
                         transition={{
                           type: "spring",
-                          stiffness: 500,
-                          damping: 40,
+                          stiffness: 400,
+                          damping: 30,
                         }}
                       />
                     )}
@@ -144,8 +159,55 @@ export const Header: React.FC<{ links?: NavLink[] }> = ({
             })}
           </div>
 
-        
+          {/* Mobile Menu Toggle Button */}
+          <div className="flex items-center sm:hidden">
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="text-white hover:text-purple-400 transition-colors duration-200 focus:outline-none p-2 bg-white/5 border border-white/10 rounded-full flex items-center justify-center"
+              aria-label="Toggle Menu"
+            >
+              <Icon
+                icon={mobileMenuOpen ? "lucide:x" : "lucide:menu"}
+                className="w-4 h-4"
+              />
+            </button>
+          </div>
         </nav>
+
+        {/* Mobile Menu Dropdown */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -15, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -15, scale: 0.95 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="absolute top-full left-0 right-0 mt-3 p-3 bg-slate-950/95 border border-white/10 backdrop-blur-2xl rounded-2xl flex flex-col gap-2 shadow-2xl z-40"
+            >
+              {links.map((l) => {
+                const isActive = active === l.href;
+                return (
+                  <a
+                    key={l.href}
+                    href={l.href}
+                    onClick={(e) => {
+                      onNavClick(e, l.href);
+                      setMobileMenuOpen(false);
+                    }}
+                    className={`px-4 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors duration-200 flex items-center justify-between ${
+                      isActive
+                        ? "text-white bg-white/10 border border-white/10"
+                        : "text-slate-400 hover:text-white hover:bg-white/5"
+                    }`}
+                  >
+                    {l.label}
+                    {isActive && <div className="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_8px_#a855f7]" />}
+                  </a>
+                );
+              })}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </motion.header>
   );

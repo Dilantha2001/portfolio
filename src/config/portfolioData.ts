@@ -305,7 +305,7 @@ export const PORTFOLIO_INFO: Portfolio = {
       links: [
         {
           label: "GitHub",
-          url: "https://github.com/Dilantha2001/BookShop",
+          url: "https://github.com/Dilantha2001/BookStore",
           icon: "SiGithub",
         },
       ],

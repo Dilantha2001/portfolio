@@ -1,3 +1,4 @@
+// Preloader.tsx
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -15,10 +16,10 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
     const checkCompletion = () => {
       if (resourcesLoaded && minTimeElapsed) {
         setShow(false);
-        // Trigger onComplete callback after the fade-out animation finishes
+        // Trigger onComplete callback after the slide-up animation finishes
         const completeTimeout = setTimeout(() => {
           onComplete();
-        }, 800);
+        }, 900);
         return () => clearTimeout(completeTimeout);
       }
     };
@@ -35,18 +36,18 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
       window.addEventListener("load", handleLoad);
     }
 
-    // Minimum display duration for visual polish (1.3 seconds)
+    // Minimum display duration for visual polish (2.8 seconds)
     const minTimer = setTimeout(() => {
       minTimeElapsed = true;
       checkCompletion();
-    }, 1300);
+    }, 2800);
 
-    // Fallback release if resources are taking too long (3.5 seconds)
+    // Fallback release if resources are taking too long (4.5 seconds)
     const fallbackTimer = setTimeout(() => {
       resourcesLoaded = true;
       minTimeElapsed = true;
       checkCompletion();
-    }, 3500);
+    }, 4500);
 
     return () => {
       window.removeEventListener("load", handleLoad);
@@ -59,49 +60,87 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
     <AnimatePresence>
       {show && (
         <motion.div
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
-          className="fixed inset-0 bg-[#030712] z-[99999] flex flex-col items-center justify-center select-none"
+          initial={{ y: 0 }}
+          exit={{ y: "-100%" }}
+          transition={{ duration: 0.85, ease: [0.76, 0, 0.24, 1] }}
+          className="fixed inset-0 bg-[#020617] z-[99999] flex flex-col items-center justify-center select-none"
         >
           {/* Ambient Glowing Backdrop Aura */}
-          <div className="absolute w-[400px] h-[400px] rounded-full bg-purple-500/10 blur-[90px] pointer-events-none" />
-          <div className="absolute w-[300px] h-[300px] rounded-full bg-indigo-500/5 blur-[80px] pointer-events-none translate-y-10" />
+          <div className="absolute w-[450px] h-[450px] rounded-full bg-purple-600/5 blur-[120px] pointer-events-none" />
+          <div className="absolute w-[350px] h-[350px] rounded-full bg-indigo-600/5 blur-[100px] pointer-events-none translate-y-10" />
 
-          <div className="relative z-10 flex flex-col items-center gap-6 w-full max-w-xs">
-            {/* Spinning Neon Gradient Ring */}
-            <div className="relative w-24 h-24 flex items-center justify-center">
-              {/* Rotating outer border */}
+          <div className="relative z-10 flex flex-col items-center gap-8 w-full max-w-xs">
+            {/* Stylized Animated Tech Logo (Isometric 3D Cube) */}
+            <motion.div
+              animate={{ y: [0, -6, 0] }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="relative w-28 h-28 flex items-center justify-center"
+            >
+              {/* Soft outer glow ring with breathing pulse */}
               <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 2.2, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-[0_0_35px_rgba(139,92,246,0.3)]"
+                animate={{
+                  scale: [0.93, 1.07, 0.93],
+                  opacity: [0.4, 0.8, 0.4],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="absolute inset-2 rounded-full border border-purple-500/5 shadow-[0_0_40px_rgba(124,58,237,0.15)] pointer-events-none"
               />
-              {/* Inner dark circle to construct border */}
-              <div className="absolute inset-[2.5px] rounded-full bg-[#030712] z-10" />
 
-              {/* Pulsing Brand Logo inside */}
-              <motion.div
-                animate={{ scale: [0.93, 1.07, 0.93] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center z-20"
-              >
-                <img
-                  src="./favicon.svg"
-                  alt="Logo"
-                  className="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(168,85,247,0.5)]"
+              <svg className="w-20 h-20 relative z-20" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <filter id="neon-glow" x="-30%" y="-30%" width="160%" height="160%">
+                    <feGaussianBlur stdDeviation="3.5" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                </defs>
+
+                {/* Isometric Cube Outer Perimeter */}
+                <motion.path
+                  d="M 50 22 L 75 36 L 75 64 L 50 78 L 25 64 L 25 36 Z"
+                  stroke="#ffffff"
+                  strokeWidth="3.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 1.8, ease: [0.25, 1, 0.5, 1] }}
+                  filter="url(#neon-glow)"
                 />
-              </motion.div>
-            </div>
 
-            {/* Glowing Brand Status Labels */}
-            <div className="text-center flex flex-col gap-1 mt-1">
-              <span className="text-[10px] font-mono tracking-[0.25em] text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 uppercase font-bold animate-pulse">
-                Initializing Portal
-              </span>
-              <span className="text-[11px] font-bold text-slate-400/80 font-sans tracking-wide uppercase">
-                Loading Experience
-              </span>
+                {/* Isometric Cube Inner Y-Shape */}
+                <motion.path
+                  d="M 50 50 L 50 22 M 50 50 L 25 64 M 50 50 L 75 64"
+                  stroke="#ffffff"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 1.5, ease: [0.25, 1, 0.5, 1], delay: 0.3 }}
+                  filter="url(#neon-glow)"
+                />
+              </svg>
+            </motion.div>
+
+            {/* Smooth GPU-Accelerated Progress Bar */}
+            <div className="w-44 h-[2px] bg-white/5 rounded-full overflow-hidden relative border border-white/5 shadow-inner">
+              <motion.div
+                initial={{ width: "0%" }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 2.8, ease: [0.22, 1, 0.36, 1] }}
+                className="h-full bg-white shadow-[0_0_8px_#ffffff]"
+              />
             </div>
           </div>
         </motion.div>

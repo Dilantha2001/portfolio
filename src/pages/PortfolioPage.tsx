@@ -42,6 +42,28 @@ const PortfolioPage: React.FC = () => {
   const secondPageRef = useRef<HTMLDivElement>(null);
   const lenis = useLenis();
 
+  useEffect(() => {
+    // Check if we navigated here from another page and need to scroll
+    const targetSection = sessionStorage.getItem("scroll-to-section");
+    if (targetSection) {
+      sessionStorage.removeItem("scroll-to-section");
+      
+      // Wait for a short moment to ensure elements are mounted
+      setTimeout(() => {
+        const target = document.querySelector(targetSection);
+        if (target) {
+          const header = document.querySelector("header");
+          const headerH = header?.offsetHeight ?? 0;
+          if (lenis) {
+            lenis.scrollTo(target as HTMLElement, { offset: -headerH, duration: 1.2 });
+          } else {
+            const y = target.getBoundingClientRect().top + window.scrollY - headerH;
+            window.scrollTo({ top: y, behavior: "smooth" });
+          }
+        }
+      }, 500);
+    }
+  }, [loading, lenis]);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -116,7 +138,7 @@ const PortfolioPage: React.FC = () => {
           className="relative w-full h-screen z-10 flex items-center justify-center bg-black"
         >
           {/* Video Background */}
-          <div className="absolute inset-0 z-0 ">
+          <div className="absolute inset-0 z-0">
             <video
               src="/video.mp4"
               autoPlay
@@ -126,6 +148,8 @@ const PortfolioPage: React.FC = () => {
               preload="metadata"
               className="absolute left-0 top-1/2 -translate-y-1/2 w-full aspect-[700/846] object-cover md:absolute md:inset-0 md:translate-y-0 md:w-full md:h-full md:aspect-auto md:object-cover"
             />
+            {/* Gradient overlay fading to black at the bottom for smooth transition */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none" />
           </div>
 
           {/* Hero Content */}
