@@ -9,8 +9,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "deploy": "gh-pages -d dist",
-    "tw:init": "tailwindcss init -p"
+    "tw:init": "tailwindcss init -p",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.8",
