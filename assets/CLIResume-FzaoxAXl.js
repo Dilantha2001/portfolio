@@ -1,0 +1,56 @@
+import{r as m,P as M,j as a}from"./index-BxxhqSs4.js";const z="https://portfolio-rag-tau.vercel.app",o=M;function J({className:p=""}){return a.jsxs(a.Fragment,{children:[a.jsx("span",{className:"pr-1",children:"🤖"}),a.jsxs("span",{className:`inline-flex items-center gap-1 ${p}`,"aria-hidden":!0,children:[a.jsx("span",{className:"w-1.5 h-1.5 rounded-full animate-bounce",style:{background:"var(--brand)",animationDelay:"0s"}}),a.jsx("span",{className:"w-1.5 h-1.5 rounded-full animate-bounce",style:{background:"var(--brand)",animationDelay:"0.12s"}}),a.jsx("span",{className:"w-1.5 h-1.5 rounded-full animate-bounce",style:{background:"var(--brand)",animationDelay:"0.24s"}})]})]})}function K({open:p=!1,onClose:x}){const[u,g]=m.useState(p),[b,$]=m.useState(!1),[N,L]=m.useState(!1),[k,f]=m.useState(""),[R,w]=m.useState([{kind:"out",text:'Welcome — type "help" to see commands.'},{kind:"out",text:`Loaded resume for ${o.personal.name} (${o.personal.title})
+`}]),[y,C]=m.useState(!1),[h,U]=m.useState([]),[j,v]=m.useState(null),D=m.useRef(null),O=m.useRef(null);m.useEffect(()=>g(p),[p]),m.useEffect(()=>{u&&!b&&D.current?.focus()},[u,b]),m.useEffect(()=>{O.current?.scrollTo({top:O.current.scrollHeight,behavior:"smooth"})},[R]),m.useEffect(()=>{function s(r){u&&(r.key==="Escape"&&T(),r.key==="m"&&(r.ctrlKey||r.metaKey)&&(r.preventDefault(),$(l=>!l)))}return window.addEventListener("keydown",s),()=>window.removeEventListener("keydown",s)},[u]);function T(){g(!1),$(!1),L(!1),x?.()}async function t(s,r=18){return new Promise(l=>{const c=Math.random().toString(36).slice(2);w(i=>[...i,{kind:"out",text:"",meta:{id:c}}]);let e=0;function n(){e++,w(i=>i.map(d=>d.meta?.id===c?{...d,text:s.slice(0,e)}:d)),e<s.length?setTimeout(n,r+Math.random()*8):(w(i=>i.map(d=>d.meta?.id===c?{kind:"out",text:s}:d)),l())}n()})}function F(s,r="resume.json"){const l=new Blob([JSON.stringify(s,null,2)],{type:"application/json"}),c=URL.createObjectURL(l),e=document.createElement("a");e.href=c,e.download=r,document.body.appendChild(e),e.click(),e.remove(),URL.revokeObjectURL(c)}async function E(s){const r=s.trim();if(!r)return;w(e=>[...e,{kind:"cmd",text:`$ ${r}`}]),U(e=>[...e,r]),v(null);const[l,...c]=r.split(/\s+/);try{switch(l.toLowerCase()){case"help":await t(["help — List available commands","about — Short intro & summary","whoami — Name & title","skills — Show grouped skills","projects — List featured projects","experience — List work roles (ids shown)","role <id> — Show role detail","open <id|resume> — Open project/role/resume in new tab","resume --pdf — Open pre-rendered PDF resume (if provided)","resume --json — Download resume JSON","contact — Show contact links","clear — Clear terminal"].join(`
+`)+`
+`,6);break;case"about":{const e=o.personal,n=o.summary??e.summary??e.headline??"";await t(`${e.name} — ${e.title}
+
+${n}
+`),o?.highlights?.length&&await t(`
+Highlights:
+- ${o.highlights.join(`
+- `)}
+`);break}case"whoami":await t(`${o.personal.name} — ${o.personal.title}
+`);break;case"skills":if(!o.skills||o.skills.length===0){await t(`No skills defined in resume.
+`);break}for(const e of o.skills)await t(`${e.title??"Skills"}: ${e.skills.map(n=>n.name).join(", ")}
+`,8);break;case"projects":if(!o.projects||o.projects.length===0){await t(`No projects listed.
+`);break}for(const e of o.projects)await t(`${e.id??"(no-id)"}: ${e.title} — ${e.short??e.description??""}
+`,10);await t(`
+Open a project: open <project-id>
+`);break;case"experience":if(!o.experience||o.experience.length===0){await t(`No experience entries.
+`);break}for(const e of o.experience)await t(`${e.id??"(no-id)"}: ${e.title} @ ${e.company??""} — ${P(e.date)}
+`,6);await t(`
+View role details: role <id>
+`);break;case"role":{const e=c[0];if(!e){await t(`Usage: role <id>
+`);break}const n=(o.experience||[]).find(i=>i.id===e);if(!n){await t(`No role found with id "${e}". Use 'experience' to list ids.
+`);break}if(await t(`${n.title} @ ${n.company??""} — ${P(n.date)}
+
+`,6),n.summary&&await t(`${n.summary}
+
+`),n.bullets)for(const i of n.bullets)await t(`- ${i}
+`,6);n?.tech?.length&&await t(`Tech: ${n.tech.join(", ")}
+`,6),n.link&&await t(`Company: ${n.link}
+`,6);break}case"open":{const e=c[0];if(!e){await t(`Usage: open <project-id|role-id|resume>
+`);break}if(e==="resume"){const S=o.meta?.pdf??o.meta?.url??o.personal.contact?.website;S?(await t(`Opening resume at ${S}
+`),window.open(S,"_blank","noopener")):await t(`No resume URL found in resume.meta or personal.contact.website.
+`);break}const n=(o.projects||[]).find(d=>d.id===e);if(n){const d=n.href||n.links?.[0]?.url;d?(await t(`Opening ${n.title} -> ${d}
+`),window.open(d,"_blank","noopener")):await t(`${n.title} has no href/links.
+`);break}const i=(o.experience||[]).find(d=>d.id===e);if(i){i.link?(await t(`Opening ${i.company} -> ${i.link}
+`),window.open(i.link,"_blank","noopener")):await t(`${i.title} has no company link.
+`);break}await t(`No project or role found with id "${e}".
+`);break}case"resume":{const e=c[0];if(e==="--pdf"){const n=o.meta?.pdf;n?(await t(`Opening PDF resume: ${n}
+`),window.open(n,"_blank","noopener")):await t(`No PDF available (resume.meta.pdf not set).
+`)}else if(e==="--json")await t(`Downloading resume JSON.
+`),F(o,`${o.personal.name.replace(/\s+/g,"_")}_resume.json`);else{const n=o.meta?.url??o.meta?.pdf??o.personal.contact?.website;n?(await t(`Opening ${n}
+`),window.open(n,"_blank","noopener")):await t(`No resume URL or PDF found in resume.meta.
+`)}break}case"contact":{const e=o.personal.contact;if(!e)await t(`No contact info.
+`);else if(e.email&&await t(`Email: ${e.email}
+`),e.phone&&await t(`Phone: ${e.phone}
+`),e.website&&await t(`Website: ${e.website}
+`),e.location&&await t(`Location: ${e.location}
+`),e?.socials?.length)for(const n of e.socials)await t(`${n.label}: ${n.url}
+`,6);break}case"clear":w([]),await t(`(terminal cleared)
+`);break;default:C(!0);try{const e=await _(r);if(C(!1),e?.answer){const n=e.answer;await t("🤖	"+n+`
+`,6)}else await t(`Unknown command: ${r}
+`)}catch(e){await t(`Error querying API: ${e.message}
+`)}break}}catch(e){await t(`Error: ${e.message}
+`)}finally{C(!1)}}function H(s){if(s.key==="Enter"){s.preventDefault();const r=k;f(""),E(r)}else if(s.key==="ArrowUp"){if(s.preventDefault(),h.length===0)return;const r=j===null?h.length-1:Math.max(0,j-1);v(r),f(h[r])}else if(s.key==="ArrowDown"){if(s.preventDefault(),h.length===0||j===null)return;const r=Math.min(h.length-1,j+1);v(r),f(h[r]||""),r===h.length-1&&(v(null),f(""))}else if(s.key==="Tab"){s.preventDefault();const l=["help","about","skills","projects","experience","role","open","resume","contact","clear"].find(c=>c.startsWith(k));l&&f(l+(l==="open"||l==="role"?" ":""))}}function I(){return R.map((s,r)=>s.kind==="cmd"?a.jsxs("div",{className:"whitespace-pre-wrap",style:{color:"var(--text)"},children:[a.jsx("span",{style:{color:"var(--brand)"},children:"$"})," ",a.jsx("span",{children:s.text.replace(/^\$\s*/,"")})]},r):a.jsx("pre",{className:"whitespace-pre-wrap leading-relaxed",style:{color:"var(--text)",margin:0},children:s.text},r))}async function _(s){const r=`${z}/api/query`;return await(await fetch(r,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({q:s})})).json()}return u?a.jsxs(a.Fragment,{children:[a.jsx("div",{className:`fixed inset-0 transition-opacity ${N?"bg-black/60":"pointer-events-none"} z-[100]`,"aria-hidden":!0}),a.jsx("div",{className:"fixed z-[100] bottom-4 left-1/2 transform -translate-x-1/2 px-4",role:"dialog","aria-modal":"true",children:a.jsx("div",{className:`w-full max-w-4xl transition-all transform
+            ${N?"h-full mt-0 rounded-none":b?"h-12":"h-[420px] rounded-xl"} border shadow-2xl overflow-hidden`,style:{background:"var(--surface)",borderColor:"var(--border)",backdropFilter:"blur(6px)"},children:a.jsxs("div",{className:"h-full grid",style:{gridTemplateRows:"auto 1fr auto"},children:[a.jsxs("div",{className:"flex items-center gap-3 px-3 py-2 border-b border-slate-700",children:[a.jsxs("div",{className:"flex items-center gap-2",children:[a.jsx("button",{onClick:T,title:"Close",className:"w-3 h-3 rounded-full shadow-sm transform hover:scale-110","aria-label":"Close terminal",children:a.jsx("span",{className:"block w-3 h-3 bg-red-500 rounded-full"})}),a.jsx("button",{onClick:()=>$(s=>!s),title:"Minimize",className:"w-3 h-3 rounded-full shadow-sm transform hover:scale-110","aria-label":"Minimize terminal",children:a.jsx("span",{className:"block w-3 h-3 bg-amber-500 rounded-full"})}),a.jsx("button",{onClick:()=>L(s=>!s),title:"Toggle fullscreen",className:"w-3 h-3 rounded-full shadow-sm transform hover:scale-110","aria-label":"Toggle fullscreen",children:a.jsx("span",{className:"block w-3 h-3 bg-green-500 rounded-full"})})]}),a.jsxs("div",{className:"ml-3 flex items-center gap-2",children:[a.jsx("div",{className:"text-xs font-medium text-[var(--text)] bg-[var(--bg)] px-2 py-0.5 rounded-sm",children:"Terminal"}),a.jsxs("div",{className:"text-xs text-white ml-2",children:["bash —"," ",o.personal.name.toLowerCase().replace(/\s+/g,""),"@portfolio"]})]}),a.jsxs("div",{className:"ml-auto flex items-center gap-3 text-white text-xs",children:[a.jsxs("div",{className:"hidden sm:block",children:["Press"," ",a.jsx("span",{className:"font-mono text-[var(--text)] bg-[var(--bg)] px-1 rounded",children:"Tab"})," ","to autocomplete"]}),a.jsx("button",{onClick:()=>{w([]),f("")},className:"text-xs px-2 py-1 rounded hover:bg-[var(--bg)] cursor-pointer",children:"Clear"})]})]}),b?a.jsxs("div",{className:"flex items-center px-4 text-sm",style:{color:"var(--muted)"},children:[a.jsx("div",{className:"font-mono mr-2",style:{color:"var(--brand)"},children:"$"}),a.jsx("div",{className:"truncate",children:"terminal — minimized. Click the yellow dot to restore or the red dot to close."})]}):a.jsxs("div",{ref:O,className:"min-h-0 overflow-y-auto font-mono text-sm p-4","aria-live":"polite",style:{maxHeight:N?"calc(100vh - 120px)":"70vh",background:"transparent",color:"var(--text)"},onWheel:s=>{const r=s.currentTarget,l=r.scrollTop===0&&s.deltaY<0,c=Math.ceil(r.scrollTop+r.clientHeight)>=r.scrollHeight&&s.deltaY>0;(l||c)&&s.stopPropagation()},children:[I(),y&&a.jsx(J,{className:"ml-2"})]}),!b&&a.jsxs("div",{className:"px-4 py-3 flex items-center gap-3",style:{borderTop:"1px solid",borderTopColor:"var(--border)",background:"transparent"},children:[a.jsx("span",{className:"font-mono",style:{color:"var(--brand)"},children:"$"}),a.jsx("input",{ref:D,value:k,onChange:s=>f(s.target.value),onKeyDown:H,placeholder:y?"processing.":'type "help" and press Enter',className:"flex-1 bg-transparent outline-none text-sm font-mono",disabled:y,"aria-label":"CLI command input",autoComplete:"off",spellCheck:!1,style:{color:"var(--text)",caretColor:"var(--brand)"}}),a.jsx("button",{onClick:()=>{E(k),f(""),D.current?.focus()},className:"inline-flex items-center gap-2 px-3 py-1.5 rounded text-sm","aria-label":"Run command",disabled:y,style:{background:"var(--brand)",color:"white",boxShadow:"0 1px 0 rgba(0,0,0,0.05)"},children:"Run"})]})]})})})]}):null}function P(p){if(!p)return"";if(typeof p=="string")return p;const{start:x,end:u,present:g}=p;return g?`${x??""} - Present`:`${x??""}${u?" - "+u:""}`.trim()}export{K as default};
