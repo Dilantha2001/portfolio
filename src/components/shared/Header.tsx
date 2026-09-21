@@ -1,16 +1,14 @@
 // Header.tsx
-import React, { useEffect, useRef, useState } from "react";
-import {
-  motion,
-  AnimatePresence,
-  useScroll,
-  useTransform,
-  animate,
-  useMotionTemplate,
-} from "framer-motion";
+import React, { useRef, useState, useEffect } from "react";
 import { PORTFOLIO_INFO } from "../../config/portfolioData";
 import { useLenis } from "lenis/react";
 import { Icon } from "@iconify/react";
+import { useTheme } from "../../context/ThemeContext";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 type NavLink = { href: string; label: string };
 
@@ -20,10 +18,13 @@ export const Header: React.FC<{ links?: NavLink[] }> = ({
   const headerRef = useRef<HTMLElement | null>(null);
   const lenis = useLenis();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { dark, toggle } = useTheme();
 
   const PERSONAL = PORTFOLIO_INFO.personal;
+  const firstName = PERSONAL.name.split(" ")[0].toUpperCase();
 
   const [active, setActive] = useState<string>(links[0]?.href ?? "#about");
+  
   useEffect(() => {
     const sections = links
       .map((l) =>
@@ -45,15 +46,29 @@ export const Header: React.FC<{ links?: NavLink[] }> = ({
     return () => obs.disconnect();
   }, [links]);
 
-  const springScrollTo = (y: number) => {
-    const controls = animate(window.scrollY, y, {
-      type: "spring",
-      stiffness: 200,
-      damping: 30,
-      onUpdate: (latest) => window.scrollTo(0, latest),
+  useGSAP(() => {
+    if (!headerRef.current) return;
+    
+    // Auto-hide navbar on scroll down, show on scroll up
+    const showAnim = gsap.from(headerRef.current, { 
+      yPercent: -100,
+      paused: true,
+      duration: 0.3,
+      ease: "power2.out"
+    }).progress(1);
+
+    ScrollTrigger.create({
+      start: "top top",
+      end: "max",
+      onUpdate: (self) => {
+        if (self.direction === -1) {
+          showAnim.play(); // scrolling up
+        } else if (self.direction === 1 && self.scrollY > 100) {
+          showAnim.reverse(); // scrolling down
+        }
+      }
     });
-    return () => controls.stop();
-  };
+  }, { scope: headerRef });
 
   const onNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     // normal navigation for external links or router routes
@@ -83,132 +98,129 @@ export const Header: React.FC<{ links?: NavLink[] }> = ({
       lenis.scrollTo(target as HTMLElement, { offset: -headerH, duration: 1.2 });
     } else {
       const y = target.getBoundingClientRect().top + window.scrollY - headerH;
-      springScrollTo(y);
+      window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
 
-  const { scrollY } = useScroll();
-  const blurPx = useTransform(scrollY, [0, 200], [8, 16]);
-  const overlayOpacity = useTransform(scrollY, [0, 200], [0.05, 0.12]);
-  const backdrop = useMotionTemplate`blur(${blurPx}px)`;
-
   const BASE = import.meta.env.BASE_URL || "/";
 
+  // Split links for Desktop
+  const leftLinks = links.slice(0, 2);
+  const rightLinks = links.slice(2);
+
   return (
-    <motion.header
+    <header
       ref={headerRef}
-      className="fixed top-0 left-0 z-50 w-full border-b border-white/10 bg-slate-950/60 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.3)] transition-all duration-300"
-      style={{ backdropFilter: backdrop, WebkitBackdropFilter: backdrop }}
+      className="fixed top-0 left-0 z-50 w-full bg-slate-950/80 backdrop-blur-xl border-b border-white/5 shadow-2xl transition-all duration-300"
     >
-      {/* animated overlay */}
-      <motion.div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none bg-black/10"
-        style={{
-          opacity: overlayOpacity,
-        }}
-      />
-      <div className="relative w-full px-6 py-3 flex items-center justify-between">
-        {/* Left: brand/home */}
-        <a
-          href={BASE}
-          className="flex items-center gap-3 text-lg font-semibold text-white group"
-        >
-          <span className="sr-only">Home</span>
-          <div className="leading-tight">
-            <div className="font-bold text-sm sm:text-base text-white tracking-tight group-hover:text-purple-400 transition-colors duration-300">
-              {PERSONAL.name}
-            </div>
-            <div className="text-[11px] text-slate-400 font-semibold tracking-widest uppercase font-mono mt-0.5 hidden sm:block">
-              {PERSONAL.title}
-            </div>
-          </div>
-        </a>
-
-        {/* Right: nav menu */}
-        <nav aria-label="Primary" className="relative flex items-center">
-          {/* Desktop Links */}
-          <div className="relative hidden sm:flex gap-1 items-center bg-white/5 border border-white/5 backdrop-blur-md rounded-full p-1">
-            {links.map((l) => {
-              const isActive = active === l.href;
-              return (
-                <a
-                  key={l.href}
-                  href={l.href}
-                  onClick={(e) => onNavClick(e, l.href)}
-                  className={`relative px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors duration-300 ${
-                    isActive ? "text-white" : "text-slate-400 hover:text-white"
-                  }`}
-                >
-                  <span className="relative z-10">{l.label}</span>
-                  <AnimatePresence>
-                    {isActive && (
-                      <motion.span
-                        layoutId="nav-pill"
-                        className="absolute inset-0 rounded-full bg-white/10 border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]"
-                        transition={{
-                          type: "spring",
-                          stiffness: 400,
-                          damping: 30,
-                        }}
-                      />
-                    )}
-                  </AnimatePresence>
-                </a>
-              );
-            })}
-          </div>
-
-          {/* Mobile Menu Toggle Button */}
-          <div className="flex items-center sm:hidden">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-white hover:text-purple-400 transition-colors duration-200 focus:outline-none p-2 bg-white/5 border border-white/10 rounded-full flex items-center justify-center"
-              aria-label="Toggle Menu"
-            >
-              <Icon
-                icon={mobileMenuOpen ? "lucide:x" : "lucide:menu"}
-                className="w-4 h-4"
-              />
-            </button>
-          </div>
+      <div className="max-w-[1800px] mx-auto w-full px-6 py-4 flex items-center justify-between">
+        
+        {/* ================= DESKTOP LAYOUT ================= */}
+        
+        {/* Left Links */}
+        <nav className="hidden sm:flex flex-1 justify-start items-center gap-8">
+          {leftLinks.map((l) => {
+            const isActive = active === l.href;
+            return (
+              <a
+                key={l.href}
+                href={l.href}
+                onClick={(e) => onNavClick(e, l.href)}
+                className={`text-sm font-medium transition-colors duration-300 ${
+                  isActive ? "text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]" : "text-slate-400 hover:text-white"
+                }`}
+              >
+                {l.label}
+              </a>
+            );
+          })}
         </nav>
 
-        {/* Mobile Menu Dropdown */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -15, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -15, scale: 0.95 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="absolute top-full left-0 right-0 mt-3 p-3 bg-slate-950/95 border border-white/10 backdrop-blur-2xl rounded-2xl flex flex-col gap-2 shadow-2xl z-40"
-            >
-              {links.map((l) => {
-                const isActive = active === l.href;
-                return (
-                  <a
-                    key={l.href}
-                    href={l.href}
-                    onClick={(e) => {
-                      onNavClick(e, l.href);
-                      setMobileMenuOpen(false);
-                    }}
-                    className={`px-4 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors duration-200 flex items-center justify-between ${
-                      isActive
-                        ? "text-white bg-white/10 border border-white/10"
-                        : "text-slate-400 hover:text-white hover:bg-white/5"
-                    }`}
-                  >
-                    {l.label}
-                    {isActive && <div className="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_8px_#a855f7]" />}
-                  </a>
-                );
-              })}
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Center Logo */}
+        <div className="flex-shrink-0 flex justify-center group cursor-pointer">
+          <a
+            href={BASE}
+            className="flex items-center gap-2 text-2xl font-black text-white tracking-[0.2em] group-hover:scale-105 transition-transform duration-300"
+          >
+            {/* You can replace this with an actual SVG logo if you have one */}
+            <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">
+              {firstName}
+            </span>
+          </a>
+        </div>
+
+        {/* Right Links */}
+        <nav className="hidden sm:flex flex-1 justify-end items-center gap-8">
+          {rightLinks.map((l) => {
+            const isActive = active === l.href;
+            return (
+              <a
+                key={l.href}
+                href={l.href}
+                onClick={(e) => onNavClick(e, l.href)}
+                className={`text-sm font-medium transition-colors duration-300 ${
+                  isActive ? "text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]" : "text-slate-400 hover:text-white"
+                }`}
+              >
+                {l.label}
+              </a>
+            );
+          })}
+          
+          {/* Dark Mode Toggle */}
+          <button
+            onClick={toggle}
+            className="text-slate-400 hover:text-white transition-colors duration-200 focus:outline-none"
+            aria-label="Toggle Dark Mode"
+          >
+            <Icon icon={dark ? "lucide:sun" : "lucide:moon"} className="w-4 h-4" />
+          </button>
+        </nav>
+
+        {/* ================= MOBILE LAYOUT (HAMBURGER) ================= */}
+        <div className="flex items-center sm:hidden">
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="text-white focus:outline-none p-2"
+            aria-label="Toggle Menu"
+          >
+            <Icon
+              icon={mobileMenuOpen ? "lucide:x" : "lucide:menu"}
+              className="w-6 h-6"
+            />
+          </button>
+        </div>
       </div>
-    </motion.header>
+
+      {/* Mobile Menu Dropdown */}
+      {mobileMenuOpen && (
+        <div className="absolute top-full left-0 w-full bg-slate-950/95 border-b border-white/10 backdrop-blur-2xl flex flex-col p-4 gap-4 shadow-2xl sm:hidden">
+          {links.map((l) => {
+            const isActive = active === l.href;
+            return (
+              <a
+                key={l.href}
+                href={l.href}
+                onClick={(e) => onNavClick(e, l.href)}
+                className={`px-4 py-3 rounded-lg text-sm font-medium tracking-wide transition-colors duration-200 flex items-center justify-between ${
+                  isActive
+                    ? "text-white bg-white/10"
+                    : "text-slate-400 hover:text-white"
+                }`}
+              >
+                {l.label}
+              </a>
+            );
+          })}
+          <button
+            onClick={toggle}
+            className="px-4 py-3 text-slate-400 hover:text-white text-sm font-medium flex items-center gap-2"
+          >
+            <Icon icon={dark ? "lucide:sun" : "lucide:moon"} className="w-4 h-4" />
+            Toggle Theme
+          </button>
+        </div>
+      )}
+    </header>
   );
 };

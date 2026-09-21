@@ -3,10 +3,9 @@ import { ThemeProvider } from "../components/ThemeProvider";
 import { Header } from "../components/shared/Header";
 import { Footer } from "../components/shared/Footer";
 import { PORTFOLIO_INFO } from "../config/portfolioData";
-import { Preloader } from "../components/Preloader";
 import type { Project } from "../types/portfolio";
 import { ProjectModal } from "../components/ProjectModal";
-import { ScrollProgressBar } from "../components/shared/ScrollProgressBar";
+
 import { ScrollToTop } from "../components/shared/ScrollToTop";
 import { Icon } from "@iconify/react";
 import { gsap } from "gsap";
@@ -14,18 +13,21 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ScrollReveal from "../components/shared/ScrollReveal";
 import { useLenis } from "lenis/react";
 
+// Video Assets
+import video1 from "../assets/68bb07f935f18fd65a10184b_69169451c95e26dc6ec891a7_Home-1_mp4.mp4";
+import video2 from "../assets/68bb07f935f18fd65a10184b_6916945d9b23ed799b8d3be6_Home-2_mp4.mp4";
+import video3 from "../assets/68bb07f935f18fd65a10184b_691694639c3e527dc672da7b_Home-3_mp4.mp4";
 
 // Lazy-loaded components below the fold
 const About = lazy(() => import("../components/About"));
 const StatsSection = lazy(() => import("../components/StatsSection"));
 const Specializations = lazy(() => import("../components/Specializations"));
 const ProjectsGrid = lazy(() => import("../components/ProjectsGrid"));
+const LiveIframeShowcase = lazy(() => import("../components/LiveIframeShowcase"));
 const FAQSection = lazy(() => import("../components/FAQSection"));
-const SkillsList = lazy(() => import("../components/SkillsList"));
-const ContactForm = lazy(() => import("../components/ContactForm"));
+const TechCarousel = lazy(() => import("../components/TechCarousel"));
+
 const CLIResume = lazy(() => import("../components/CLIResume"));
-const BrowserMockup = lazy(() => import("../components/BrowserMockup"));
-const ElectricBorder = lazy(() => import("../components/ElectricBorder"));
 
 const SectionLoader = () => (
   <div className="w-full h-32 flex items-center justify-center">
@@ -36,11 +38,11 @@ const SectionLoader = () => (
 const PortfolioPage: React.FC = () => {
   const [selected, setSelected] = useState<Project | null>(null);
   const [showCLI, setShowCLI] = useState(false);
-  const [loading, setLoading] = useState(true);
 
   const heroRef = useRef<HTMLDivElement>(null);
   const heroContentRef = useRef<HTMLDivElement>(null);
   const secondPageRef = useRef<HTMLDivElement>(null);
+  const thirdPageRef = useRef<HTMLDivElement>(null);
   const lenis = useLenis();
 
   useEffect(() => {
@@ -64,7 +66,91 @@ const PortfolioPage: React.FC = () => {
         }
       }, 500);
     }
-  }, [loading, lenis]);
+  }, [lenis]);
+
+  useEffect(() => {
+    if (!lenis) return;
+
+    let isAnimating = false;
+    let lastAnimationTime = 0;
+    const cooldown = 1000;
+
+    const handleScrollAttempt = (dir: "down" | "up", event?: Event) => {
+      const now = Date.now();
+      if (isAnimating || now - lastAnimationTime < cooldown) {
+        if (event && event.cancelable) event.preventDefault();
+        return;
+      }
+
+      const scrollY = window.scrollY;
+      const header = document.querySelector("header");
+      const headerH = header?.offsetHeight ?? 0;
+      const secondPage = secondPageRef.current;
+      if (!secondPage) return;
+
+      const targetY = secondPage.getBoundingClientRect().top + scrollY - headerH;
+
+      if (dir === "down" && scrollY < 10) {
+        if (event && event.cancelable) event.preventDefault();
+        isAnimating = true;
+        lastAnimationTime = now;
+        lenis.scrollTo(secondPage, {
+          offset: -headerH,
+          duration: 1.2,
+          onComplete: () => {
+            isAnimating = false;
+          }
+        });
+      } else if (dir === "up" && scrollY > 10 && scrollY <= targetY + 15) {
+        if (event && event.cancelable) event.preventDefault();
+        isAnimating = true;
+        lastAnimationTime = now;
+        lenis.scrollTo(0, {
+          duration: 1.2,
+          onComplete: () => {
+            isAnimating = false;
+          }
+        });
+      }
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) < 5) return;
+      if (e.deltaY > 0) {
+        handleScrollAttempt("down", e);
+      } else if (e.deltaY < 0) {
+        handleScrollAttempt("up", e);
+      }
+    };
+
+    let touchStartY = 0;
+    const onTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      const touchEndY = e.touches[0].clientY;
+      const diffY = touchStartY - touchEndY;
+      
+      if (Math.abs(diffY) < 15) return;
+      
+      if (diffY > 0) {
+        handleScrollAttempt("down", e);
+      } else {
+        handleScrollAttempt("up", e);
+      }
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+    };
+  }, [lenis]);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -72,7 +158,7 @@ const PortfolioPage: React.FC = () => {
     const heroPin = ScrollTrigger.create({
       trigger: heroRef.current,
       start: "top top",
-      end: "bottom+=40% top",
+      end: "top+=30% top",
       pin: true,
       pinSpacing: false,
     });
@@ -92,26 +178,7 @@ const PortfolioPage: React.FC = () => {
         scrollTrigger: {
           trigger: heroRef.current,
           start: "top top",
-          end: "bottom+=40% top",
-          scrub: true,
-        }
-      }
-    );
-
-    const videoAnimation = gsap.fromTo(
-      ".hero-video",
-      {
-        scale: 1,
-        opacity: 1,
-      },
-      {
-        scale: 1.1,
-        opacity: 0.3,
-        ease: "none",
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "top top",
-          end: "bottom+=40% top",
+          end: "top+=30% top",
           scrub: true,
         }
       }
@@ -128,7 +195,7 @@ const PortfolioPage: React.FC = () => {
         scrollTrigger: {
           trigger: secondPageRef.current,
           start: "top bottom",
-          end: "top top",
+          end: "top bottom-=30%",
           scrub: true,
           onLeave: () => {
             gsap.set(secondPageRef.current, { clipPath: "none" });
@@ -143,21 +210,55 @@ const PortfolioPage: React.FC = () => {
       }
     );
 
+    const techCarouselPin = ScrollTrigger.create({
+      trigger: secondPageRef.current,
+      start: "top top",
+      end: "top+=30% top",
+      pin: true,
+      pinSpacing: false,
+    });
+
+    const thirdMaskAnimation = gsap.fromTo(
+      thirdPageRef.current,
+      {
+        clipPath: "inset(100% 0% 0% 0%)",
+      },
+      {
+        clipPath: "inset(0% 0% 0% 0%)",
+        ease: "none",
+        scrollTrigger: {
+          trigger: thirdPageRef.current,
+          start: "top bottom",
+          end: "top bottom-=30%",
+          scrub: true,
+          onLeave: () => {
+            gsap.set(thirdPageRef.current, { clipPath: "none" });
+          },
+          onEnterBack: () => {
+            gsap.set(thirdPageRef.current, { clipPath: "inset(0% 0% 0% 0%)" });
+          },
+          onLeaveBack: () => {
+            gsap.set(thirdPageRef.current, { clipPath: "inset(100% 0% 0% 0%)" });
+          }
+        },
+      }
+    );
+
     return () => {
       heroPin.kill();
       heroContentAnimation.scrollTrigger?.kill();
       heroContentAnimation.kill();
-      videoAnimation.scrollTrigger?.kill();
-      videoAnimation.kill();
       maskAnimation.scrollTrigger?.kill();
       maskAnimation.kill();
+      techCarouselPin.kill();
+      thirdMaskAnimation.scrollTrigger?.kill();
+      thirdMaskAnimation.kill();
     };
   }, []);
 
   return (
     <ThemeProvider>
-      {loading && <Preloader onComplete={() => setLoading(false)} />}
-      <ScrollProgressBar />
+
 
       {/* Main Page Container */}
       <div className="relative w-full overflow-x-hidden z-10">
@@ -180,23 +281,26 @@ const PortfolioPage: React.FC = () => {
         {/* ==================== FIRST PAGE (HERO SECTION) ==================== */}
         <div
           ref={heroRef}
-          className="relative w-full h-screen z-10 flex items-end justify-center bg-black pb-16 md:pb-24 lg:pb-32"
+          className="relative w-full h-screen z-10 flex items-center justify-center bg-transparent overflow-hidden"
         >
-          {/* Video Background */}
-          <div className="absolute inset-0 z-0">
-            <video
-              src={`${import.meta.env.BASE_URL}video.mp4`}
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="metadata"
-              className="w-full h-full object-cover hero-video"
-            />
+          {/* 2-Column Video Background */}
+          <div className="absolute inset-0 z-0 flex w-full h-full">
+            {/* Column 1 */}
+            <div className="relative w-1/2 h-full overflow-hidden group">
+              <video src={video1} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
+            </div>
+            {/* Column 2 */}
+            <div className="relative w-1/2 h-full overflow-hidden group border-l border-white/10">
+              <video src={video2} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
+            </div>
+            {/* Global Gradient Overlay for text readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-black/10 pointer-events-none" />
           </div>
 
           {/* Hero Content */}
-          <div ref={heroContentRef} className="relative z-10 w-full max-w-[1800px] mx-auto px-6 md:px-12 lg:px-24">
+          <div ref={heroContentRef} className="relative z-10 w-full max-w-[1800px] mx-auto px-6 md:px-12 lg:px-24 pb-16 md:pb-24 lg:pb-32 mt-auto">
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-12 lg:gap-32">
               {/* Left Column - Heading */}
               <div className="max-w-3xl text-left">
@@ -245,18 +349,38 @@ const PortfolioPage: React.FC = () => {
           </div>
         </div>
 
-        {/* ==================== SECOND PAGE (MAIN CONTENT WRAPPER) ==================== */}
+        {/* ==================== SECOND PAGE (TECH CAROUSEL) ==================== */}
         <div
           ref={secondPageRef}
-          className="relative w-full z-20 bg-[var(--background)]"
+          className="relative w-full z-20 bg-[var(--background)] flex flex-col justify-center"
+          style={{ clipPath: "inset(100% 0% 0% 0%)", minHeight: "30vh" }}
+        >
+          <Suspense fallback={<SectionLoader />}>
+            <ScrollReveal>
+              <TechCarousel />
+            </ScrollReveal>
+          </Suspense>
+        </div>
+
+        {/* ==================== THIRD PAGE (ABOUT & MAIN CONTENT) ==================== */}
+        <div
+          ref={thirdPageRef}
+          className="relative w-full z-30 bg-transparent"
           style={{ clipPath: "inset(100% 0% 0% 0%)" }}
         >
           {/* About Section */}
-          <div id="about" className="relative w-full pt-32 pb-10">
+          <div id="about" className="relative w-full">
             <Suspense fallback={<SectionLoader />}>
               <ScrollReveal>
                 <About personal={PORTFOLIO_INFO.personal} />
               </ScrollReveal>
+            </Suspense>
+          </div>
+
+          {/* Live Sites / Iframe Showcase Section */}
+          <div id="live-sites" className="relative w-full">
+            <Suspense fallback={<SectionLoader />}>
+              <LiveIframeShowcase />
             </Suspense>
           </div>
 
@@ -267,157 +391,45 @@ const PortfolioPage: React.FC = () => {
             </ScrollReveal>
           </Suspense>
 
-          {/* ── Live Demo Showcase Section (Full Viewport Width) ── */}
-          <section id="live-demo" className="w-full py-16 px-6 md:px-12 lg:px-24 bg-[var(--background)] border-y border-[var(--border)]">
+          <div id="specializations" className="w-full">
             <Suspense fallback={<SectionLoader />}>
               <ScrollReveal>
-                <div className="max-w-[1800px] mx-auto">
-                  <div className="mb-8">
-                    <h2 className="text-3xl font-semibold text-[var(--brand)]">Live Project Demos</h2>
-                    <p className="text-sm text-white mt-1">
-                      Interact with my live projects directly from here.
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {/* Mockup 1: Portfolio */}
-                    <div className="flex flex-col gap-3">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm font-medium text-white">Professional Portfolio</span>
-                        <a
-                          href="https://comfy-medovik-ee1f2a.netlify.app/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-xs text-[var(--brand)] underline hover:opacity-80"
-                        >
-                          Open Fullscreen ↗
-                        </a>
-                      </div>
-                      <div
-                        style={{
-                          position: "relative",
-                          borderRadius: "18px",
-                          padding: "2px",
-                          background: "linear-gradient(135deg, #5F67E6 0%, #8B5CF6 50%, #5F67E6 100%)",
-                          boxShadow: "0 0 40px rgba(95,103,230,0.2)",
-                        }}
-                      >
-                        <BrowserMockup
-                          url="https://comfy-medovik-ee1f2a.netlify.app/"
-                          title="Portfolio Preview"
-                          viewportHeight={550}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Mockup 2: Smart Banking */}
-                    <div className="flex flex-col gap-3">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm font-medium text-white">Smart Banking Web</span>
-                        <a
-                          href="https://beautiful-travesseiro-228b5f.netlify.app/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-xs text-[var(--brand)] underline hover:opacity-80"
-                        >
-                          Open Fullscreen ↗
-                        </a>
-                      </div>
-                      <div
-                        style={{
-                          position: "relative",
-                          borderRadius: "18px",
-                          padding: "2px",
-                          background: "linear-gradient(135deg, #8B5CF6 0%, #EC4899 50%, #8B5CF6 100%)",
-                          boxShadow: "0 0 40px rgba(139,92,246,0.2)",
-                        }}
-                      >
-                        <BrowserMockup
-                          url="https://beautiful-travesseiro-228b5f.netlify.app/"
-                          title="Banking App Preview"
-                          viewportHeight={550}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <Specializations />
               </ScrollReveal>
             </Suspense>
-          </section>
+          </div>
 
-          {/* Main Content (Projects, Skills, Contact) */}
           <main className="max-w-[1800px] w-full mx-auto px-6 md:px-12 py-10">
-
             <section id="projects" className="py-8">
               <Suspense fallback={<SectionLoader />}>
                 <ScrollReveal>
-                  <h2 className="text-2xl font-semibold text-[var(--brand)]">
-                    Projects
-                  </h2>
-                  <p className="mb-6 text-sm text-white mt-1">
-                    Selected work — click a card for details.
-                  </p>
-                  <ProjectsGrid
-                    projects={PORTFOLIO_INFO.projects}
-                    onOpen={setSelected}
-                  />
-                </ScrollReveal>
-              </Suspense>
-            </section>
-
-            <div id="specializations">
-              <Suspense fallback={<SectionLoader />}>
-                <ScrollReveal>
-                  <Specializations />
-                </ScrollReveal>
-              </Suspense>
-            </div>
-
-            {/* FAQ Accordion Section */}
-            <div id="faq">
-              <Suspense fallback={<SectionLoader />}>
-                <ScrollReveal>
-                  <FAQSection />
-                </ScrollReveal>
-              </Suspense>
-            </div>
-
-            <section id="skills" className="py-8">
-              <Suspense fallback={<SectionLoader />}>
-                <ScrollReveal>
-                  <h2 className="text-2xl font-semibold text-[var(--brand)]">
-                    Skills
-                  </h2>
-                  <p className="mb-6 text-sm text-white mt-1">
-                    Tools and technologies I use regularly.
-                  </p>
-                  <SkillsList skills={PORTFOLIO_INFO.skills} isBar={true} />
-                </ScrollReveal>
-              </Suspense>
-            </section>
-
-            <section id="contact" className="py-8 flex flex-col items-center">
-              <Suspense fallback={<SectionLoader />}>
-                <ScrollReveal>
-                  <div className="w-full max-w-3xl">
-                    <h2 className="text-2xl font-semibold text-[var(--brand)] text-center">
-                      Contact
+                  <div className="flex flex-col md:flex-row justify-between items-start gap-6 mb-12">
+                    <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white max-w-2xl leading-tight tracking-tight">
+                      Fullstack Development
                     </h2>
-                    <p className="text-sm text-white mt-1 text-center">
-                      Tell me about your project, or just say hi.
-                    </p>
-                    <div className="mt-8">
-                      <ElectricBorder color="#7c3aed" borderRadius={24}>
-                        <div className="p-8 sm:p-10 rounded-[24px] bg-slate-900/40 dark:bg-black/50 backdrop-blur-xl border border-white/5 shadow-2xl">
-                          <ContactForm />
-                        </div>
-                      </ElectricBorder>
+                    <div className="max-w-md">
+                      <p className="text-slate-300 text-sm md:text-base leading-relaxed mt-2 md:mt-4">
+                        Selected work — click a card for details.
+                      </p>
                     </div>
                   </div>
                 </ScrollReveal>
+                <ProjectsGrid
+                  projects={PORTFOLIO_INFO.projects}
+                  onOpen={setSelected}
+                />
               </Suspense>
             </section>
           </main>
+
+          {/* FAQ Accordion Section (Full Width) */}
+          <div id="faq" className="w-full">
+            <Suspense fallback={<SectionLoader />}>
+              <ScrollReveal>
+                <FAQSection />
+              </ScrollReveal>
+            </Suspense>
+          </div>
 
           <Footer />
         </div>

@@ -1,64 +1,120 @@
-// src/components/shared/Footer.tsx
-import React from "react";
-import { Icon } from "@iconify/react";
-import { PORTFOLIO_INFO } from "../../config/portfolioData";
+import React, { useRef, useState, useEffect } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { PORTFOLIO_INFO } from '../../config/portfolioData';
+import './Footer.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export const Footer: React.FC = () => {
+  const footerRef = useRef<HTMLElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    if (!footerRef.current) return;
+    
+    let ctx = gsap.context(() => {
+      const elements = footerRef.current?.querySelectorAll('.footer-heading, .footer-form, .footer-links-area, .footer-bottom');
+      
+      if (elements) {
+        gsap.from(elements, {
+          y: 50,
+          opacity: 0,
+          stagger: 0.1,
+          duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: footerRef.current,
+            start: 'top 80%',
+          },
+        });
+      }
+    }, footerRef);
+    
+    return () => ctx.revert();
+  }, []);
+
+  const HoverText = ({ text, isHighlight }: { text: string; isHighlight: boolean }) => (
+    <span className={isHighlight ? "highlight" : ""}>
+      {text.split('').map((char, i) => (
+        <span 
+          key={i} 
+          className={`hover-char ${isHighlight ? 'hover-char-highlight' : 'hover-char-normal'}`}
+          style={{ whiteSpace: 'pre' }}
+        >
+          {char}
+        </span>
+      ))}
+    </span>
+  );
+
   return (
-    <footer 
-      className="relative w-full border-t border-slate-900/50 py-16 mt-20 select-none overflow-hidden bg-[var(--background)]"
-    >
-      <div className="relative z-10 max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 px-6">
+    <section className="footer-section" ref={footerRef} id="contact">
+      <div className="footer-container">
         
-        {/* Left Side: Brand Image & Copyright Signature */}
-        <div className="flex items-center gap-4 text-left">
-          
-          <div className="flex flex-col gap-0.5">
-            <div className="text-xs font-black tracking-widest text-slate-200 uppercase font-mono">
-              DILANTHA RANAWEERA
+        <h1 
+          className="footer-heading"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <HoverText text="READY FOR " isHighlight={true} /> 
+          <div className="heading-inline-img-wrapper">
+            <img 
+              src={PORTFOLIO_INFO.personal.avatar}
+              alt="Portrait 1" 
+              className={`heading-inline-img grayscale ${isHovered ? 'img-hidden' : 'img-visible'}`} 
+            /> 
+            <img 
+              src={PORTFOLIO_INFO.personal.avatar}
+              alt="Portrait 2" 
+              className={`heading-inline-img ${isHovered ? 'img-visible' : 'img-hidden'}`} 
+            /> 
+          </div>
+          <HoverText text=" YOUR" isHighlight={false} /><br />
+          <HoverText text="PRESTIGE" isHighlight={true} />
+          <HoverText text=" MOMENT?" isHighlight={false} />
+        </h1>
+
+        <form className="footer-form" onSubmit={(e) => e.preventDefault()}>
+          <div className="input-group">
+            <label>Name</label>
+            <input type="text" placeholder="" />
+          </div>
+          <div className="input-group">
+            <label>Email</label>
+            <input type="email" placeholder="" />
+          </div>
+          <button type="submit" className="submit-btn">
+            Submit <span className="arrow">↵</span>
+          </button>
+        </form>
+
+        <div className="footer-links-area">
+          <div className="footer-socials">
+            <span className="label">Follow</span>
+            <div className="social-icons">
+              {PORTFOLIO_INFO.personal.contact.socials.map((social) => (
+                <a key={social.label} href={social.url.startsWith("http") ? social.url : `https://${social.url}`} target="_blank" rel="noopener noreferrer" className="icon" title={social.label}>
+                  {social.label.substring(0, 2).toUpperCase()}
+                </a>
+              ))}
             </div>
-            <div className="text-[10px] text-slate-500 font-medium tracking-tight">
-              © {new Date().getFullYear()} • Software Engineer & Visual Developer. All rights reserved.
-            </div>
+          </div>
+          <div className="footer-contact">
+            <span className="label">Write</span>
+            <a href={`mailto:${PORTFOLIO_INFO.personal.contact.email}`} className="contact-email">
+              {PORTFOLIO_INFO.personal.contact.email.toUpperCase()}
+            </a>
           </div>
         </div>
 
-        {/* Center: Minimalist Link Stack (Clean, Desktop only) */}
-        <div className="hidden md:flex items-center gap-6 text-xs text-slate-500 font-medium font-sans">
-          <a href="#about" className="hover:text-purple-400 transition-colors duration-300 cursor-pointer">About</a>
-          <a href="#projects" className="hover:text-purple-400 transition-colors duration-300 cursor-pointer">Projects</a>
-          <a href="#/resume" className="hover:text-purple-400 transition-colors duration-300 cursor-pointer">CV/Resume</a>
-          <a href="#skills" className="hover:text-purple-400 transition-colors duration-300 cursor-pointer">Skills</a>
-          <a href="#contact" className="hover:text-purple-400 transition-colors duration-300 cursor-pointer">Contact</a>
-        </div>
-
-        {/* Right Side: Glass Social Sockets */}
-        <div className="flex items-center gap-3">
-          {PORTFOLIO_INFO.personal?.contact?.socials?.map((s) => {
-            const iconMap: Record<string, string> = {
-              SiLinkedin: "simple-icons:linkedin",
-              SiGithub: "simple-icons:github",
-              LinkedIn: "simple-icons:linkedin",
-              GitHub: "simple-icons:github",
-            };
-            const iconName = (s.icon ? iconMap[s.icon] : undefined) || iconMap[s.label] || "lucide:globe";
-            return (
-              <a
-                key={s.label}
-                href={s.url.startsWith("http") ? s.url : `https://${s.url}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full border border-slate-900 bg-slate-950/40 flex items-center justify-center text-slate-400 hover:text-purple-400 hover:border-purple-500/30 transition-all duration-300 shadow-sm hover:scale-105 active:scale-95 cursor-pointer"
-                title={s.label}
-              >
-                <Icon icon={iconName} className="text-base" />
-              </a>
-            );
-          })}
+        <div className="footer-bottom">
+          <span>© {PORTFOLIO_INFO.personal.name.toUpperCase()}, {new Date().getFullYear()}</span>
+          <span>ALL RIGHTS RESERVED</span>
         </div>
 
       </div>
-    </footer>
+    </section>
   );
 };
 

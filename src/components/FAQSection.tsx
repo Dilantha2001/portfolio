@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Icon } from "@iconify/react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useRef, useState } from "react";
+import gsap from "gsap";
+import "./FAQSection.css";
 
 interface FAQItem {
   question: string;
@@ -30,87 +30,97 @@ const FAQS: FAQItem[] = [
   },
 ];
 
-export const FAQSection: React.FC = () => {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+const FAQItemComponent: React.FC<{ item: FAQItem; index: number }> = ({ item, index }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const plusBlockRef = useRef<HTMLDivElement>(null);
+  const verticalLineRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const trackProgressRef = useRef<HTMLDivElement>(null);
 
-  const toggleFAQ = (index: number) => {
-    setActiveIndex(activeIndex === index ? null : index);
+  const handleMouseEnter = () => {
+    gsap.to(titleRef.current, { x: 15, color: "#a855f7", duration: 0.7, ease: "expo.out", overwrite: "auto" });
+    gsap.to(plusBlockRef.current, { 
+      scale: 1.15,
+      rotation: 90,
+      borderColor: "rgba(168, 85, 247, 0.4)",
+      duration: 0.7, 
+      ease: "expo.out", 
+      overwrite: "auto" 
+    });
+    gsap.to(trackProgressRef.current, { width: "100%", backgroundColor: "#a855f7", duration: 0.7, ease: "expo.out", overwrite: "auto" });
+  };
+
+  const handleMouseLeave = () => {
+    gsap.to(titleRef.current, { x: 0, color: "var(--text-light)", duration: 0.5, ease: "power2.out", overwrite: "auto" });
+    gsap.to(plusBlockRef.current, { 
+      scale: 1,
+      rotation: 0,
+      borderColor: "var(--border-color)",
+      duration: 0.5, 
+      ease: "power2.out", 
+      overwrite: "auto" 
+    });
+    
+    if (!isOpen) {
+      gsap.to(trackProgressRef.current, { width: "0%", backgroundColor: "var(--text-light)", duration: 0.5, ease: "power2.out", overwrite: "auto" });
+    } else {
+      gsap.to(trackProgressRef.current, { backgroundColor: "var(--text-light)", duration: 0.5, ease: "power2.out", overwrite: "auto" });
+    }
+  };
+
+  const handleClick = () => {
+    const nextOpen = !isOpen;
+    setIsOpen(nextOpen);
+
+    if (nextOpen) {
+      gsap.set(contentRef.current, { opacity: 0 });
+      gsap.to(contentRef.current, { height: "auto", opacity: 1, duration: 0.7, ease: "expo.inOut", overwrite: "auto" });
+      gsap.to(verticalLineRef.current, { rotation: 0, duration: 0.7, ease: "expo.inOut", overwrite: "auto" });
+      gsap.to(trackProgressRef.current, { width: "100%", duration: 0.4, overwrite: "auto" });
+    } else {
+      gsap.to(contentRef.current, { height: 0, opacity: 0, duration: 0.6, ease: "expo.inOut", overwrite: "auto" });
+      gsap.to(verticalLineRef.current, { rotation: 90, duration: 0.6, ease: "expo.inOut", overwrite: "auto" });
+      gsap.to(trackProgressRef.current, { width: "0%", duration: 0.6, ease: "expo.inOut", overwrite: "auto" });
+    }
   };
 
   return (
-    <section className="py-16 flex flex-col items-center select-none overflow-hidden">
-      <div className="w-full max-w-4xl px-4 md:px-8">
-        
-        {/* Section Header */}
-        <div className="text-center mb-12 flex flex-col items-center gap-2.5">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-purple-500/20 bg-purple-500/5 text-[10px] font-bold font-mono tracking-widest text-purple-400 uppercase">
-            <Icon icon="lucide:help-circle" className="text-xs" />
-            Questions
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white font-sans">
-            Frequently Asked Questions
-          </h2>
-          <p className="max-w-xl text-sm text-slate-400 font-light mt-1">
-            Clear answers to help you understand how I operate, build, and deliver projects.
-          </p>
+    <div className="faq-item" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleClick}>
+      <div className="faq-top-wrap">
+        <h3 className="faq-title" ref={titleRef}>{index + 1}. {item.question}</h3>
+        <div className="plus-block" ref={plusBlockRef}>
+          <div className="plus-line horizontal"></div>
+          <div className="plus-line vertical" ref={verticalLineRef} style={{ transform: "rotate(90deg)" }}></div>
         </div>
+      </div>
+      <div className="faq-content" ref={contentRef}>
+        <p className="faq-answer">{item.answer}</p>
+      </div>
+      <div className="faq-track">
+        <div className="track-line"></div>
+        <div className="track-progress" ref={trackProgressRef}></div>
+      </div>
+    </div>
+  );
+};
 
-        {/* Accordion List */}
-        <div className="flex flex-col gap-4 w-full">
-          {FAQS.map((faq, index) => {
-            const isOpen = activeIndex === index;
-            return (
-              <div
-                key={index}
-                className={`border rounded-3xl backdrop-blur-xl transition-all duration-300 overflow-hidden cursor-pointer ${
-                  isOpen
-                    ? "bg-slate-900/35 dark:bg-black/50 border-purple-500/30 shadow-[0_0_35px_rgba(139,92,246,0.1)]"
-                    : "bg-slate-900/15 dark:bg-black/25 border-white/5 hover:border-purple-500/20 hover:bg-slate-900/25"
-                }`}
-                onClick={() => toggleFAQ(index)}
-              >
-                {/* Accordion Trigger/Header */}
-                <div className="flex items-center justify-between p-6 sm:p-7 select-none">
-                  <span className={`text-base sm:text-lg font-bold font-sans transition-colors duration-300 ${
-                    isOpen ? "text-purple-400" : "text-slate-100"
-                  }`}>
-                    {faq.question}
-                  </span>
-                  
-                  {/* Plus/Minus Indicator */}
-                  <div className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-300 shrink-0 ${
-                    isOpen 
-                      ? "border-purple-500/30 bg-purple-500/10 text-purple-300 rotate-180" 
-                      : "border-slate-800 bg-slate-950/40 text-slate-400 hover:text-slate-200"
-                  }`}>
-                    <Icon 
-                      icon={isOpen ? "lucide:minus" : "lucide:plus"} 
-                      className="text-sm" 
-                    />
-                  </div>
-                </div>
-
-                {/* Collapsible Content */}
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      key="content"
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                    >
-                      <div className="px-6 pb-6 sm:px-7 sm:pb-7 border-t border-white/5 pt-4">
-                        <p className="text-sm sm:text-[15px] text-slate-300 leading-relaxed font-light">
-                          {faq.answer}
-                        </p>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            );
-          })}
+export const FAQSection: React.FC = () => {
+  return (
+    <section className="faq-section select-none">
+      <div className="faq-container-box">
+        <div className="faq-header">
+          <div className="overflow-mask">
+            <h2 className="text-item">Common</h2>
+          </div>
+          <div className="overflow-mask">
+            <h2 className="text-item text-muted">questions</h2>
+          </div>
+        </div>
+        <div className="faq-container">
+          {FAQS.map((faq, index) => (
+            <FAQItemComponent key={index} item={faq} index={index} />
+          ))}
         </div>
       </div>
     </section>

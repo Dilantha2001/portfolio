@@ -20,12 +20,12 @@
 
 /* dark theme tokens */
 .dark {
-  --bg: #0b1220;
-  --surface: #0f1724;
-  --text: #e6edf3;
+  --bg: #030008;
+  --surface: #0a0512;
+  --text: #ffffff;
   --muted: oklch(0.269 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --brand: #7c3aed;
+  --border: rgba(255, 255, 255, 0.05);
+  --brand: #a855f7;
   --accent: oklch(0.269 0 0);
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
@@ -231,13 +231,28 @@ html, body {
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* Global Typography & Selection */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-black text-white antialiased selection:bg-purple-500/30 selection:text-purple-200 overflow-x-hidden;
+    font-family: 'Geist', 'Inter', system-ui, sans-serif;
   }
+  
+  /* Premium Noise Overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
   html {
     @apply font-sans;
   }
@@ -288,4 +303,40 @@ html, body {
 .animate-chevron-bounce {
   display: inline-block;
   animation: chevron-bounce 1.6s infinite ease-in-out;
+}
+
+/* Custom Purple Scrollbar */
+html, body {
+  scrollbar-width: thin;
+  scrollbar-color: #a855f7 var(--bg);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: var(--bg);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #a855f7; /* purple-500 */
+  border-radius: 10px;
+  border: 2px solid var(--bg); /* Adds padding around thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #9333ea; /* purple-600 */
+}
+
+/* Infinite Scroll Animation */
+@keyframes infinite-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-infinite-scroll {
+  animation: infinite-scroll 30s linear infinite;
+  width: max-content;
 }

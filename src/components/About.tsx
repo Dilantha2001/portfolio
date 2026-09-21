@@ -1,260 +1,90 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { Icon } from "@iconify/react";
+import React, { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { Personal } from "../types/portfolio";
 
+gsap.registerPlugin(ScrollTrigger);
+
 export const About: React.FC<{ personal: Personal }> = ({ personal }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLHeadingElement>(null);
+  const badgeRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    if (!containerRef.current) return;
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top 75%",
+        end: "bottom 80%",
+        toggleActions: "play none none reverse",
+      }
+    });
+
+    // Animate the small badge at the top
+    tl.fromTo(badgeRef.current,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
+    );
+
+    // Animate the main text block
+    tl.fromTo(textRef.current,
+      { opacity: 0, y: 40, filter: "blur(10px)" },
+      { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.2, ease: "power3.out" },
+      "-=0.6" // start before badge finishes
+    );
+
+  }, { scope: containerRef });
+
   return (
-    <div className="relative w-full min-h-[85vh] flex flex-col justify-end rounded-3xl bg-[var(--background)] border border-slate-800/70 text-slate-100 overflow-hidden pt-12 md:pt-16 lg:pt-20 px-6 md:px-12 lg:px-16 pb-0 shadow-[0_0_50px_rgba(168,85,247,0.03)] mx-auto">
-      
-      {/* ── AMBIENT BACKLIGHT GLOW (3D Avatar Aura) ── */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[300px] sm:w-[450px] h-[300px] sm:h-[450px] rounded-full bg-gradient-to-tr from-indigo-500/15 via-purple-500/20 to-pink-500/15 blur-[90px] pointer-events-none z-0" />
-
-      {/* ── BACKGROUND GIANT TEXT (Glow-Backlit White Highlight) ── */}
-      <div className="hidden sm:flex absolute inset-x-0 top-1/2 -translate-y-1/2 items-center justify-center pointer-events-none select-none z-0 overflow-hidden">
-        <h2 className="text-[14vw] font-black tracking-tighter text-white/35 uppercase leading-none text-center w-full whitespace-nowrap drop-shadow-[0_0_35px_rgba(255,255,255,0.6)] select-none pointer-events-none">
-          DILANTHA
-        </h2>
-      </div>
-
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-10 items-end w-full">
+    <div 
+      ref={containerRef}
+      className="w-full bg-transparent pt-32 pb-24 md:pt-40 md:pb-32 px-6 md:px-12 lg:px-24 overflow-hidden"
+    >
+      <div className="max-w-[1500px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         
-        {/* ── LEFT COLUMN: Professional Bio & Social Connections ── */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="lg:col-span-1 flex flex-col gap-6 text-left pb-8 md:pb-12 lg:pb-16 order-1 lg:order-none self-end"
-        >
-          {/* Status Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 text-[10px] uppercase font-mono tracking-widest w-fit">
-            <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-ping"></span>
-            Full-Stack Developer
-          </div>
-
-          <p className="text-base md:text-lg font-medium leading-relaxed tracking-tight text-slate-300">
-            I am a <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 font-bold">Full-Stack Software Engineer</span> specializing in designing and building highly scalable, secure Web Applications. I bridge the gap between elegant design aesthetics and high-performance server architectures.
-          </p>
+        {/* Left Column: Typography */}
+        <div className="lg:col-span-7 flex flex-col items-start gap-8 md:gap-12">
           
-          {/* Social Icons & Modern View CV Button */}
-          <div className="flex flex-col gap-4 mt-2 items-start w-full">
-            <div className="flex gap-2.5">
-              {personal.contact?.socials?.map((s) => {
-                const iconMap: Record<string, string> = {
-                  SiLinkedin: "simple-icons:linkedin",
-                  SiGithub: "simple-icons:github",
-                  LinkedIn: "simple-icons:linkedin",
-                  GitHub: "simple-icons:github",
-                };
-                const iconName = iconMap[s.icon || ""] || iconMap[s.label || ""] || "lucide:globe";
-                return (
-                  <a
-                    key={s.label}
-                    href={s.url.startsWith("http") ? s.url : `https://${s.url}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-11 h-11 rounded-xl border border-slate-800 bg-slate-950/60 flex items-center justify-center text-slate-300 hover:bg-slate-900 hover:text-purple-400 hover:border-purple-500/30 transition-all duration-300 cursor-pointer shadow-inner hover:scale-105 active:scale-95"
-                    title={s.label}
-                  >
-                    <Icon icon={iconName} className="text-lg" />
-                  </a>
-                );
-              })}
-            </div>
-            
-            <a
-              href="#/resume"
-              className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-extrabold text-[11px] tracking-wider uppercase hover:shadow-[0_0_20px_rgba(168,85,247,0.35)] transition-all duration-300 active:scale-95 cursor-pointer select-none"
-            >
-              <Icon icon="lucide:file-text" className="text-xs shrink-0" />
-              View Standalone CV
-            </a>
+          {/* Top Label */}
+          <div 
+            ref={badgeRef}
+            className="flex items-center gap-3 text-[10px] md:text-xs font-bold tracking-[0.25em] uppercase text-purple-300"
+          >
+            <span>Available For Work</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse"></span>
+            <span>Full-Stack Engineer</span>
           </div>
-        </motion.div>
+          
+          {/* Main Typography */}
+          <h2 
+            ref={textRef}
+            className="text-4xl sm:text-5xl md:text-[3.5rem] lg:text-[4.2rem] font-medium text-slate-100 tracking-tight leading-[1.15]"
+            style={{ letterSpacing: "-0.02em" }}
+          >
+            Design and build highly scalable, secure Web Applications, focused on{" "}
+            <span className="bg-purple-500 text-white px-3 py-1 rounded-[4px] font-semibold shadow-[0_0_30px_rgba(168,85,247,0.4)] box-decoration-clone leading-snug">
+              performance and aesthetics,
+            </span>{" "}
+            ensuring your digital presence feels modern, functional, and elevated with precision engineering.
+          </h2>
+          
+        </div>
 
-        {/* ── CENTER COLUMN: Avatar with 10 Orbiting Technology Badges (Hug Avatar Position) ── */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
-          className="lg:col-span-2 relative flex items-end justify-center h-[380px] sm:h-[480px] md:h-[520px] lg:h-[580px] overflow-visible group select-none order-3 lg:order-none self-end"
-        >
-          {personal.avatar && (
-            <div className="relative w-full h-full flex items-end justify-center">
-              
-              {/* ── FLOATING LOGO ORBITS (Pointer Events Enabled for tactile hovering) ── */}
-
-              {/* Floating Badge 1: React (Hugging Top Left) */}
-              <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[10%] left-[0%] sm:left-[18%] lg:left-[8%] xl:left-[15%] z-20 flex items-center gap-1.5 sm:gap-2.5 px-2.5 py-1.5 sm:px-4.5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(99,102,241,0.25)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
-              >
-                <Icon icon="logos:react" className="w-4.5 h-4.5 sm:w-6 sm:h-6 group-hover/float:rotate-[360deg] transition-transform duration-[2000ms] ease-in-out" />
-                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-slate-200">React</span>
-              </motion.div>
-
-              {/* Floating Badge 2: Node.js (Hugging Top Right) */}
-              <motion.div
-                animate={{ y: [0, -12, 0] }}
-                transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[12%] right-[0%] sm:right-[18%] lg:right-[8%] xl:right-[15%] z-20 flex items-center gap-1.5 sm:gap-2.5 px-2.5 py-1.5 sm:px-4.5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(34,197,94,0.2)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
-              >
-                <Icon icon="logos:nodejs-icon" className="w-4.5 h-4.5 sm:w-6 sm:h-6" />
-                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-slate-200">Node.js</span>
-              </motion.div>
-
-              {/* Floating Badge 3: TypeScript (Hugging Upper Mid-Left) */}
-              <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[28%] left-[-2%] sm:left-[10%] lg:left-[2%] xl:left-[8%] z-20 flex items-center gap-1.5 sm:gap-2.5 px-2.5 py-1.5 sm:px-4.5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(59,130,246,0.25)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
-              >
-                <Icon icon="logos:typescript-icon" className="w-4.5 h-4.5 sm:w-6 sm:h-6" />
-                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-slate-200">TypeScript</span>
-              </motion.div>
-
-              {/* Floating Badge 4: JavaScript (Hugging Upper Mid-Right) */}
-              <motion.div
-                animate={{ y: [0, -9, 0] }}
-                transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[30%] right-[-2%] sm:right-[10%] lg:right-[2%] xl:right-[8%] z-20 flex items-center gap-1.5 sm:gap-2.5 px-2.5 py-1.5 sm:px-4.5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(251,191,36,0.2)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
-              >
-                <Icon icon="logos:javascript" className="w-4.5 h-4.5 sm:w-6 sm:h-6 rounded-md" />
-                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-slate-200">JavaScript</span>
-              </motion.div>
-
-              {/* Floating Badge 5: AWS (Hugging Middle Left) */}
-              <motion.div
-                animate={{ y: [0, -11, 0] }}
-                transition={{ duration: 3.9, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[48%] left-[-4%] sm:left-[8%] lg:left-[0%] xl:left-[5%] z-20 flex items-center gap-1.5 sm:gap-2.5 px-2.5 py-1.5 sm:px-4.5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(251,191,36,0.2)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
-              >
-                <Icon icon="logos:aws" className="w-4.5 h-4.5 sm:w-6 sm:h-6" />
-                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-slate-200">AWS</span>
-              </motion.div>
-
-              {/* Floating Badge 6: Tailwind CSS (Hugging Middle Right) */}
-              <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 4.3, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[50%] right-[-4%] sm:right-[8%] lg:right-[0%] xl:right-[5%] z-20 flex items-center gap-1.5 sm:gap-2.5 px-2.5 py-1.5 sm:px-4.5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(14,165,233,0.2)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
-              >
-                <Icon icon="logos:tailwindcss-icon" className="w-4.5 h-4.5 sm:w-6 sm:h-6" />
-                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-slate-200">Tailwind</span>
-              </motion.div>
-
-              {/* Floating Badge 7: Docker (Hugging Lower Mid-Left) */}
-              <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 3.7, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[68%] left-[-1%] sm:left-[14%] lg:left-[4%] xl:left-[10%] z-20 flex items-center gap-1.5 sm:gap-2.5 px-2.5 py-1.5 sm:px-4.5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(14,165,233,0.25)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
-              >
-                <Icon icon="logos:docker-icon" className="w-4.5 h-4.5 sm:w-6 sm:h-6" />
-                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-slate-200">Docker</span>
-              </motion.div>
-
-              {/* Floating Badge 8: MongoDB (Hugging Lower Mid-Right) */}
-              <motion.div
-                animate={{ y: [0, -12, 0] }}
-                transition={{ duration: 4.6, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[70%] right-[-1%] sm:right-[14%] lg:right-[4%] xl:right-[10%] z-20 flex items-center gap-1.5 sm:gap-2.5 px-2.5 py-1.5 sm:px-4.5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(34,197,94,0.2)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
-              >
-                <Icon icon="logos:mongodb-icon" className="w-4.5 h-4.5 sm:w-6 sm:h-6" />
-                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-slate-200">MongoDB</span>
-              </motion.div>
-
-              {/* Floating Badge 9: MySQL (Hugging Bottom Left) */}
-              <motion.div
-                animate={{ y: [0, -9, 0] }}
-                transition={{ duration: 4.1, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[86%] left-[4%] sm:left-[22%] lg:left-[10%] xl:left-[18%] z-20 flex items-center gap-1.5 sm:gap-2.5 px-2.5 py-1.5 sm:px-4.5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(0,117,143,0.2)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
-              >
-                <Icon icon="logos:mysql-icon" className="w-4.5 h-4.5 sm:w-6 sm:h-6" />
-                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-slate-200">MySQL</span>
-              </motion.div>
-
-              {/* Floating Badge 10: PHP (Hugging Bottom Right) */}
-              <motion.div
-                animate={{ y: [0, -11, 0] }}
-                transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[88%] right-[4%] sm:right-[22%] lg:right-[10%] xl:right-[18%] z-20 flex items-center gap-1.5 sm:gap-2.5 px-2.5 py-1.5 sm:px-4.5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-950/85 border border-slate-800/80 shadow-[0_0_15px_rgba(120,119,190,0.2)] backdrop-blur-md cursor-pointer hover:border-purple-500/50 hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all duration-300 pointer-events-auto group/float"
-              >
-                <Icon icon="logos:php" className="w-4.5 h-4.5 sm:w-6 sm:h-6" />
-                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-slate-200">PHP</span>
-              </motion.div>
-
-              {/* Trail 3 */}
-              <img
-                className="absolute w-full h-full object-contain object-bottom opacity-10 -translate-x-[40px] scale-[0.9] sm:scale-[0.9] md:scale-[0.9] lg:scale-[1.15] origin-bottom translate-y-0 md:translate-y-0 lg:translate-y-[70px] filter grayscale transition-transform duration-700 ease-out group-hover:-translate-x-[60px] group-hover:scale-[0.95] group-hover:lg:scale-[1.2]"
-                src={personal.avatar}
-                alt="profile-trail-2"
-              />
-              {/* Trail 2 */}
-              <img
-                className="absolute w-full h-full object-contain object-bottom opacity-30 -translate-x-[20px] scale-[0.95] sm:scale-[0.95] md:scale-[0.95] lg:scale-[1.2] origin-bottom translate-y-0 md:translate-y-0 lg:translate-y-[70px] filter grayscale transition-transform duration-700 ease-out group-hover:-translate-x-[30px] group-hover:scale-[1.0] group-hover:lg:scale-[1.25]"
-                src={personal.avatar}
-                alt="profile-trail-1"
-              />
-              {/* Main Profile Image */}
-              <img
-                className="relative w-full h-full object-contain object-bottom z-10 drop-shadow-[0_20px_50px_rgba(0,0,0,0.35)] scale-[1.0] sm:scale-[1.0] md:scale-[1.0] lg:scale-[1.25] origin-bottom translate-y-0 filter grayscale md:translate-y-0 lg:translate-y-[70px] transition-transform duration-700 ease-out group-hover:scale-[1.05] group-hover:lg:scale-[1.3]"
-                src={personal.avatar}
-                alt="profile-main"
-              />
-            </div>
-          )}
-        </motion.div>
-
-        {/* ── RIGHT COLUMN: Overview & Key Statistics (Breathing & Sleek) ── */}
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-          className="lg:col-span-1 flex flex-col justify-between h-full text-left gap-8 pb-8 md:pb-12 lg:pb-16 order-2 lg:order-none self-stretch"
-        >
-          {/* Quick Info Dashboard */}
-          <div className="flex flex-col gap-6 mt-auto">
-            <div className="space-y-1">
-              <h4 className="text-xs font-mono font-bold tracking-widest text-slate-400 uppercase">
-                Engineering Base
-              </h4>
-              <div className="text-base font-extrabold text-slate-100">
-                Colombo, Sri Lanka
-              </div>
-            </div>
-
-            <div className="space-y-1">
-              <h4 className="text-xs font-mono font-bold tracking-widest text-slate-400 uppercase">
-                Work Mode
-              </h4>
-              <div className="text-base font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
-                Remote / Freelance Available
-              </div>
-            </div>
-
-            <div className="space-y-1.5">
-              <h4 className="text-xs font-mono font-bold tracking-widest text-slate-400 uppercase">
-                Primary Stack Focus
-              </h4>
-              <p className="text-sm text-slate-300 leading-relaxed font-medium">
-                Building secure JWT-authenticated APIs, relational database queries (MySQL/Postgres), and high-performance React user experiences.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4 w-full justify-between">
-            <p className="text-xs text-slate-400 font-mono leading-relaxed max-w-[150px]">
-              Crafted with absolute engineering precision.
-            </p>
-            {/* Down Arrow scroll trigger */}
+        {/* Right Column: Avatar Image */}
+        <div className="lg:col-span-5 w-full flex justify-center lg:justify-end relative">
+           {/* Decorative Glow */}
+           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-purple-500/20 blur-[100px] rounded-full z-0 pointer-events-none" />
            
-              
-          </div>
-        </motion.div>
+           <img 
+              src={personal.avatar} 
+              alt="Dilantha" 
+              className="relative z-10 w-full max-w-sm md:max-w-md lg:max-w-full object-contain filter grayscale hover:grayscale-0 hover:scale-[1.02] transition-all duration-700 drop-shadow-2xl" 
+              style={{ clipPath: "inset(0 0 15px 0)" }}
+           />
+        </div>
 
       </div>
     </div>
